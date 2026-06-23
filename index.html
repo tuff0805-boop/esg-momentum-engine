@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ESG Momentum Engine — PolyFinTech100 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div id="root">
+      <!-- Shown only if React never mounts -->
+      <div id="pre-react-msg" style="padding:32px;font-family:monospace;font-size:14px;color:#111">
+        Loading ESG Momentum Engine...
+        <br><small style="color:#666">If this persists, open DevTools (F12) → Console tab and share the red error.</small>
+      </div>
+    </div>
+    <script>
+      // Remove loading message once React mounts (React replaces root children)
+      const obs = new MutationObserver(() => {
+        const msg = document.getElementById('pre-react-msg')
+        if (msg && msg.parentElement && msg.parentElement.children.length > 1) {
+          msg.remove()
+          obs.disconnect()
+        }
+      })
+      obs.observe(document.getElementById('root'), { childList: true, subtree: false })
+    </script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

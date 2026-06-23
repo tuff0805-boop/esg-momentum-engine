@@ -1,0 +1,116 @@
+@import "tailwindcss";
+
+/* ─── Design tokens ─────────────────────────────────────────────────── */
+:root {
+  --bg:        #F8FAFC;
+  --surface:   #FFFFFF;
+  --sidebar:   #FFFFFF;
+  --border:    #E2E8F0;
+  --primary:   #0F172A;
+  --secondary: #64748B;
+  --muted:     #94A3B8;
+  --accent:    #10B981;
+  --accent-dim:#059669;
+  --amber:     #F59E0B;
+  --danger:    #EF4444;
+  --blue:      #3B82F6;
+  --purple:    #8B5CF6;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.04);
+  --radius:    12px;
+}
+
+.dark {
+  --bg:        #0A0F1E;
+  --surface:   #0D1526;
+  --sidebar:   #080D1A;
+  --border:    rgba(255,255,255,0.06);
+  --primary:   #F1F5F9;
+  --secondary: #64748B;
+  --muted:     #475569;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.4);
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.4);
+}
+
+/* ─── Base ───────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--primary);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Utility classes ────────────────────────────────────────────────── */
+.text-primary   { color: var(--primary); }
+.text-secondary { color: var(--secondary); }
+.text-muted     { color: var(--muted); }
+.text-accent    { color: var(--accent); }
+.text-amber     { color: var(--amber); }
+.text-danger    { color: var(--danger); }
+.border-border  { border-color: var(--border); }
+.bg-surface     { background: var(--surface); }
+.bg-accent      { background: var(--accent); }
+
+/* ─── Card ───────────────────────────────────────────────────────────── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+.card-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+}
+.card-title   { font-size: 14px; font-weight: 600; color: var(--primary); }
+.card-subtitle{ font-size: 11px; color: var(--secondary); margin-top: 2px; }
+
+/* ─── Table ──────────────────────────────────────────────────────────── */
+.table-head-row {
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+.th {
+  text-align: left;
+  padding: 10px 16px;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  color: var(--secondary);
+  white-space: nowrap;
+}
+.tr {
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background 0.12s;
+}
+.tr:nth-child(even) { background: color-mix(in srgb, var(--bg) 60%, var(--surface)); }
+.tr:hover { background: color-mix(in srgb, var(--accent) 8%, var(--surface)); }
+.td { padding: 10px 16px; }
+
+/* ─── Select input ───────────────────────────────────────────────────── */
+.select-input {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 32px 8px 12px;
+  font-size: 13px;
+  color: var(--primary);
+  appearance: none;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+}
+.select-input:focus { outline: none; border-color: var(--accent); }
+
+/* ─── Scrollbar ─────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+#root { width: 100%; min-height: 100vh; }
