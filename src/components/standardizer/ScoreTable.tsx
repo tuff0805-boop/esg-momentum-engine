@@ -38,8 +38,8 @@ export function ScoreTable({ companies, allCompanies, onSelect }: ScoreTableProp
               ['MSCI', 'MSCI ESG Rating score (0-100). Higher = better ESG profile per MSCI methodology.'],
               ['Sust.', 'Sustainalytics ESG Risk score shown normalised (0-100). Higher = lower ESG risk per Sustainalytics.'],
               ['BBG', 'Bloomberg ESG Disclosure score (0-100). Measures breadth and quality of ESG data disclosed.'],
-              ['SES', 'Standardized ESG Score: z-score normalization of all three providers, rescaled to 50 +/- 15. Removes inter-provider bias.'],
-              ['Disagree', 'Provider disagreement: std dev of the three z-scores. High disagreement = potential alpha from mispricing.'],
+              ['Std. ESG Score', 'Standardized ESG Score: z-score normalization of all three providers, rescaled to 50 +/- 15. Removes inter-provider bias.'],
+              ['Divergence', 'Provider divergence: standard deviation of the three z-scores. High divergence = potential alpha from mispricing.'],
               ['Pillars', 'Environmental / Social / Governance sub-score bars derived from provider z-scores.'],
             ].map(([h, tip]) => (
               <th key={h as string} className="th whitespace-nowrap">

@@ -19,10 +19,10 @@ interface MomentumMatrixProps {
 }
 
 const quadrantColors: Record<string, string> = {
-  'Hidden Winners': '#1D9E75',
-  'Future Leaders': '#3B82F6',
-  'Value Traps': '#E05252',
-  'Overrated Leaders': '#EF9F27',
+  'Overweight': '#1D9E75',
+  'Strong Overweight': '#3B82F6',
+  'Underweight': '#E05252',
+  'Reduce': '#EF9F27',
 }
 
 interface DataPoint {
@@ -116,7 +116,7 @@ export function MomentumMatrix({ companies, allCompanies, onSelect }: MomentumMa
     <div className="relative">
       <ResponsiveContainer width="100%" height={400}>
         <ScatterChart margin={{ top: 28, right: 30, bottom: 28, left: 10 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="color-mix(in srgb, var(--border) 80%, transparent)" />
+          <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" />
           <XAxis
             type="number"
             dataKey="x"
@@ -124,7 +124,7 @@ export function MomentumMatrix({ companies, allCompanies, onSelect }: MomentumMa
             domain={[20, 80]}
             label={{ value: 'SES Score', position: 'insideBottom', offset: -14, fill: '#64748b', fontSize: 11 }}
             tick={{ fill: '#64748b', fontSize: 10, fontFamily: 'JetBrains Mono, monospace' }}
-            axisLine={{ stroke: 'var(--border)' }}
+            axisLine={{ stroke: '#E2E8F0' }}
             tickLine={false}
           />
           <YAxis
@@ -135,7 +135,7 @@ export function MomentumMatrix({ companies, allCompanies, onSelect }: MomentumMa
             tickFormatter={v => `${Number(v).toFixed(1)}%`}
             label={{ value: 'ESG CAGR', angle: -90, position: 'insideLeft', fill: '#64748b', fontSize: 11 }}
             tick={{ fill: '#64748b', fontSize: 10, fontFamily: 'JetBrains Mono, monospace' }}
-            axisLine={{ stroke: 'var(--border)' }}
+            axisLine={{ stroke: '#E2E8F0' }}
             tickLine={false}
           />
           <Tooltip content={<CustomTooltip />} />
@@ -166,10 +166,10 @@ export function MomentumMatrix({ companies, allCompanies, onSelect }: MomentumMa
       </ResponsiveContainer>
 
       {/* Corner quadrant labels */}
-      <div className="absolute top-7 left-16 text-[10px] font-semibold pointer-events-none" style={{ color: '#10B981', opacity: 0.6 }}>Hidden Winners</div>
-      <div className="absolute top-7 right-8 text-[10px] font-semibold pointer-events-none" style={{ color: '#3B82F6', opacity: 0.6 }}>Future Leaders</div>
-      <div className="absolute bottom-14 left-16 text-[10px] font-semibold pointer-events-none" style={{ color: '#EF4444', opacity: 0.6 }}>Value Traps</div>
-      <div className="absolute bottom-14 right-8 text-[10px] font-semibold pointer-events-none" style={{ color: '#F59E0B', opacity: 0.6 }}>Overrated Leaders</div>
+      <div className="absolute top-7 left-16 text-[10px] font-semibold pointer-events-none" style={{ color: '#10B981', opacity: 0.6 }}>Overweight</div>
+      <div className="absolute top-7 right-8 text-[10px] font-semibold pointer-events-none" style={{ color: '#3B82F6', opacity: 0.6 }}>Strong Overweight</div>
+      <div className="absolute bottom-14 left-16 text-[10px] font-semibold pointer-events-none" style={{ color: '#EF4444', opacity: 0.6 }}>Underweight</div>
+      <div className="absolute bottom-14 right-8 text-[10px] font-semibold pointer-events-none" style={{ color: '#F59E0B', opacity: 0.6 }}>Reduce</div>
     </div>
   )
 }

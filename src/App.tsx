@@ -12,8 +12,8 @@ type Tab    = 'standardizer' | 'momentum' | 'dcf'
 
 const TAB_LABELS: Record<Tab, string> = {
   standardizer: 'ESG Score Standardizer',
-  momentum:     'ESG CAGR Momentum',
-  dcf:          'DCF Valuation',
+  momentum:     'ESG Momentum',
+  dcf:          'Financial Materiality Index',
 }
 
 
@@ -64,9 +64,11 @@ export default function App() {
       {/* Main column */}
       <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
         {/* Top navbar */}
-        <header className={`sticky top-0 z-20 flex items-center justify-between px-6 py-3 border-b ${topbarBg}`}>
+        <header className={`sticky top-0 z-20 border-b ${topbarBg}`}>
+          <div style={{ height: 4, background: '#0066CC' }} />
+          <div className="flex items-center justify-between px-6 py-3">
           <div>
-            <div className={`text-xs ${breadcrumb}`}>ESG Momentum Engine</div>
+            <div className={`text-xs ${breadcrumb}`}>ESG Momentum Engine · <span style={{ color: '#0066CC' }} className="font-medium">iTrade ESG Intelligence</span></div>
             <div className={`text-sm font-semibold ${isDark ? 'text-white' : 'text-slate-900'}`}>
               {TAB_LABELS[activeTab]}
             </div>
@@ -86,6 +88,7 @@ export default function App() {
               <span>PFT100</span>
               <span className="text-accent/60">2026</span>
             </div>
+          </div>
           </div>
         </header>
 

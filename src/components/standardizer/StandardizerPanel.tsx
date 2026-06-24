@@ -22,10 +22,13 @@ export function StandardizerPanel({ activeSector, onSelect, animKey }: Standardi
     ? filtered.reduce((s, c) => s + calcSES(c, ALL_COMPANIES), 0) / filtered.length
     : 0
   const highDisagreeCount = filtered.filter(c => calcDisagreement(c, ALL_COMPANIES) >= 0.8).length
-  const hiddenWinnersCount = filtered.filter(c => getQuadrant(c, ALL_COMPANIES) === 'Hidden Winners').length
+  const hiddenWinnersCount = filtered.filter(c => getQuadrant(c, ALL_COMPANIES) === 'Overweight').length
 
   return (
     <div className="flex flex-col gap-6">
+      <div className="text-sm text-secondary leading-relaxed px-1">
+        We normalize scores from three rating agencies into one reliable score. Higher divergence between providers = more alpha opportunity.
+      </div>
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <MetricCard
           label="Universe"
@@ -36,27 +39,27 @@ export function StandardizerPanel({ activeSector, onSelect, animKey }: Standardi
           animKey={animKey}
         />
         <MetricCard
-          label="Avg SES"
+          label="Average Standardized ESG Score"
           value={avgSES}
           decimals={1}
-          subLabel="Standardized ESG Score"
-          tooltip="Average Standardized ESG Score across filtered companies. SES normalises MSCI, Sustainalytics and Bloomberg onto a common 0-100 scale."
+          subLabel="Normalized across all providers"
+          tooltip="Average Standardized ESG Score across filtered companies. Normalises MSCI, Sustainalytics and Bloomberg onto a common 0-100 scale."
           color="teal"
           animKey={animKey}
         />
         <MetricCard
-          label="High Disagreement"
+          label="High Provider Divergence"
           value={highDisagreeCount}
-          subLabel="Alpha signal companies"
-          tooltip="Companies where provider disagreement (std dev of z-scores) exceeds 0.8 — indicating potential mispricing and alpha opportunity."
+          subLabel="Overweight opportunity companies"
+          tooltip="Companies where provider divergence (standard deviation of z-scores) exceeds 0.8 — indicating potential mispricing and alpha opportunity."
           color="amber"
           animKey={animKey}
         />
         <MetricCard
-          label="Hidden Winners"
+          label="Overweight"
           value={hiddenWinnersCount}
-          subLabel="Low SES · positive CAGR"
-          tooltip="Companies with below-average SES but positive ESG momentum — undervalued by current ratings but improving rapidly."
+          subLabel="Low score · rising trajectory"
+          tooltip="Companies with below-average Standardized ESG Score but positive ESG Compound Annual Growth Rate — undervalued by current ratings but improving rapidly."
           color="teal"
           animKey={animKey}
         />
@@ -73,7 +76,7 @@ export function StandardizerPanel({ activeSector, onSelect, animKey }: Standardi
       <div className="card p-5">
         <div className="mb-4">
           <div className="card-title">Provider Disagreement</div>
-          <div className="card-subtitle">Std dev of z-scores across MSCI, Sustainalytics and Bloomberg · high = alpha signal</div>
+          <div className="card-subtitle">Standard deviation of z-scores across MSCI, Sustainalytics and Bloomberg · high = alpha signal</div>
         </div>
         <DisagreementBars companies={filtered} allCompanies={ALL_COMPANIES} />
       </div>

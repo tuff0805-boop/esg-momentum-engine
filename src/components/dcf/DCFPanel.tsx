@@ -46,6 +46,9 @@ export function DCFPanel({ activeSector, onSelect }: DCFPanelProps) {
 
   return (
     <div className="flex flex-col gap-6">
+      <div className="text-sm text-secondary leading-relaxed px-1">
+        We translate ESG improvements into financial impact — showing how much they affect the company's target price through four channels.
+      </div>
       {/* Company selector */}
       <div className="flex items-center gap-3 flex-wrap">
         <label className="text-xs text-secondary uppercase tracking-widest">Company</label>
@@ -70,18 +73,18 @@ export function DCFPanel({ activeSector, onSelect }: DCFPanelProps) {
           <div className="grid grid-cols-2 gap-4">
             <div className="card p-4">
               <div className="flex items-center justify-between mb-2">
-                <div className="text-[10px] text-secondary uppercase tracking-widest">Materiality Filter</div>
+                <div className="text-[10px] text-secondary uppercase tracking-widest">Financial Materiality Threshold</div>
                 <Badge variant={dcf.materialityPass ? 'buy' : 'reduce'}>{dcf.materialityPass ? 'PASS' : 'FAIL'}</Badge>
               </div>
               <div className="font-mono text-xs text-primary mb-1">
-                FCF/MCap = {((company.fcf / company.mcap) * 100).toFixed(2)}%
+                Free Cash Flow / Market Cap = {((company.fcf / company.mcap) * 100).toFixed(2)}%
               </div>
               <div className="text-[10px] text-secondary">
                 Threshold: &gt;0.5% · ESG adjustments are material to enterprise value
               </div>
             </div>
             <div className="card p-4">
-              <div className="text-[10px] text-secondary uppercase tracking-widest mb-2">Capex J-Curve</div>
+              <div className="text-[10px] text-secondary uppercase tracking-widest mb-2">ESG Transition Capex — J-Curve</div>
               <JCurveChart capexDrag={dcf.capexDrag} opSave={dcf.opSave} revUp={dcf.revUp} />
             </div>
           </div>
@@ -113,7 +116,7 @@ export function DCFPanel({ activeSector, onSelect }: DCFPanelProps) {
           <table className="w-full text-xs min-w-[640px]">
             <thead>
               <tr className="table-head-row">
-                {['Company', 'Sector', 'Quadrant', 'Base Price', 'ESG Target', 'Upside', 'Rating'].map(h => (
+                {['Company', 'Sector', 'ESG Positioning', 'Base Price', 'ESG Target Price', 'Upside', 'Rating'].map(h => (
                   <th key={h} className="th">{h}</th>
                 ))}
               </tr>
@@ -160,8 +163,8 @@ export function DCFPanel({ activeSector, onSelect }: DCFPanelProps) {
 }
 
 function quadrantBorderColor(q: string): string {
-  if (q === 'Hidden Winners') return '#10B981'
-  if (q === 'Future Leaders') return '#3B82F6'
-  if (q === 'Value Traps') return '#EF4444'
+  if (q === 'Overweight') return '#10B981'
+  if (q === 'Strong Overweight') return '#3B82F6'
+  if (q === 'Underweight') return '#EF4444'
   return '#F59E0B'
 }

@@ -60,22 +60,22 @@ export function Badge({ variant, children, className = '' }: BadgeProps) {
 export function quadrantVariant(
   q: string
 ): BadgeVariant {
-  if (q === 'Hidden Winners') return 'hidden-winners'
-  if (q === 'Future Leaders') return 'future-leaders'
-  if (q === 'Value Traps') return 'value-traps'
+  if (q === 'Overweight') return 'hidden-winners'
+  if (q === 'Strong Overweight') return 'future-leaders'
+  if (q === 'Underweight') return 'value-traps'
   return 'overrated-leaders'
 }
 
 export function ratingVariant(r: string): BadgeVariant {
-  if (r === 'Buy') return 'buy'
+  if (r === 'Overweight') return 'buy'
   if (r === 'Accumulate') return 'accumulate'
-  if (r === 'Hold') return 'hold'
+  if (r === 'Neutral') return 'hold'
   return 'reduce'
 }
 
 export function forecastVariant(f: string): BadgeVariant {
-  if (f === 'Upgrade likely') return 'upgrade'
-  if (f === 'Downgrade risk') return 'downgrade'
+  if (f === 'Rating Upgrade Expected') return 'upgrade'
+  if (f === 'Rating Downgrade Risk') return 'downgrade'
   if (f === 'Watch') return 'watch'
   return 'stable'
 }

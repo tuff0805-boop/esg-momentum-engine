@@ -6,7 +6,7 @@ interface TargetPriceOutputProps {
   adjPrice: number
   bullPrice: number
   upsidePct: number
-  rating: 'Buy' | 'Accumulate' | 'Hold' | 'Reduce'
+  rating: 'Overweight' | 'Accumulate' | 'Neutral' | 'Underweight'
   multiplier: number
   quadrant: string
   baseWACC: number
@@ -34,10 +34,10 @@ export function TargetPriceOutput({
   waccReduction,
 }: TargetPriceOutputProps) {
   const ratingColors: Record<string, string> = {
-    Buy: 'text-teal-400',
+    Overweight: 'text-blue-500',
     Accumulate: 'text-blue-400',
-    Hold: 'text-amber-400',
-    Reduce: 'text-red-400',
+    Neutral: 'text-amber-400',
+    Underweight: 'text-red-400',
   }
 
   // Range bar: map prices onto 0-100
@@ -56,7 +56,7 @@ export function TargetPriceOutput({
         {rating}
       </div>
       <div className={`font-mono text-sm mb-5 ${upsidePct >= 0 ? 'text-accent' : 'text-danger'}`}>
-        {upsidePct >= 0 ? '+' : ''}{upsidePct.toFixed(1)}% ESG uplift
+        {upsidePct >= 0 ? '+' : ''}{upsidePct.toFixed(1)}% ESG Impact on Financial Materiality
       </div>
 
       <div className="grid grid-cols-3 gap-3 mb-4">
@@ -94,10 +94,10 @@ export function TargetPriceOutput({
 
       <div className="grid grid-cols-2 gap-3 text-xs">
         {[
-          ['Momentum multiplier', `${(multiplier * 100).toFixed(0)}%`, 'text-primary'],
+          ['ESG Momentum Multiplier', `${(multiplier * 100).toFixed(0)}%`, 'text-primary'],
           ['Quadrant', quadrant, 'text-primary'],
           ['Base WACC', `${baseWACC.toFixed(2)}%`, 'text-primary'],
-          [`Adj WACC (-${waccReduction.toFixed(0)}bps)`, `${adjWACC.toFixed(2)}%`, 'text-accent'],
+          [`Adj WACC (-${waccReduction.toFixed(0)} basis points)`, `${adjWACC.toFixed(2)}%`, 'text-accent'],
         ].map(([label, val, cls]) => (
           <div key={label as string}>
             <div className="text-secondary">{label}</div>

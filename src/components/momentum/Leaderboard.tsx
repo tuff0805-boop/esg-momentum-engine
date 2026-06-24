@@ -23,9 +23,9 @@ export function Leaderboard({ companies, allCompanies, onSelect }: LeaderboardPr
     .sort((a, b) => b.momentum - a.momentum)
 
   function quadrantBorder(q: string): string {
-    if (q === 'Hidden Winners') return '#10B981'
-    if (q === 'Future Leaders') return '#3B82F6'
-    if (q === 'Value Traps') return '#EF4444'
+    if (q === 'Overweight') return '#10B981'
+    if (q === 'Strong Overweight') return '#3B82F6'
+    if (q === 'Underweight') return '#EF4444'
     return '#F59E0B'
   }
 
@@ -34,7 +34,7 @@ export function Leaderboard({ companies, allCompanies, onSelect }: LeaderboardPr
       <table className="w-full text-xs min-w-[680px]">
         <thead>
           <tr className="table-head-row">
-            {['#', 'Company', 'SES', 'ESG CAGR', 'Event Score', 'Momentum', 'Quadrant', 'Forecast'].map(h => (
+            {['#', 'Company', 'Std. ESG Score', 'ESG CAGR', 'Forward Signal Score', 'ESG Momentum', 'Quadrant', 'Rating Agency Forecast'].map(h => (
               <th key={h} className="th">{h}</th>
             ))}
           </tr>
@@ -65,14 +65,14 @@ export function Leaderboard({ companies, allCompanies, onSelect }: LeaderboardPr
               <td className="td">
                 <div className="flex items-center gap-2">
                   <div className="w-20 rounded-full h-1.5 overflow-hidden" style={{ background: 'var(--border)' }}>
-                    <div className="h-full rounded-full bg-emerald-500" style={{ width: `${r.momentum}%` }} />
+                    <div className="h-full rounded-full" style={{ background: '#0066CC', width: `${r.momentum}%` }} />
                   </div>
                   <span className="font-mono text-primary">{r.momentum}</span>
                 </div>
               </td>
               <td className="td">
                 <Badge variant={quadrantVariant(r.quadrant)}>
-                  {r.quadrant.split(' ')[0]} {r.quadrant.split(' ')[1]?.[0]}
+                  {r.quadrant}
                 </Badge>
               </td>
               <td className="td">

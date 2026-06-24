@@ -22,44 +22,47 @@ export function MomentumPanel({ activeSector, onSelect, animKey }: MomentumPanel
   const avgCAGR = filtered.length
     ? filtered.reduce((s, c) => s + calcCAGR(c), 0) / filtered.length
     : 0
-  const hiddenWinners = filtered.filter(c => getQuadrant(c, ALL_COMPANIES) === 'Hidden Winners').length
-  const upgradeLikely = filtered.filter(c => getRaterForecast(c, ALL_COMPANIES) === 'Upgrade likely').length
-  const downgradeRisk = filtered.filter(c => getRaterForecast(c, ALL_COMPANIES) === 'Downgrade risk').length
+  const hiddenWinners = filtered.filter(c => getQuadrant(c, ALL_COMPANIES) === 'Overweight').length
+  const upgradeLikely = filtered.filter(c => getRaterForecast(c, ALL_COMPANIES) === 'Rating Upgrade Expected').length
+  const downgradeRisk = filtered.filter(c => getRaterForecast(c, ALL_COMPANIES) === 'Rating Downgrade Risk').length
 
   return (
     <div className="flex flex-col gap-6">
+      <div className="text-sm text-secondary leading-relaxed px-1">
+        We measure how fast a company's ESG is improving, not just where it stands today. Companies improving fastest are flagged as Overweight.
+      </div>
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <MetricCard
-          label="Avg ESG CAGR"
+          label="Average ESG CAGR"
           value={avgCAGR}
           decimals={1}
           suffix="%"
-          subLabel="5-year ESG improvement rate"
-          tooltip="Average ESG CAGR across filtered companies: (SES_current / SES_base)^(1/5) - 1"
+          subLabel="5-year Compound Annual Growth Rate"
+          tooltip="Average ESG Compound Annual Growth Rate (CAGR) across filtered companies: (Score_current / Score_base)^(1/5) - 1"
           color="teal"
           animKey={animKey}
         />
         <MetricCard
-          label="Hidden Winners"
+          label="Overweight"
           value={hiddenWinners}
-          subLabel="Low SES · rising momentum"
-          tooltip="Companies below-average SES but with positive ESG CAGR — potential re-rating candidates."
+          subLabel="Low score · rising trajectory"
+          tooltip="Companies below-average Standardized ESG Score but with positive ESG CAGR — potential re-rating candidates."
           color="teal"
           animKey={animKey}
         />
         <MetricCard
-          label="Upgrade Likely"
+          label="Rating Upgrade Expected"
           value={upgradeLikely}
-          subLabel="Rater forecast"
-          tooltip="Companies with momentum >= 70 and ESG CAGR > 5% — likely to receive rating upgrades in the next 12 months."
+          subLabel="Rating Agency Forecast"
+          tooltip="Companies with ESG Momentum score >= 70 and ESG CAGR > 5% — likely to receive rating upgrades in the next 12 months."
           color="teal"
           animKey={animKey}
         />
         <MetricCard
-          label="Downgrade Risk"
+          label="Rating Downgrade Risk"
           value={downgradeRisk}
-          subLabel="Rater forecast"
-          tooltip="Companies with momentum < 25 — at risk of ESG rating downgrades and negative screening by institutional investors."
+          subLabel="Rating Agency Forecast"
+          tooltip="Companies with ESG Momentum score < 25 — at risk of ESG rating downgrades and negative screening by institutional investors."
           color="red"
           trendDirection="down"
           animKey={animKey}
@@ -69,17 +72,17 @@ export function MomentumPanel({ activeSector, onSelect, animKey }: MomentumPanel
       <div className="card overflow-hidden">
         <div className="card-header">
           <div className="card-title">ESG Momentum Matrix</div>
-          <div className="card-subtitle">X = Standardized ESG Score · Y = ESG CAGR · click dot to inspect</div>
+          <div className="card-subtitle">X = Standardized ESG Score · Y = ESG CAGR (Compound Annual Growth Rate) · click dot to inspect</div>
         </div>
         <div className="p-4">
           <MomentumMatrix companies={filtered} allCompanies={ALL_COMPANIES} onSelect={onSelect} />
         </div>
         <div className="px-5 pb-4 flex gap-4 flex-wrap">
           {[
-            { label: 'Hidden Winners',    color: 'bg-emerald-500' },
-            { label: 'Future Leaders',    color: 'bg-blue-500'    },
-            { label: 'Value Traps',       color: 'bg-red-500'     },
-            { label: 'Overrated Leaders', color: 'bg-amber-500'   },
+            { label: 'Overweight',        color: 'bg-emerald-500' },
+            { label: 'Strong Overweight', color: 'bg-blue-500'    },
+            { label: 'Underweight',       color: 'bg-red-500'     },
+            { label: 'Reduce',            color: 'bg-amber-500'   },
           ].map(q => (
             <div key={q.label} className="flex items-center gap-1.5 text-xs text-secondary">
               <div className={`w-2.5 h-2.5 rounded-full ${q.color}`} />

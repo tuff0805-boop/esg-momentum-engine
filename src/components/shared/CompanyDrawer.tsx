@@ -76,7 +76,7 @@ export function CompanyDrawer({ company, allCompanies, onClose }: CompanyDrawerP
               {/* SES + Pillars */}
               <div className="bg-white/3 border border-white/5 rounded-xl p-4">
                 <div className="flex items-center justify-between mb-3">
-                  <span className="text-xs text-slate-500 uppercase tracking-widest">SES Score</span>
+                  <span className="text-xs text-slate-500 uppercase tracking-widest">Standardized ESG Score</span>
                   <div className="flex gap-2">
                     <Badge variant={quadrantVariant(quadrant)}>{quadrant}</Badge>
                     <Badge variant={forecastVariant(forecast)}>{forecast}</Badge>
@@ -99,7 +99,7 @@ export function CompanyDrawer({ company, allCompanies, onClose }: CompanyDrawerP
                   </div>
                 </div>
                 <div className="bg-white/3 border border-white/5 rounded-xl p-3 text-center">
-                  <div className="text-xs text-slate-500 mb-1">Momentum</div>
+                  <div className="text-xs text-slate-500 mb-1">ESG Momentum</div>
                   <div className="font-mono text-xl font-semibold text-white">{momentum}/100</div>
                 </div>
                 <div className="bg-white/3 border border-white/5 rounded-xl p-3 text-center">
@@ -142,7 +142,7 @@ export function CompanyDrawer({ company, allCompanies, onClose }: CompanyDrawerP
               {dcf && (
                 <div className="bg-white/3 border border-white/5 rounded-xl p-4">
                   <div className="flex items-center justify-between mb-3">
-                    <div className="text-xs text-slate-500 uppercase tracking-widest">DCF Summary</div>
+                    <div className="text-xs text-slate-500 uppercase tracking-widest">Financial Materiality Summary</div>
                     <Badge variant={ratingVariant(dcf.rating)}>{dcf.rating}</Badge>
                   </div>
                   <div className="grid grid-cols-2 gap-3 mb-3">
@@ -150,7 +150,7 @@ export function CompanyDrawer({ company, allCompanies, onClose }: CompanyDrawerP
                       ['Revenue uplift', `+${dcf.revUp.toFixed(2)}%`],
                       ['Op cost save', `-${dcf.opSave.toFixed(2)}%`],
                       ['Capex drag', `+${dcf.capexDrag.toFixed(2)}%`],
-                      ['WACC reduction', `-${dcf.waccReduction.toFixed(0)}bps`],
+                      ['WACC reduction', `-${dcf.waccReduction.toFixed(0)} basis points`],
                     ].map(([k, v]) => (
                       <div key={k}>
                         <div className="text-xs text-slate-500">{k}</div>

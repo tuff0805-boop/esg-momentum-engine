@@ -62,37 +62,37 @@ export function calcMomentum(company: Company, allCompanies: Company[]): number 
 export function getQuadrant(
   company: Company,
   allCompanies: Company[]
-): 'Hidden Winners' | 'Future Leaders' | 'Value Traps' | 'Overrated Leaders' {
+): 'Overweight' | 'Strong Overweight' | 'Underweight' | 'Reduce' {
   const sesList = allCompanies.map(c => calcSES(c, allCompanies))
   const avgSES = sesList.reduce((a, b) => a + b, 0) / sesList.length
   const ses = calcSES(company, allCompanies)
   const cagr = calcCAGR(company)
   const highSES = ses >= avgSES
   const positiveCAGR = cagr >= 0
-  if (!highSES && positiveCAGR) return 'Hidden Winners'
-  if (highSES && positiveCAGR) return 'Future Leaders'
-  if (!highSES && !positiveCAGR) return 'Value Traps'
-  return 'Overrated Leaders'
+  if (!highSES && positiveCAGR) return 'Overweight'
+  if (highSES && positiveCAGR) return 'Strong Overweight'
+  if (!highSES && !positiveCAGR) return 'Underweight'
+  return 'Reduce'
 }
 
 export function getRaterForecast(
   company: Company,
   allCompanies: Company[]
-): 'Upgrade likely' | 'Stable/+' | 'Watch' | 'Downgrade risk' {
+): 'Rating Upgrade Expected' | 'Stable/+' | 'Watch' | 'Rating Downgrade Risk' {
   const momentum = calcMomentum(company, allCompanies)
   const cagr = calcCAGR(company)
-  if (momentum >= 70 && cagr > 5) return 'Upgrade likely'
+  if (momentum >= 70 && cagr > 5) return 'Rating Upgrade Expected'
   if (momentum >= 45) return 'Stable/+'
   if (momentum >= 25) return 'Watch'
-  return 'Downgrade risk'
+  return 'Rating Downgrade Risk'
 }
 
 export function getMultiplier(quadrant: string): number {
   const map: Record<string, number> = {
-    'Hidden Winners': 1.0,
-    'Future Leaders': 0.8,
-    'Overrated Leaders': 0.3,
-    'Value Traps': 0.1,
+    'Overweight':        1.0,
+    'Strong Overweight':  0.8,
+    'Reduce':            0.3,
+    'Underweight':        0.1,
   }
   return map[quadrant] ?? 0.5
 }
@@ -116,11 +116,11 @@ export function calcDCF(company: Company, allCompanies: Company[]) {
   const bullPrice = company.base_price * (1 + upsidePct * 1.6)
   const materialityPass = company.fcf / company.mcap > 0.005
 
-  let rating: 'Buy' | 'Accumulate' | 'Hold' | 'Reduce'
-  if (upsidePct > 0.08) rating = 'Buy'
+  let rating: 'Overweight' | 'Accumulate' | 'Neutral' | 'Underweight'
+  if (upsidePct > 0.08) rating = 'Overweight'
   else if (upsidePct >= 0.03) rating = 'Accumulate'
-  else if (upsidePct >= -0.03) rating = 'Hold'
-  else rating = 'Reduce'
+  else if (upsidePct >= -0.03) rating = 'Neutral'
+  else rating = 'Underweight'
 
   return {
     multiplier,
