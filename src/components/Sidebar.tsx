@@ -53,7 +53,9 @@ export function Sidebar({ activeTab, activeSector, onTabChange, onSectorChange }
           borderBottom: '1px solid #1E2836',
         }}
       >
-        <img src="/cgsi_logo.png" alt="CGS International" style={{ height: 24, width: 'auto', objectFit: 'contain', mixBlendMode: 'multiply', filter: 'contrast(1.1)' }} />
+        <div style={{ borderRadius: 4, overflow: 'hidden' }}>
+          <img src="/cgsi_logo.png" alt="CGS International" style={{ height: 24, width: 'auto', display: 'block' }} />
+        </div>
       </div>
 
       {/* Nav items */}
@@ -108,16 +110,13 @@ export function Sidebar({ activeTab, activeSector, onTabChange, onSectorChange }
         <div style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 600, color: '#4A5568', padding: '12px 20px 6px' }}>
           Sector
         </div>
-        {SECTOR_ITEMS.map((item, i) => {
+        {SECTOR_ITEMS.map((item) => {
           const isActive = activeSector === item.id
           const dot      = SECTOR_DOTS[item.id]
           return (
-            <motion.button
+            <button
               key={item.id}
               onClick={() => onSectorChange(item.id)}
-              initial={{ x: -10, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ delay: 0.15 + i * 0.05, duration: 0.2 }}
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -153,7 +152,7 @@ export function Sidebar({ activeTab, activeSector, onTabChange, onSectorChange }
               <span style={{ fontSize: 12, color: '#4A5568', fontFamily: 'monospace' }}>
                 {SECTOR_COUNTS[item.id]}
               </span>
-            </motion.button>
+            </button>
           )
         })}
       </div>
