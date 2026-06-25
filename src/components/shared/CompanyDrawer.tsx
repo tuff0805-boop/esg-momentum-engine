@@ -15,10 +15,9 @@ function PillarBar({ label, value, color }: { label: string; value: number; colo
   return (
     <div className="flex items-center gap-2">
       <span style={{ fontSize: 11, color: '#8B9AAB', width: 14 }}>{label}</span>
-      <div className="flex-1 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.06)', height: 6 }}>
+      <div className="flex-1 overflow-hidden" style={{ background: 'rgba(255,255,255,0.04)', height: 4, borderRadius: 2 }}>
         <motion.div
-          className="h-full rounded-full"
-          style={{ background: color }}
+          style={{ background: color, height: '100%', borderRadius: 2 }}
           initial={{ width: 0 }}
           animate={{ width: `${value}%` }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
@@ -38,8 +37,8 @@ export function CompanyDrawer({ company, allCompanies, onClose }: CompanyDrawerP
   const forecast = company ? getRaterForecast(company, allCompanies) : ''
   const dcf      = company ? calcDCF(company, allCompanies) : null
 
-  const cardBg     = 'rgba(255,255,255,0.03)'
-  const cardBorder = 'rgba(255,255,255,0.06)'
+  const cardBg     = '#0D1117'
+  const cardBorder = '#1E2836'
 
   return (
     <AnimatePresence>
@@ -55,16 +54,16 @@ export function CompanyDrawer({ company, allCompanies, onClose }: CompanyDrawerP
           />
           <motion.div
             className="fixed right-0 top-0 h-full overflow-y-auto z-50"
-            style={{ width: 520, maxWidth: '95vw', background: '#0D1117', borderLeft: '1px solid #2A3441' }}
+            style={{ width: 420, maxWidth: '95vw', background: '#080B10', borderLeft: '1px solid #1E2836' }}
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 28, stiffness: 280 }}
           >
             {/* Header */}
-            <div className="sticky top-0 flex items-start justify-between px-6 py-4" style={{ background: '#0D1117', borderBottom: '1px solid #2A3441', zIndex: 10 }}>
+            <div className="sticky top-0 flex items-start justify-between px-4 py-3" style={{ background: '#080B10', borderBottom: '1px solid #1E2836', zIndex: 10 }}>
               <div>
-                <div style={{ fontSize: 18, fontWeight: 600, color: '#FFFFFF' }}>{company.name}</div>
+                <div style={{ fontSize: 16, fontWeight: 600, color: '#E8EDF2' }}>{company.name}</div>
                 <div style={{ fontSize: 12, color: '#8B9AAB', marginTop: 2 }}>{company.country} · {company.sector}</div>
               </div>
               <button onClick={onClose} style={{ color: '#8B9AAB', background: 'none', border: 'none', cursor: 'pointer', padding: 4 }}>
@@ -76,7 +75,7 @@ export function CompanyDrawer({ company, allCompanies, onClose }: CompanyDrawerP
 
             <div className="p-6 flex flex-col gap-5">
               {/* SES + Pillars */}
-              <div className="rounded-xl p-4" style={{ background: cardBg, border: `1px solid ${cardBorder}` }}>
+              <div style={{ background: cardBg, border: `1px solid ${cardBorder}`, borderRadius: 4, padding: 16 }}>
                 <div className="flex items-center justify-between mb-3">
                   <span style={{ fontSize: 10, color: '#8B9AAB', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Standardized ESG Score</span>
                   <div className="flex gap-2">
@@ -84,7 +83,7 @@ export function CompanyDrawer({ company, allCompanies, onClose }: CompanyDrawerP
                     <Badge variant={forecastVariant(forecast)}>{forecast}</Badge>
                   </div>
                 </div>
-                <div className="font-mono" style={{ fontSize: 36, fontWeight: 700, color: '#00C087', marginBottom: 12, lineHeight: 1 }}>{ses.toFixed(1)}</div>
+                <div className="font-mono" style={{ fontSize: 28, fontWeight: 700, color: '#00C087', marginBottom: 12, lineHeight: 1 }}>{ses.toFixed(1)}</div>
                 <div className="flex flex-col gap-2">
                   <PillarBar label="E" value={pillars.E} color="#00C087" />
                   <PillarBar label="S" value={pillars.S} color="#60A5FA" />
@@ -99,21 +98,21 @@ export function CompanyDrawer({ company, allCompanies, onClose }: CompanyDrawerP
                   { label: 'ESG Momentum', val: `${momentum}/100`,                              color: '#FFFFFF' },
                   { label: 'Mkt Cap',      val: `$${company.mcap}B`,                            color: '#FFFFFF' },
                 ].map(item => (
-                  <div key={item.label} className="rounded-xl p-3 text-center" style={{ background: cardBg, border: `1px solid ${cardBorder}` }}>
+                  <div key={item.label} style={{ background: cardBg, border: `1px solid ${cardBorder}`, borderRadius: 4, padding: '8px 12px', textAlign: 'center' }}>
                     <div style={{ fontSize: 11, color: '#8B9AAB', marginBottom: 4 }}>{item.label}</div>
-                    <div className="font-mono" style={{ fontSize: 18, fontWeight: 600, color: item.color }}>{item.val}</div>
+                    <div className="font-mono" style={{ fontSize: 15, fontWeight: 600, color: item.color }}>{item.val}</div>
                   </div>
                 ))}
               </div>
 
               {/* Provider Scores */}
-              <div className="rounded-xl p-4" style={{ background: cardBg, border: `1px solid ${cardBorder}` }}>
+              <div style={{ background: cardBg, border: `1px solid ${cardBorder}`, borderRadius: 4, padding: 16 }}>
                 <div style={{ fontSize: 10, color: '#8B9AAB', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 12 }}>Provider Scores</div>
                 <div className="grid grid-cols-3 gap-3">
                   {[['MSCI', company.msci], ['Sustainalytics', company.sustainalytics], ['Bloomberg', company.bloomberg]].map(([k, v]) => (
                     <div key={k as string} className="text-center">
                       <div style={{ fontSize: 11, color: '#8B9AAB', marginBottom: 2 }}>{k}</div>
-                      <div className="font-mono" style={{ fontSize: 18, fontWeight: 600, color: '#FFFFFF' }}>{v}</div>
+                      <div className="font-mono" style={{ fontSize: 15, fontWeight: 600, color: '#E8EDF2' }}>{v}</div>
                     </div>
                   ))}
                 </div>
@@ -124,7 +123,7 @@ export function CompanyDrawer({ company, allCompanies, onClose }: CompanyDrawerP
                 <div style={{ fontSize: 10, color: '#8B9AAB', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 10 }}>ESG Events</div>
                 <div className="flex flex-col gap-2">
                   {company.events.map((ev, i) => (
-                    <div key={i} className="flex items-center gap-3 rounded-lg px-3 py-2.5" style={{ background: cardBg, border: `1px solid ${cardBorder}` }}>
+                    <div key={i} className="flex items-center gap-3 px-3 py-2.5" style={{ background: cardBg, border: `1px solid ${cardBorder}`, borderRadius: 4 }}>
                       <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: ev.direction === 1 ? '#00C087' : '#E8323C' }} />
                       <div className="flex-1 text-sm" style={{ color: '#D1D5DB' }}>{ev.title}</div>
                       <div className="flex gap-1.5">
@@ -138,7 +137,7 @@ export function CompanyDrawer({ company, allCompanies, onClose }: CompanyDrawerP
 
               {/* DCF Summary */}
               {dcf && (
-                <div className="rounded-xl p-4" style={{ background: cardBg, border: `1px solid ${cardBorder}` }}>
+                <div style={{ background: cardBg, border: `1px solid ${cardBorder}`, borderRadius: 4, padding: 16 }}>
                   <div className="flex items-center justify-between mb-3">
                     <div style={{ fontSize: 10, color: '#8B9AAB', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Financial Materiality Summary</div>
                     <Badge variant={ratingVariant(dcf.rating)}>{dcf.rating}</Badge>
@@ -156,16 +155,16 @@ export function CompanyDrawer({ company, allCompanies, onClose }: CompanyDrawerP
                       </div>
                     ))}
                   </div>
-                  <div className="flex items-center justify-between pt-3" style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+                  <div className="flex items-center justify-between pt-3" style={{ borderTop: '1px solid #1E2836' }}>
                     <div>
                       <div style={{ fontSize: 11, color: '#8B9AAB' }}>ESG Target Price</div>
-                      <div className="font-mono" style={{ fontSize: 18, fontWeight: 700, color: '#00C087' }}>
+                      <div className="font-mono" style={{ fontSize: 15, fontWeight: 700, color: '#00C087' }}>
                         {dcf.adjPrice > 100 ? Math.round(dcf.adjPrice).toLocaleString() : dcf.adjPrice.toFixed(2)}
                       </div>
                     </div>
                     <div className="text-right">
                       <div style={{ fontSize: 11, color: '#8B9AAB' }}>Upside</div>
-                      <div className="font-mono" style={{ fontSize: 18, fontWeight: 700, color: dcf.upsidePct >= 0 ? '#00C087' : '#E8323C' }}>
+                      <div className="font-mono" style={{ fontSize: 15, fontWeight: 700, color: dcf.upsidePct >= 0 ? '#00C087' : '#E8323C' }}>
                         {dcf.upsidePct >= 0 ? '+' : ''}{dcf.upsidePct.toFixed(1)}%
                       </div>
                     </div>
@@ -178,9 +177,9 @@ export function CompanyDrawer({ company, allCompanies, onClose }: CompanyDrawerP
                 <div>
                   {/* Section header with red underline — iTrade style */}
                   <div style={{ marginBottom: 12 }}>
-                    <div style={{ fontSize: 13, fontWeight: 600, color: '#FFFFFF' }}>
+                    <div style={{ fontSize: 13, fontWeight: 600, color: '#E8EDF2' }}>
                       News &amp; Catalysts
-                      <div style={{ width: 32, height: 2, background: '#E8323C', marginTop: 5, borderRadius: 1 }} />
+                      <div style={{ width: 24, height: 2, background: '#E8323C', marginTop: 4, borderRadius: 1 }} />
                     </div>
                     <div style={{ fontSize: 11, color: '#8B9AAB', marginTop: 4 }}>Recent ESG events with sentiment and SDG mapping</div>
                   </div>

@@ -24,15 +24,15 @@ const sectorItems: { id: string; sector: Sector; label: string; icon: string }[]
 ]
 
 export function Sidebar({ activeTab, activeSector, onTabChange, onSectorChange }: SidebarProps) {
-  const sidebarBg    = '#111827'
-  const borderCol    = '#2A3441'
-  const labelCol     = '#4B5563'
+  const sidebarBg    = '#080B10'
+  const borderCol    = '#1E2836'
+  const labelCol     = '#4A5568'
   const inactiveText = '#8B9AAB'
-  const activeText   = '#FFFFFF'
-  const hoverBg      = '#1F2937'
-  const activeBg     = '#1F2937'
-  const footerText   = '#4B5563'
-  const titleText    = '#FFFFFF'
+  const activeText   = '#E8EDF2'
+  const hoverBg      = '#131920'
+  const activeBg     = '#0D1117'
+  const footerText   = '#4A5568'
+  const titleText    = '#E8EDF2'
   const subtitleText = '#8B9AAB'
 
   const navItemBase: React.CSSProperties = {
@@ -40,8 +40,8 @@ export function Sidebar({ activeTab, activeSector, onTabChange, onSectorChange }
     alignItems: 'center',
     gap: '10px',
     width: '100%',
-    padding: '8px 12px',
-    borderRadius: '6px',
+    padding: '6px 10px',
+    borderRadius: '4px',
     fontSize: '13px',
     fontWeight: 500,
     cursor: 'pointer',
@@ -76,7 +76,7 @@ export function Sidebar({ activeTab, activeSector, onTabChange, onSectorChange }
     fontWeight: 600,
     color: labelCol,
     padding: '0 12px',
-    marginTop: '16px',
+    marginTop: '12px',
     marginBottom: '4px',
     display: 'block',
   }
@@ -84,7 +84,7 @@ export function Sidebar({ activeTab, activeSector, onTabChange, onSectorChange }
   return (
     <aside
       style={{
-        width: 230,
+        width: 200,
         flexShrink: 0,
         display: 'flex',
         flexDirection: 'column',
@@ -96,7 +96,7 @@ export function Sidebar({ activeTab, activeSector, onTabChange, onSectorChange }
       }}
     >
       {/* Logo area */}
-      <div style={{ padding: '20px 16px 16px', borderBottom: `1px solid ${borderCol}` }}>
+      <div style={{ padding: '14px 12px 12px', borderBottom: `1px solid ${borderCol}` }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <div
             style={{
@@ -170,7 +170,7 @@ export function Sidebar({ activeTab, activeSector, onTabChange, onSectorChange }
       </nav>
 
       {/* Footer */}
-      <div style={{ padding: '12px 16px', borderTop: `1px solid ${borderCol}` }}>
+      <div style={{ padding: '10px 12px', borderTop: `1px solid ${borderCol}` }}>
         <div style={{ fontSize: 10, color: footerText, lineHeight: 1.6 }}>
           <div style={{ fontWeight: 600, marginBottom: 1 }}>CGS International &middot; iTrade ESG Intelligence Module</div>
           <div>PolyFinTech100 2026</div>

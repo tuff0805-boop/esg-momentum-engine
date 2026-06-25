@@ -30,7 +30,7 @@ export function StandardizerPanel({ activeSector, onSelect, animKey, viewMode = 
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="text-sm text-secondary leading-relaxed px-1">
+      <div style={{ fontSize: 11, fontStyle: 'italic', color: '#4A5568', marginBottom: 4 }}>
         {isRetail
           ? 'Top ESG investment signals for the current selection. Click any card to see company details.'
           : 'We normalize scores from three rating agencies into one reliable score. Higher divergence between providers = more alpha opportunity.'}

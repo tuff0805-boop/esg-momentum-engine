@@ -41,25 +41,9 @@ const CustomDot = (props: any) => {
   const labelW = label.length * 5.5 + 8
   return (
     <g onClick={() => onClick(payload.company)} style={{ cursor: 'pointer' }}>
-      <circle cx={cx} cy={cy} r={8} fill={color} stroke="#1A2332" strokeWidth={2} />
-      <rect
-        x={cx - labelW / 2}
-        y={cy - 26}
-        width={labelW}
-        height={14}
-        rx={3}
-        fill="#1A2332"
-        fillOpacity={0.95}
-      />
-      <text
-        x={cx}
-        y={cy - 15}
-        textAnchor="middle"
-        fontSize={9}
-        fill="#FFFFFF"
-        fontWeight="600"
-        fontFamily="'JetBrains Mono', monospace"
-      >
+      <circle cx={cx} cy={cy} r={7} fill={color} stroke="#1E2836" strokeWidth={1.5} />
+      <rect x={cx - labelW/2} y={cy - 24} width={labelW} height={13} rx={3} fill="#131920" stroke="#1E2836" strokeWidth={0.5} />
+      <text x={cx} y={cy - 13} textAnchor="middle" fontSize={9} fill="#E8EDF2" fontWeight="500">
         {label}
       </text>
     </g>
@@ -72,11 +56,11 @@ const CustomTooltip = ({ active, payload }: any) => {
   const d: DataPoint = payload[0].payload
   const color = quadrantColors[d.quadrant]
   return (
-    <div style={{ background: '#1A2332', border: '1px solid #2A3441', borderRadius: 8, padding: '10px 12px', fontSize: 12, boxShadow: '0 4px 12px rgba(0,0,0,0.5)' }}>
-      <div style={{ fontWeight: 600, color: '#FFFFFF', marginBottom: 4 }}>{d.name}</div>
+    <div style={{ background: '#131920', border: '1px solid #1E2836', borderRadius: 4, padding: '8px 10px', fontSize: 11 }}>
+      <div style={{ fontWeight: 500, color: '#E8EDF2', marginBottom: 3 }}>{d.name}</div>
       <div style={{ color: '#8B9AAB' }}>Score: <span style={{ fontFamily: 'monospace', color: '#00C087' }}>{d.x.toFixed(1)}</span></div>
       <div style={{ color: '#8B9AAB' }}>CAGR: <span style={{ fontFamily: 'monospace', color: d.y >= 0 ? '#00C087' : '#E8323C' }}>{d.y >= 0 ? '+' : ''}{d.y.toFixed(1)}%</span></div>
-      <div style={{ marginTop: 6, fontWeight: 600, color }}>{d.quadrant}</div>
+      <div style={{ marginTop: 4, fontWeight: 500, color, fontSize: 10 }}>{d.quadrant}</div>
     </div>
   )
 }
@@ -112,18 +96,18 @@ export function MomentumMatrix({ companies, allCompanies, onSelect }: MomentumMa
   const yMax = cagrValues.length ? Math.ceil(Math.max(...cagrValues) + 2) : 16
 
   return (
-    <div className="relative" style={{ background: '#1A2332', borderRadius: 8, padding: '8px 0' }}>
+    <div className="relative" style={{ background: '#080B10', borderRadius: 4, padding: '4px 0' }}>
       <ResponsiveContainer width="100%" height={400}>
         <ScatterChart margin={{ top: 28, right: 30, bottom: 28, left: 10 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#2A3441" vertical={true} />
+          <CartesianGrid strokeDasharray="3 3" stroke="#1E2836" vertical={true} />
           <XAxis
             type="number"
             dataKey="x"
             name="SES"
             domain={[20, 80]}
-            label={{ value: 'Standardized ESG Score', position: 'insideBottom', offset: -14, fill: '#8B9AAB', fontSize: 11 }}
-            tick={{ fill: '#8B9AAB', fontSize: 10, fontFamily: 'JetBrains Mono, monospace' }}
-            axisLine={{ stroke: '#2A3441' }}
+            label={{ value: 'Standardized ESG Score', position: 'insideBottom', offset: -14, fill: '#4A5568', fontSize: 10 }}
+            tick={{ fill: '#4A5568', fontSize: 10 }}
+            axisLine={{ stroke: '#1E2836' }}
             tickLine={false}
           />
           <YAxis
@@ -132,25 +116,23 @@ export function MomentumMatrix({ companies, allCompanies, onSelect }: MomentumMa
             name="ESG CAGR"
             domain={[yMin, yMax]}
             tickFormatter={v => `${Number(v).toFixed(1)}%`}
-            label={{ value: 'ESG CAGR', angle: -90, position: 'insideLeft', fill: '#8B9AAB', fontSize: 11 }}
-            tick={{ fill: '#8B9AAB', fontSize: 10, fontFamily: 'JetBrains Mono, monospace' }}
-            axisLine={{ stroke: '#2A3441' }}
+            label={{ value: 'ESG CAGR', angle: -90, position: 'insideLeft', fill: '#4A5568', fontSize: 10 }}
+            tick={{ fill: '#4A5568', fontSize: 10 }}
+            axisLine={{ stroke: '#1E2836' }}
             tickLine={false}
           />
           <Tooltip content={<CustomTooltip />} />
           <ReferenceLine
             x={avgSES}
-            stroke="#4B5563"
-            strokeOpacity={0.8}
+            stroke="#2A3A4A"
             strokeDasharray="4 4"
-            label={{ value: 'Avg Score', position: 'top', fill: '#4B5563', fontSize: 10 }}
+            label={{ value: 'Avg Score', position: 'top', fill: '#4A5568', fontSize: 10 }}
           />
           <ReferenceLine
             y={0}
-            stroke="#4B5563"
-            strokeOpacity={0.8}
+            stroke="#2A3A4A"
             strokeDasharray="4 4"
-            label={{ value: 'CAGR=0', position: 'right', fill: '#4B5563', fontSize: 10 }}
+            label={{ value: 'CAGR=0', position: 'right', fill: '#4A5568', fontSize: 10 }}
           />
           <Scatter
             data={data}
@@ -163,10 +145,10 @@ export function MomentumMatrix({ companies, allCompanies, onSelect }: MomentumMa
         </ScatterChart>
       </ResponsiveContainer>
 
-      <div className="absolute top-7 left-16 text-[10px] font-semibold pointer-events-none" style={{ color: '#00C087', opacity: 0.7 }}>Overweight</div>
-      <div className="absolute top-7 right-8 text-[10px] font-semibold pointer-events-none" style={{ color: '#60A5FA', opacity: 0.7 }}>Strong Overweight</div>
-      <div className="absolute bottom-14 left-16 text-[10px] font-semibold pointer-events-none" style={{ color: '#E8323C', opacity: 0.7 }}>Underweight</div>
-      <div className="absolute bottom-14 right-8 text-[10px] font-semibold pointer-events-none" style={{ color: '#C4A85A', opacity: 0.7 }}>Reduce</div>
+      <div className="absolute top-7 left-16 text-[10px] font-semibold pointer-events-none" style={{ color: '#4A5568', opacity: 0.6 }}>Overweight</div>
+      <div className="absolute top-7 right-8 text-[10px] font-semibold pointer-events-none" style={{ color: '#4A5568', opacity: 0.6 }}>Strong Overweight</div>
+      <div className="absolute bottom-14 left-16 text-[10px] font-semibold pointer-events-none" style={{ color: '#4A5568', opacity: 0.6 }}>Underweight</div>
+      <div className="absolute bottom-14 right-8 text-[10px] font-semibold pointer-events-none" style={{ color: '#4A5568', opacity: 0.6 }}>Reduce</div>
     </div>
   )
 }

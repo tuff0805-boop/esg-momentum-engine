@@ -6,18 +6,18 @@ function sdgLabel(n: number): string {
 }
 
 const SENTIMENT_STYLE: Record<NewsItem['sentiment'], { bg: string; color: string; label: string }> = {
-  'very-positive': { bg: '#064E3B', color: '#00C087',  label: 'Very Positive' },
-  'positive':      { bg: '#052E20', color: '#34D399',  label: 'Positive'      },
-  'neutral':       { bg: '#1F2937', color: '#8B9AAB',  label: 'Neutral'       },
-  'negative':      { bg: '#3B2A00', color: '#FCD34D',  label: 'Negative'      },
-  'very-negative': { bg: '#7F1D1D', color: '#EF4444',  label: 'Very Negative' },
+  'very-positive': { bg: '#003D2B', color: '#00C087',  label: 'Very Positive' },
+  'positive':      { bg: '#003D2B', color: '#00C087',  label: 'Positive'      },
+  'neutral':       { bg: '#131920', color: '#8B9AAB',  label: 'Neutral'       },
+  'negative':      { bg: '#2A1A00', color: '#C4A85A',  label: 'Negative'      },
+  'very-negative': { bg: '#3D0A0C', color: '#E8323C',  label: 'Very Negative' },
 }
 
 const PILLAR_STYLE: Record<string, { bg: string; color: string }> = {
-  E:   { bg: '#064E3B', color: '#00C087' },
-  S:   { bg: '#1E3A5F', color: '#60A5FA' },
-  G:   { bg: '#3B0764', color: '#C084FC' },
-  ESG: { bg: '#1F2937', color: '#8B9AAB' },
+  E:   { bg: '#003D2B', color: '#00C087' },
+  S:   { bg: '#0A2A52', color: '#60A5FA' },
+  G:   { bg: '#1A0A2E', color: '#C084FC' },
+  ESG: { bg: '#131920', color: '#8B9AAB' },
 }
 
 interface NewsCatalystFeedProps {
@@ -39,22 +39,22 @@ export function NewsCatalystFeed({ news, compact = false }: NewsCatalystFeedProp
           <div
             key={item.id}
             style={{
-              background: 'rgba(255,255,255,0.02)',
-              border: '1px solid #2A3441',
-              borderRadius: 8,
-              padding: compact ? '10px 12px' : '14px 16px',
+              background: '#0D1117',
+              border: '1px solid #1E2836',
+              borderRadius: 4,
+              padding: compact ? '10px 12px' : '10px 12px',
             }}
           >
             {/* Top row: date + badges */}
             <div className="flex items-center gap-2 flex-wrap mb-2">
-              <span style={{ fontSize: 10, color: '#8B9AAB', fontFamily: 'monospace' }}>{item.date}</span>
+              <span style={{ fontSize: 10, color: '#4A5568', fontFamily: 'monospace' }}>{item.date}</span>
 
               {/* Sentiment badge */}
               <span
                 style={{
-                  display: 'inline-flex', alignItems: 'center', padding: '2px 6px',
-                  borderRadius: 4, fontSize: 10, fontWeight: 600, letterSpacing: '0.05em',
-                  background: sent.bg, color: sent.color, border: `1px solid ${sent.color}33`,
+                  display: 'inline-flex', alignItems: 'center', padding: '1px 6px',
+                  borderRadius: 3, fontSize: 10, fontWeight: 500, letterSpacing: '0.04em',
+                  background: sent.bg, color: sent.color, border: `1px solid ${sent.color}44`,
                 }}
               >
                 {sent.label}
@@ -63,9 +63,9 @@ export function NewsCatalystFeed({ news, compact = false }: NewsCatalystFeedProp
               {/* Event type badge */}
               <span
                 style={{
-                  display: 'inline-flex', alignItems: 'center', padding: '2px 6px',
-                  borderRadius: 4, fontSize: 10, fontWeight: 600,
-                  background: '#1E3A5F', color: '#60A5FA', border: '1px solid #1E40AF',
+                  display: 'inline-flex', alignItems: 'center', padding: '1px 6px',
+                  borderRadius: 3, fontSize: 10, fontWeight: 500,
+                  background: '#0A2A52', color: '#60A5FA', border: '1px solid #0F3D7A',
                 }}
               >
                 {item.eventType}
@@ -74,8 +74,8 @@ export function NewsCatalystFeed({ news, compact = false }: NewsCatalystFeedProp
               {/* Pillar badge */}
               <span
                 style={{
-                  display: 'inline-flex', alignItems: 'center', padding: '2px 6px',
-                  borderRadius: 4, fontSize: 10, fontWeight: 700,
+                  display: 'inline-flex', alignItems: 'center', padding: '1px 6px',
+                  borderRadius: 3, fontSize: 10, fontWeight: 500,
                   background: pil.bg, color: pil.color, border: `1px solid ${pil.color}44`,
                 }}
               >
@@ -87,18 +87,18 @@ export function NewsCatalystFeed({ news, compact = false }: NewsCatalystFeedProp
             </div>
 
             {/* Headline */}
-            <div style={{ fontSize: 13, fontWeight: 600, color: '#FFFFFF', marginBottom: 4, lineHeight: 1.4 }}>
+            <div style={{ fontSize: 13, fontWeight: 500, color: '#E8EDF2', marginBottom: 4, lineHeight: 1.4 }}>
               {item.headline}
             </div>
 
             {/* Source */}
-            <div style={{ fontSize: 10, color: '#8B9AAB', marginBottom: compact ? 4 : 6 }}>
+            <div style={{ fontSize: 11, color: '#4A5568', marginBottom: compact ? 4 : 6 }}>
               {item.source}
             </div>
 
             {/* Summary — hidden in compact mode */}
             {!compact && (
-              <div style={{ fontSize: 11, color: '#9CA3AF', lineHeight: 1.6, marginBottom: 8 }}>
+              <div style={{ fontSize: 11, color: '#8B9AAB', lineHeight: 1.5, marginBottom: 8 }}>
                 {item.summary}
               </div>
             )}
@@ -112,8 +112,8 @@ export function NewsCatalystFeed({ news, compact = false }: NewsCatalystFeedProp
                   title={`UN SDG Goal ${n}`}
                   style={{
                     display: 'inline-flex', alignItems: 'center', padding: '1px 5px',
-                    borderRadius: 4, fontSize: 10, fontWeight: 600,
-                    background: '#1A2332', color: '#FFFFFF', border: '1px solid #2A3441',
+                    borderRadius: 2, fontSize: 10, fontWeight: 500,
+                    background: '#131920', color: '#8B9AAB', border: '1px solid #1E2836',
                     gap: 2,
                   }}
                 >

@@ -223,14 +223,13 @@ export function Chatbot() {
             title="Ask our AI Analyst any question about the ESG data, company comparisons, or investment signals shown in this dashboard."
             style={{
               display: 'flex', alignItems: 'center', gap: 8,
-              background: '#1A2332', border: '1.5px solid #E8323C',
-              borderRadius: 28, padding: '10px 18px 10px 14px',
-              cursor: 'pointer', color: '#FFFFFF',
-              boxShadow: '0 4px 16px rgba(232,50,60,0.25)',
-              transition: 'box-shadow 0.15s',
+              background: '#0D1117', border: '1px solid #1E2836',
+              borderRadius: 4, padding: '8px 14px 8px 10px',
+              cursor: 'pointer', color: '#E8EDF2',
+              transition: 'border-color 0.15s',
             }}
-            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.boxShadow = '0 6px 24px rgba(232,50,60,0.45)' }}
-            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.boxShadow = '0 4px 16px rgba(232,50,60,0.25)' }}
+            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = '#E8323C' }}
+            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = '#1E2836' }}
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E8323C" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
@@ -247,13 +246,13 @@ export function Chatbot() {
             position: 'fixed', bottom: 24, right: 24, zIndex: 100,
             width: 400, height: 600,
             maxWidth: 'calc(100vw - 48px)', maxHeight: 'calc(100vh - 80px)',
-            background: '#111827', border: '1px solid #2A3441',
-            borderRadius: 14, boxShadow: '0 16px 48px rgba(0,0,0,0.6)',
+            background: '#080B10', border: '1px solid #1E2836',
+            borderRadius: 4, boxShadow: 'none',
             display: 'flex', flexDirection: 'column', overflow: 'hidden',
           }}
         >
           {/* Header */}
-          <div style={{ padding: '14px 16px', borderBottom: '1px solid #2A3441', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div style={{ padding: '12px 14px', borderBottom: '1px solid #1E2836', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <div>
               <div style={{ fontSize: 14, fontWeight: 700, color: '#FFFFFF' }}>ESG AI Analyst</div>
               <div style={{ fontSize: 10, color: '#8B9AAB', marginTop: 1 }}>
@@ -286,18 +285,18 @@ export function Chatbot() {
                       key={q}
                       onClick={() => sendMessage(q)}
                       style={{
-                        background: '#1A2332', border: '1px solid #2A3441',
-                        borderRadius: 8, padding: '8px 12px',
-                        color: '#D1D5DB', fontSize: 12, textAlign: 'left',
+                        background: '#0D1117', border: '1px solid #1E2836',
+                        borderRadius: 3, padding: '8px 12px',
+                        color: '#8B9AAB', fontSize: 12, textAlign: 'left',
                         cursor: 'pointer', transition: 'background 0.1s, border-color 0.1s',
                       }}
                       onMouseEnter={e => {
-                        (e.currentTarget as HTMLElement).style.background = '#1F2D3D'
+                        (e.currentTarget as HTMLElement).style.background = '#131920'
                         ;(e.currentTarget as HTMLElement).style.borderColor = '#E8323C44'
                       }}
                       onMouseLeave={e => {
-                        (e.currentTarget as HTMLElement).style.background = '#1A2332'
-                        ;(e.currentTarget as HTMLElement).style.borderColor = '#2A3441'
+                        (e.currentTarget as HTMLElement).style.background = '#0D1117'
+                        ;(e.currentTarget as HTMLElement).style.borderColor = '#1E2836'
                       }}
                     >
                       {q}
@@ -316,12 +315,12 @@ export function Chatbot() {
                   style={{
                     maxWidth: '88%',
                     padding: '10px 12px',
-                    borderRadius: msg.role === 'user' ? '12px 12px 2px 12px' : '12px 12px 12px 2px',
-                    background: msg.role === 'user' ? '#1E3A5F' : '#1A2332',
-                    color: '#FFFFFF',
-                    fontSize: 13,
+                    borderRadius: msg.role === 'user' ? '8px 8px 2px 8px' : '8px 8px 8px 2px',
+                    background: msg.role === 'user' ? '#0A2A52' : '#0D1117',
+                    color: '#E8EDF2',
+                    fontSize: 12,
                     lineHeight: 1.55,
-                    border: msg.role === 'user' ? '1px solid #1E40AF' : '1px solid #2A3441',
+                    border: msg.role === 'user' ? '1px solid #1E2836' : '1px solid #1E2836',
                     whiteSpace: 'pre-wrap',
                   }}
                 >
@@ -337,7 +336,7 @@ export function Chatbot() {
             {loading && (
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
                 <div style={{ fontSize: 9, color: '#4B5563', marginBottom: 3, marginLeft: 2 }}>AI Analyst</div>
-                <div style={{ padding: '10px 14px', background: '#1A2332', border: '1px solid #2A3441', borderRadius: '12px 12px 12px 2px', display: 'flex', gap: 4, alignItems: 'center' }}>
+                <div style={{ padding: '10px 14px', background: '#0D1117', border: '1px solid #1E2836', borderRadius: '8px 8px 8px 2px', display: 'flex', gap: 4, alignItems: 'center' }}>
                   {[0, 1, 2].map(i => (
                     <span
                       key={i}
@@ -357,7 +356,7 @@ export function Chatbot() {
           </div>
 
           {/* Input */}
-          <div style={{ padding: '10px 12px', borderTop: '1px solid #2A3441', flexShrink: 0, display: 'flex', gap: 8, alignItems: 'center' }}>
+          <div style={{ padding: '10px 12px', borderTop: '1px solid #1E2836', flexShrink: 0, display: 'flex', gap: 8, alignItems: 'center' }}>
             <input
               ref={inputRef}
               value={input}
@@ -366,21 +365,21 @@ export function Chatbot() {
               placeholder="Ask about ESG data, companies…"
               disabled={loading}
               style={{
-                flex: 1, background: '#1A2332', border: '1px solid #2A3441',
-                borderRadius: 8, padding: '8px 12px', fontSize: 13,
-                color: '#FFFFFF', outline: 'none',
+                flex: 1, background: '#0D1117', border: '1px solid #1E2836',
+                borderRadius: 3, padding: '8px 12px', fontSize: 12,
+                color: '#E8EDF2', outline: 'none',
               }}
               onFocus={e => { e.currentTarget.style.borderColor = '#E8323C' }}
-              onBlur={e => { e.currentTarget.style.borderColor = '#2A3441' }}
+              onBlur={e => { e.currentTarget.style.borderColor = '#1E2836' }}
             />
             <button
               onClick={() => sendMessage(input)}
               disabled={loading || !input.trim()}
               style={{
-                background: input.trim() && !loading ? '#E8323C' : '#2A3441',
-                border: 'none', borderRadius: 8, padding: '8px 12px',
+                background: input.trim() && !loading ? '#E8323C' : '#1E2836',
+                border: 'none', borderRadius: 3, padding: '8px 12px',
                 cursor: input.trim() && !loading ? 'pointer' : 'not-allowed',
-                color: '#FFFFFF', transition: 'background 0.12s', flexShrink: 0,
+                color: '#E8EDF2', transition: 'background 0.12s', flexShrink: 0,
               }}
             >
               <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">

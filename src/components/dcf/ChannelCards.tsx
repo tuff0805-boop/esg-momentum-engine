@@ -10,28 +10,28 @@ interface ChannelCardsProps {
 
 function IconRevenue({ color }: { color: string }) {
   return (
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <path d="M7 17L17 7"/><path d="M7 7h10v10"/>
     </svg>
   )
 }
 function IconCoin({ color }: { color: string }) {
   return (
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <circle cx="12" cy="12" r="8"/><path d="M12 8v8"/><path d="M8.5 10a2 2 0 013.5-1.5 2 2 0 013.5 1.5"/>
     </svg>
   )
 }
 function IconBuilding({ color }: { color: string }) {
   return (
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <path d="M3 21V7a2 2 0 012-2h14a2 2 0 012 2v14"/><path d="M3 21h18"/><path d="M9 21V13h6v8"/><path d="M9 9h.01M15 9h.01M9 13h.01M15 13h.01"/>
     </svg>
   )
 }
 function IconShield({ color }: { color: string }) {
   return (
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
     </svg>
   )
@@ -83,16 +83,16 @@ export function ChannelCards({ revUp, opSave, capexDrag, waccReduction }: Channe
   ]
 
   return (
-    <div className="grid grid-cols-2 gap-4">
+    <div className="grid grid-cols-2 gap-3">
       {channels.map(ch => (
-        <div key={ch.label} className="card p-4" style={{ borderTop: `3px solid ${ch.topColor}` }}>
-          <div className="flex items-start justify-between mb-2">
+        <div key={ch.label} style={{ background: '#0D1117', border: '1px solid #1E2836', borderRadius: 4, padding: '12px', borderTop: `2px solid ${ch.topColor}` }}>
+          <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 8 }}>
             <ch.Icon color={ch.iconColor} />
             <Tooltip content={ch.tooltip} />
           </div>
-          <div className="font-mono text-2xl font-bold mb-1" style={{ color: ch.numColor }}>{ch.value}</div>
-          <div className="text-[10px] text-secondary uppercase tracking-widest font-semibold">{ch.label}</div>
-          <div className="text-[11px] text-secondary mt-0.5">{ch.desc}</div>
+          <div style={{ fontFamily: 'monospace', fontSize: 20, fontWeight: 500, marginBottom: 4, color: ch.numColor }}>{ch.value}</div>
+          <div style={{ fontSize: 10, color: '#4A5568', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600 }}>{ch.label}</div>
+          <div style={{ fontSize: 11, color: '#8B9AAB', marginTop: 2 }}>{ch.desc}</div>
         </div>
       ))}
     </div>

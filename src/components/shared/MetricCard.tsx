@@ -13,17 +13,8 @@ interface MetricCardProps {
   animKey?: string | number
 }
 
-// Left accent border colors
-const borderColor: Record<string, string> = {
-  default: 'transparent',
-  teal:    '#00C087',
-  amber:   '#C4A85A',
-  red:     '#E8323C',
-}
-
-// Large number text colors
 const numColor: Record<string, string> = {
-  default: '#FFFFFF',
+  default: '#E8EDF2',
   teal:    '#00C087',
   amber:   '#C4A85A',
   red:     '#E8323C',
@@ -40,11 +31,10 @@ export function MetricCard({
   color = 'default',
   trendDirection,
 }: MetricCardProps) {
-  const border  = borderColor[color] ?? borderColor.default
-  const numClr  = numColor[color] ?? numColor.default
+  const numClr = numColor[color] ?? numColor.default
 
   let arrow = ''
-  let arrowColor = '#8B9AAB'
+  let arrowColor = '#4A5568'
   if (trendDirection === 'up') {
     arrow = '▲'; arrowColor = '#00C087'
   } else if (trendDirection === 'down') {
@@ -57,22 +47,29 @@ export function MetricCard({
 
   return (
     <div
-      className="card p-5 flex flex-col gap-1"
-      style={{ borderLeft: border !== 'transparent' ? `3px solid ${border}` : undefined }}
+      style={{
+        background: '#0D1117',
+        border: '1px solid #1E2836',
+        borderRadius: 4,
+        padding: '12px 14px',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 4,
+      }}
     >
-      <div className="flex items-center gap-1.5">
-        <span style={{ fontSize: 10, color: '#8B9AAB', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+        <span style={{ fontSize: 10, color: '#4A5568', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600 }}>
           {label}
         </span>
         {tooltip && <Tooltip content={tooltip} />}
       </div>
-      <div className="flex items-baseline gap-1.5">
-        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 30, fontWeight: 700, lineHeight: 1, letterSpacing: '-0.02em', color: numClr }}>
+      <div style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}>
+        <span style={{ fontFamily: 'monospace', fontSize: 26, fontWeight: 500, lineHeight: 1, color: numClr, fontVariantNumeric: 'tabular-nums' }}>
           {prefix}{value.toFixed(decimals)}{suffix}
         </span>
-        {arrow && <span style={{ fontSize: 13, color: arrowColor }}>{arrow}</span>}
+        {arrow && <span style={{ fontSize: 11, color: arrowColor }}>{arrow}</span>}
       </div>
-      {subLabel && <div style={{ fontSize: 11, color: '#8B9AAB', marginTop: 2 }}>{subLabel}</div>}
+      {subLabel && <div style={{ fontSize: 11, color: '#4A5568', marginTop: 1 }}>{subLabel}</div>}
     </div>
   )
 }

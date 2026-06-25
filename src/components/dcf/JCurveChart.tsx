@@ -28,22 +28,22 @@ export function JCurveChart({ capexDrag, opSave, revUp }: JCurveChartProps) {
   return (
     <ResponsiveContainer width="100%" height={160}>
       <BarChart data={data} margin={{ top: 10, right: 4, left: -10, bottom: 0 }}>
-        <CartesianGrid strokeDasharray="3 3" stroke="#2A3441" vertical={false} />
+        <CartesianGrid strokeDasharray="3 3" stroke="#1E2836" vertical={false} />
         <XAxis
           dataKey="year"
-          tick={{ fill: '#8B9AAB', fontSize: 10 }}
+          tick={{ fill: '#4A5568', fontSize: 10 }}
           axisLine={false}
           tickLine={false}
         />
         <YAxis
           tickFormatter={(v: number) => `${v.toFixed(1)}%`}
-          tick={{ fill: '#8B9AAB', fontSize: 9 }}
+          tick={{ fill: '#4A5568', fontSize: 9 }}
           axisLine={false}
           tickLine={false}
           width={38}
         />
-        <ReferenceLine y={0} stroke="#4B5563" strokeWidth={1} />
-        <Bar dataKey="value" radius={[3, 3, 0, 0]} maxBarSize={28}>
+        <ReferenceLine y={0} stroke="#2A3A4A" strokeWidth={1} />
+        <Bar dataKey="value" radius={[2, 2, 0, 0]} maxBarSize={24}>
           {data.map((d, i) => (
             <Cell key={i} fill={d.value >= 0 ? '#00C087' : '#E8323C'} fillOpacity={0.85} />
           ))}

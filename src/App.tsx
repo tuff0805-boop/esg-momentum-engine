@@ -50,19 +50,20 @@ export default function App() {
       <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
         {/* Top navbar */}
         <header
-          className="sticky top-0 z-20 flex items-center justify-between px-6 py-3 border-b"
+          className="sticky top-0 z-20 flex items-center justify-between px-4 py-2 border-b"
           style={{
-            background: '#0D1117',
-            borderColor: '#2A3441',
+            background: '#080B10',
+            borderColor: '#1E2836',
+            minHeight: 48,
           }}
         >
           {/* Left: CGS logo + breadcrumb */}
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2 pr-3 border-r" style={{ borderColor: '#2A3441' }}>
+            <div className="flex items-center gap-2 pr-3 border-r" style={{ borderColor: '#1E2836' }}>
               <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: '#E8323C' }}>
                 <span className="text-white text-[10px] font-black leading-none">S</span>
               </div>
-              <span className="text-sm font-bold" style={{ color: '#FFFFFF' }}>CGS International</span>
+              <span className="text-sm font-bold" style={{ color: '#E8EDF2' }}>CGS International</span>
             </div>
             <div>
               <div className="text-[10px] font-medium" style={{ color: '#8B9AAB' }}>
@@ -76,16 +77,16 @@ export default function App() {
             {/* Retail / Analyst toggle */}
             <div className="flex items-center gap-1.5">
               <div
-                className="flex rounded-full overflow-hidden"
-                style={{ border: '1px solid #2A3441', background: '#1A2332' }}
+                className="flex rounded overflow-hidden"
+                style={{ border: '1px solid #1E2836', background: '#080B10' }}
               >
                 {(['retail', 'analyst'] as ViewMode[]).map(mode => (
                   <button
                     key={mode}
                     onClick={() => setViewMode(mode)}
                     style={{
-                      padding: '4px 12px',
-                      fontSize: 11,
+                      padding: '3px 10px',
+                      fontSize: 10,
                       fontWeight: 600,
                       border: 'none',
                       cursor: 'pointer',
@@ -102,23 +103,15 @@ export default function App() {
               <Tooltip content="Retail view shows simplified buy/sell signals. Analyst view shows full ESG methodology, scoring model, and DCF valuation." />
             </div>
 
-            <div
-              className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs"
-              style={{
-                background: '#1A2332',
-                border: '1px solid #2A3441',
-                color: '#8B9AAB',
-              }}
-            >
-              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <button style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#4A5568', padding: '6px', display: 'flex', alignItems: 'center' }}>
+              <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
               </svg>
-              Search companies...
-            </div>
-            <SGTClock className="text-xs font-mono hidden sm:block" style={{ color: '#8B9AAB' }} />
+            </button>
+            <SGTClock className="hidden sm:block" style={{ fontSize: 11, fontFamily: 'monospace', color: '#4A5568' }} />
             <div
-              className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-semibold"
-              style={{ background: 'rgba(232,50,60,0.12)', color: '#E8323C' }}
+              className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded text-[10px] font-semibold"
+              style={{ background: 'rgba(232,50,60,0.10)', color: '#E8323C', fontSize: 10 }}
             >
               <span>PFT100</span>
               <span style={{ opacity: 0.6 }}>2026</span>
@@ -126,7 +119,7 @@ export default function App() {
           </div>
         </header>
 
-        <main className="flex-1 p-6 max-w-screen-xl w-full mx-auto">
+        <main className="flex-1 p-4 max-w-screen-xl w-full mx-auto">
           {activeTab === 'standardizer' && (
             <StandardizerPanel activeSector={activeSector} onSelect={onSelect} animKey={tabKey} viewMode={viewMode} />
           )}

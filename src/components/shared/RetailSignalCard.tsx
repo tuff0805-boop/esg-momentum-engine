@@ -69,17 +69,17 @@ export function RetailSignalCard({ companies, allCompanies, onSelect }: RetailSi
             key={c.name}
             onClick={() => onSelect(c)}
             style={{
-              background: '#1A2332',
-              border: `1px solid ${color}44`,
-              borderLeft: `4px solid ${color}`,
-              borderRadius: 10,
-              padding: '18px 20px',
+              background: '#0D1117',
+              border: '1px solid #1E2836',
+              borderLeft: `2px solid ${color}`,
+              borderRadius: 4,
+              padding: '14px 16px',
               textAlign: 'left',
               cursor: 'pointer',
               transition: 'background 0.12s',
             }}
-            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = '#1F2D3D' }}
-            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = '#1A2332' }}
+            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = '#131920' }}
+            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = '#0D1117' }}
           >
             <div style={{ fontSize: 11, color: '#8B9AAB', marginBottom: 4 }}>
               {c.country} · {c.sector}
@@ -87,13 +87,13 @@ export function RetailSignalCard({ companies, allCompanies, onSelect }: RetailSi
             <div style={{ fontSize: 15, fontWeight: 700, color: '#FFFFFF', marginBottom: 8 }}>
               {c.name}
             </div>
-            <div style={{ fontSize: 28, fontWeight: 800, color, letterSpacing: '-0.02em', marginBottom: 8, lineHeight: 1 }}>
+            <div style={{ fontFamily: 'monospace', fontSize: 20, fontWeight: 700, color, letterSpacing: '-0.01em', marginBottom: 8, lineHeight: 1 }}>
               {signal}
             </div>
-            <div style={{ fontSize: 11, color: '#9CA3AF', lineHeight: 1.5, marginBottom: 12 }}>
+            <div style={{ fontSize: 11, color: '#8B9AAB', lineHeight: 1.5, marginBottom: 12 }}>
               {reason}
             </div>
-            <div style={{ display: 'flex', gap: 16, borderTop: '1px solid #2A3441', paddingTop: 10 }}>
+            <div style={{ display: 'flex', gap: 16, borderTop: '1px solid #1E2836', paddingTop: 10 }}>
               <div>
                 <div style={{ fontSize: 9, color: '#4B5563', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 2 }}>ESG Target Price</div>
                 <div className="font-mono" style={{ fontSize: 15, fontWeight: 700, color }}>{fmtPrice(dcf.adjPrice)}</div>
