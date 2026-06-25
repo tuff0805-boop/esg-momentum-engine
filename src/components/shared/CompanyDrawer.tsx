@@ -3,6 +3,7 @@ import type { Company } from '../../data/companies'
 import { calcSES, calcCAGR, calcMomentum, calcPillars, calcDCF } from '../../lib/esg'
 import { getQuadrant, getRaterForecast } from '../../lib/esg'
 import { Badge, quadrantVariant, ratingVariant, forecastVariant } from './Badge'
+import { NewsCatalystFeed } from './NewsCatalystFeed'
 
 interface CompanyDrawerProps {
   company: Company | null
@@ -54,14 +55,14 @@ export function CompanyDrawer({ company, allCompanies, onClose }: CompanyDrawerP
           />
           <motion.div
             className="fixed right-0 top-0 h-full overflow-y-auto z-50"
-            style={{ width: 480, maxWidth: '95vw', background: '#0D1117', borderLeft: '1px solid #2A3441' }}
+            style={{ width: 520, maxWidth: '95vw', background: '#0D1117', borderLeft: '1px solid #2A3441' }}
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 28, stiffness: 280 }}
           >
             {/* Header */}
-            <div className="sticky top-0 flex items-start justify-between px-6 py-4" style={{ background: '#0D1117', borderBottom: '1px solid #2A3441' }}>
+            <div className="sticky top-0 flex items-start justify-between px-6 py-4" style={{ background: '#0D1117', borderBottom: '1px solid #2A3441', zIndex: 10 }}>
               <div>
                 <div style={{ fontSize: 18, fontWeight: 600, color: '#FFFFFF' }}>{company.name}</div>
                 <div style={{ fontSize: 12, color: '#8B9AAB', marginTop: 2 }}>{company.country} · {company.sector}</div>
@@ -94,9 +95,9 @@ export function CompanyDrawer({ company, allCompanies, onClose }: CompanyDrawerP
               {/* Momentum stats */}
               <div className="grid grid-cols-3 gap-3">
                 {[
-                  { label: 'ESG CAGR',    val: `${cagr >= 0 ? '+' : ''}${cagr.toFixed(1)}%`,   color: cagr >= 0 ? '#00C087' : '#E8323C' },
-                  { label: 'ESG Momentum', val: `${momentum}/100`,                                color: '#FFFFFF' },
-                  { label: 'Mkt Cap',     val: `$${company.mcap}B`,                               color: '#FFFFFF' },
+                  { label: 'ESG CAGR',     val: `${cagr >= 0 ? '+' : ''}${cagr.toFixed(1)}%`, color: cagr >= 0 ? '#00C087' : '#E8323C' },
+                  { label: 'ESG Momentum', val: `${momentum}/100`,                              color: '#FFFFFF' },
+                  { label: 'Mkt Cap',      val: `$${company.mcap}B`,                            color: '#FFFFFF' },
                 ].map(item => (
                   <div key={item.label} className="rounded-xl p-3 text-center" style={{ background: cardBg, border: `1px solid ${cardBorder}` }}>
                     <div style={{ fontSize: 11, color: '#8B9AAB', marginBottom: 4 }}>{item.label}</div>
@@ -169,6 +170,21 @@ export function CompanyDrawer({ company, allCompanies, onClose }: CompanyDrawerP
                       </div>
                     </div>
                   </div>
+                </div>
+              )}
+
+              {/* ── News & Catalysts ── */}
+              {company.news && company.news.length > 0 && (
+                <div>
+                  {/* Section header with red underline — iTrade style */}
+                  <div style={{ marginBottom: 12 }}>
+                    <div style={{ fontSize: 13, fontWeight: 600, color: '#FFFFFF' }}>
+                      News &amp; Catalysts
+                      <div style={{ width: 32, height: 2, background: '#E8323C', marginTop: 5, borderRadius: 1 }} />
+                    </div>
+                    <div style={{ fontSize: 11, color: '#8B9AAB', marginTop: 4 }}>Recent ESG events with sentiment and SDG mapping</div>
+                  </div>
+                  <NewsCatalystFeed news={company.news} />
                 </div>
               )}
             </div>

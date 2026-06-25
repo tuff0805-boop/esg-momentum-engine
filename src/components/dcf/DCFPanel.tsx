@@ -7,10 +7,12 @@ import { Badge, quadrantVariant, ratingVariant } from '../shared/Badge'
 import { ChannelCards } from './ChannelCards'
 import { JCurveChart } from './JCurveChart'
 import { TargetPriceOutput } from './TargetPriceOutput'
+import { RetailSignalCard } from '../shared/RetailSignalCard'
 
 interface DCFPanelProps {
   activeSector: string
   onSelect: (c: Company) => void
+  viewMode?: 'retail' | 'analyst'
 }
 
 function fmt(v: number): string {
@@ -21,7 +23,7 @@ function fmt(v: number): string {
 
 const SECTOR_VALUES = new Set<string>(['Energy', 'Materials', 'Industrials'])
 
-export function DCFPanel({ activeSector, onSelect }: DCFPanelProps) {
+export function DCFPanel({ activeSector, onSelect, viewMode = 'analyst' }: DCFPanelProps) {
   const [selectedIdx, setSelectedIdx] = useState(0)
 
   const filtered = SECTOR_VALUES.has(activeSector)
@@ -44,12 +46,22 @@ export function DCFPanel({ activeSector, onSelect }: DCFPanelProps) {
     quadrant: getQuadrant(c, ALL_COMPANIES),
   })).sort((a, b) => b.dcf.upsidePct - a.dcf.upsidePct)
 
+  const isRetail = viewMode === 'retail'
+
   return (
     <div className="flex flex-col gap-6">
       <div className="text-sm text-secondary leading-relaxed px-1">
-        We translate ESG improvements into financial impact — showing how much they affect the company's target price through four channels.
+        {isRetail
+          ? 'ESG-adjusted target prices — how sustainability improvements affect what each company is worth.'
+          : 'We translate ESG improvements into financial impact — showing how much they affect the company\'s target price through four channels.'}
       </div>
-      {/* Company selector */}
+
+      {/* Retail: signal cards */}
+      {isRetail && (
+        <RetailSignalCard companies={filtered} allCompanies={ALL_COMPANIES} onSelect={onSelect} />
+      )}
+
+      {/* Company selector (always shown) */}
       <div className="flex items-center gap-3 flex-wrap">
         <label className="text-xs text-secondary uppercase tracking-widest">Company</label>
         <div className="relative">
@@ -67,46 +79,67 @@ export function DCFPanel({ activeSector, onSelect }: DCFPanelProps) {
         <Badge variant={quadrantVariant(quadrant)}>{quadrant}</Badge>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="flex flex-col gap-4">
-          <ChannelCards revUp={dcf.revUp} opSave={dcf.opSave} capexDrag={dcf.capexDrag} waccReduction={dcf.waccReduction} />
-          <div className="grid grid-cols-2 gap-4">
-            <div className="card p-4">
-              <div className="flex items-center justify-between mb-2">
-                <div className="text-[10px] text-secondary uppercase tracking-widest">Financial Materiality Threshold</div>
-                <Badge variant={dcf.materialityPass ? 'buy' : 'reduce'}>{dcf.materialityPass ? 'PASS' : 'FAIL'}</Badge>
+      {/* Analyst: full DCF breakdown */}
+      {!isRetail && (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="flex flex-col gap-4">
+            <ChannelCards revUp={dcf.revUp} opSave={dcf.opSave} capexDrag={dcf.capexDrag} waccReduction={dcf.waccReduction} />
+            <div className="grid grid-cols-2 gap-4">
+              <div className="card p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="text-[10px] text-secondary uppercase tracking-widest">Financial Materiality Threshold</div>
+                  <Badge variant={dcf.materialityPass ? 'buy' : 'reduce'}>{dcf.materialityPass ? 'PASS' : 'FAIL'}</Badge>
+                </div>
+                <div className="font-mono text-xs text-primary mb-1">
+                  Free Cash Flow / Market Cap = {((company.fcf / company.mcap) * 100).toFixed(2)}%
+                </div>
+                <div className="text-[10px] text-secondary">
+                  Threshold: &gt;0.5% · ESG adjustments are material to enterprise value
+                </div>
               </div>
-              <div className="font-mono text-xs text-primary mb-1">
-                Free Cash Flow / Market Cap = {((company.fcf / company.mcap) * 100).toFixed(2)}%
+              <div className="card p-4">
+                <div className="text-[10px] text-secondary uppercase tracking-widest mb-2">ESG Transition Capex — J-Curve</div>
+                <JCurveChart capexDrag={dcf.capexDrag} opSave={dcf.opSave} revUp={dcf.revUp} />
               </div>
-              <div className="text-[10px] text-secondary">
-                Threshold: &gt;0.5% · ESG adjustments are material to enterprise value
-              </div>
-            </div>
-            <div className="card p-4">
-              <div className="text-[10px] text-secondary uppercase tracking-widest mb-2">ESG Transition Capex — J-Curve</div>
-              <JCurveChart capexDrag={dcf.capexDrag} opSave={dcf.opSave} revUp={dcf.revUp} />
             </div>
           </div>
-        </div>
 
-        <div>
-          <TargetPriceOutput
-            bearPrice={dcf.bearPrice}
-            basePrice={dcf.basePrice}
-            adjPrice={dcf.adjPrice}
-            bullPrice={dcf.bullPrice}
-            upsidePct={dcf.upsidePct}
-            rating={dcf.rating}
-            multiplier={dcf.multiplier}
-            quadrant={quadrant}
-            baseWACC={dcf.baseWACC}
-            adjWACC={dcf.adjWACC}
-            waccReduction={dcf.waccReduction}
-          />
+          <div>
+            <TargetPriceOutput
+              bearPrice={dcf.bearPrice}
+              basePrice={dcf.basePrice}
+              adjPrice={dcf.adjPrice}
+              bullPrice={dcf.bullPrice}
+              upsidePct={dcf.upsidePct}
+              rating={dcf.rating}
+              multiplier={dcf.multiplier}
+              quadrant={quadrant}
+              baseWACC={dcf.baseWACC}
+              adjWACC={dcf.adjWACC}
+              waccReduction={dcf.waccReduction}
+            />
+          </div>
         </div>
-      </div>
+      )}
 
+      {/* Retail: just the target price output */}
+      {isRetail && (
+        <TargetPriceOutput
+          bearPrice={dcf.bearPrice}
+          basePrice={dcf.basePrice}
+          adjPrice={dcf.adjPrice}
+          bullPrice={dcf.bullPrice}
+          upsidePct={dcf.upsidePct}
+          rating={dcf.rating}
+          multiplier={dcf.multiplier}
+          quadrant={quadrant}
+          baseWACC={dcf.baseWACC}
+          adjWACC={dcf.adjWACC}
+          waccReduction={dcf.waccReduction}
+        />
+      )}
+
+      {/* All-companies table — always shown */}
       <div className="card overflow-hidden">
         <div className="card-header">
           <div className="card-title">All Companies — ESG Valuation</div>
@@ -133,7 +166,7 @@ export function DCFPanel({ activeSector, onSelect }: DCFPanelProps) {
                   style={{ borderLeft: `3px solid ${quadrantBorderColor(r.quadrant)}` }}
                 >
                   <td className="td">
-                    <div className="font-semibold text-primary group-hover:text-accent transition-colors">{r.company.name}</div>
+                    <div className="font-semibold text-primary">{r.company.name}</div>
                     <div className="text-secondary text-[10px]">{r.company.country} · {r.company.sector}</div>
                   </td>
                   <td className="td text-secondary">{r.company.sector}</td>

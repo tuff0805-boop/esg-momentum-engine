@@ -8,8 +8,8 @@ interface ScoreTableProps {
   companies: Company[]
   allCompanies: Company[]
   onSelect: (c: Company) => void
+  hidePillars?: boolean
 }
-
 
 function DisagreementBadge({ value }: { value: number }) {
   if (value < 0.4) return <Badge variant="buy">Low</Badge>
@@ -17,25 +17,29 @@ function DisagreementBadge({ value }: { value: number }) {
   return <Badge variant="overrated-leaders">High</Badge>
 }
 
-export function ScoreTable({ companies, allCompanies, onSelect }: ScoreTableProps) {
+export function ScoreTable({ companies, allCompanies, onSelect, hidePillars = false }: ScoreTableProps) {
+  const headers: [string, string][] = [
+    ['Company', 'Name, country and sector of the company'],
+    ['MSCI', 'MSCI ESG Rating score (0-100). Higher = better ESG profile per MSCI methodology.'],
+    ['Sust.', 'Sustainalytics ESG Risk score shown normalised (0-100). Higher = lower ESG risk per Sustainalytics.'],
+    ['BBG', 'Bloomberg ESG Disclosure score (0-100). Measures breadth and quality of ESG data disclosed.'],
+    ['Std. ESG Score', 'Standardized ESG Score: z-score normalization of all three providers, rescaled to 50 +/- 15. Removes inter-provider bias.'],
+    ['Divergence', 'Provider divergence: standard deviation of the three z-scores. High divergence = potential alpha from mispricing.'],
+  ]
+  if (!hidePillars) {
+    headers.push(['Pillars', 'Environmental / Social / Governance sub-score bars derived from provider z-scores.'])
+  }
+
   return (
     <div className="overflow-x-auto">
-      <table className="w-full text-xs min-w-[700px]">
+      <table className="w-full text-xs min-w-[580px]">
         <thead>
           <tr className="table-head-row">
-            {[
-              ['Company', 'Name, country and sector of the company'],
-              ['MSCI', 'MSCI ESG Rating score (0-100). Higher = better ESG profile per MSCI methodology.'],
-              ['Sust.', 'Sustainalytics ESG Risk score shown normalised (0-100). Higher = lower ESG risk per Sustainalytics.'],
-              ['BBG', 'Bloomberg ESG Disclosure score (0-100). Measures breadth and quality of ESG data disclosed.'],
-              ['Std. ESG Score', 'Standardized ESG Score: z-score normalization of all three providers, rescaled to 50 +/- 15. Removes inter-provider bias.'],
-              ['Divergence', 'Provider divergence: standard deviation of the three z-scores. High divergence = potential alpha from mispricing.'],
-              ['Pillars', 'Environmental / Social / Governance sub-score bars derived from provider z-scores.'],
-            ].map(([h, tip]) => (
-              <th key={h as string} className="th whitespace-nowrap">
+            {headers.map(([h, tip]) => (
+              <th key={h} className="th whitespace-nowrap">
                 <span className="flex items-center gap-1">
                   {h}
-                  <Tooltip content={tip as string} />
+                  <Tooltip content={tip} />
                 </span>
               </th>
             ))}
@@ -43,7 +47,7 @@ export function ScoreTable({ companies, allCompanies, onSelect }: ScoreTableProp
         </thead>
         <tbody>
           {companies.map((c, i) => {
-            const ses = calcSES(c, allCompanies)
+            const ses     = calcSES(c, allCompanies)
             const disagree = calcDisagreement(c, allCompanies)
             const pillars = calcPillars(c, allCompanies)
             return (
@@ -66,18 +70,20 @@ export function ScoreTable({ companies, allCompanies, onSelect }: ScoreTableProp
                 <td className="td">
                   <DisagreementBadge value={disagree} />
                 </td>
-                <td className="td">
-                  <div className="flex flex-col gap-1 w-24">
-                    {([['E', pillars.E, '#00C087'], ['S', pillars.S, '#60A5FA'], ['G', pillars.G, '#C084FC']] as [string, number, string][]).map(([lbl, val, col]) => (
-                      <div key={lbl} className="flex items-center gap-1">
-                        <span className="text-[9px] text-secondary w-3">{lbl}</span>
-                        <div className="flex-1 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.06)', height: 4 }}>
-                          <div className="h-full rounded-full" style={{ width: `${val}%`, background: col }} />
+                {!hidePillars && (
+                  <td className="td">
+                    <div className="flex flex-col gap-1 w-24">
+                      {([['E', pillars.E, '#00C087'], ['S', pillars.S, '#60A5FA'], ['G', pillars.G, '#C084FC']] as [string, number, string][]).map(([lbl, val, col]) => (
+                        <div key={lbl} className="flex items-center gap-1">
+                          <span className="text-[9px] text-secondary w-3">{lbl}</span>
+                          <div className="flex-1 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.06)', height: 4 }}>
+                            <div className="h-full rounded-full" style={{ width: `${val}%`, background: col }} />
+                          </div>
                         </div>
-                      </div>
-                    ))}
-                  </div>
-                </td>
+                      ))}
+                    </div>
+                  </td>
+                )}
               </motion.tr>
             )
           })}
