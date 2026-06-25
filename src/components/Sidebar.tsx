@@ -6,10 +6,8 @@ type Sector = 'All' | 'Energy' | 'Materials' | 'Industrials'
 interface SidebarProps {
   activeTab: Tab
   activeSector: Sector
-  isDark: boolean
   onTabChange: (t: Tab) => void
   onSectorChange: (s: Sector) => void
-  onToggleDark: () => void
 }
 
 const analysisItems: { id: string; tab: Tab; label: string; icon: string }[] = [
@@ -25,19 +23,17 @@ const sectorItems: { id: string; sector: Sector; label: string; icon: string }[]
   { id: 'industrials', sector: 'Industrials', label: 'Industrials',   icon: '⚙' },
 ]
 
-export function Sidebar({ activeTab, activeSector, isDark, onTabChange, onSectorChange, onToggleDark }: SidebarProps) {
-  const isLight = !isDark
-
-  const sidebarBg    = isLight ? '#FFFFFF'  : '#111827'
-  const borderCol    = isLight ? '#E2E8F0'  : '#2A3441'
-  const labelCol     = isLight ? '#94A3B8'  : '#4B5563'
-  const inactiveText = isLight ? '#64748B'  : '#8B9AAB'
-  const activeText   = isLight ? '#E8323C'  : '#FFFFFF'
-  const hoverBg      = isLight ? '#F8FAFC'  : '#1F2937'
-  const activeBg     = isLight ? '#FEF2F2'  : '#1F2937'
-  const footerText   = isLight ? '#94A3B8'  : '#4B5563'
-  const titleText    = isLight ? '#0F172A'  : '#FFFFFF'
-  const subtitleText = isLight ? '#64748B'  : '#8B9AAB'
+export function Sidebar({ activeTab, activeSector, onTabChange, onSectorChange }: SidebarProps) {
+  const sidebarBg    = '#111827'
+  const borderCol    = '#2A3441'
+  const labelCol     = '#4B5563'
+  const inactiveText = '#8B9AAB'
+  const activeText   = '#FFFFFF'
+  const hoverBg      = '#1F2937'
+  const activeBg     = '#1F2937'
+  const footerText   = '#4B5563'
+  const titleText    = '#FFFFFF'
+  const subtitleText = '#8B9AAB'
 
   const navItemBase: React.CSSProperties = {
     display: 'flex',
@@ -171,16 +167,6 @@ export function Sidebar({ activeTab, activeSector, isDark, onTabChange, onSector
           </button>
         ))}
 
-        <span style={sectionLabel}>Settings</span>
-        <button
-          onClick={onToggleDark}
-          style={{ ...navItemBase, color: inactiveText }}
-          onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = hoverBg }}
-          onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'transparent' }}
-        >
-          <span style={{ fontSize: 12, opacity: 0.7, width: 16, textAlign: 'center' }}>{isDark ? '☀' : '☽'}</span>
-          <span>{isDark ? 'Light Mode' : 'Dark Mode'}</span>
-        </button>
       </nav>
 
       {/* Footer */}

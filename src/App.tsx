@@ -23,7 +23,6 @@ export default function App() {
   const [activeSector, setActiveSector]     = useState<Sector>('All')
   const [activeTab, setActiveTab]           = useState<Tab>('standardizer')
   const [selectedCompany, setSelectedCompany] = useState<Company | null>(null)
-  const [isDark, setIsDark]                 = useState(true)
   const [viewMode, setViewMode]             = useState<ViewMode>('analyst')
   const [tabKey, setTabKey]                 = useState(0)
 
@@ -34,32 +33,18 @@ export default function App() {
   }
 
   useEffect(() => {
-    document.documentElement.classList.remove('dark')
-    if (!isDark) {
-      document.documentElement.classList.add('light')
-    } else {
-      document.documentElement.classList.remove('light')
-    }
-  }, [isDark])
-
-  useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' })
   }, [activeSector])
 
   const onSelect = useCallback((c: Company) => setSelectedCompany(c), [])
 
-  const isLight = !isDark
-  const mainBg  = isLight ? 'bg-[#F8FAFC] text-slate-900' : 'bg-[#0D1117] text-white'
-
   return (
-    <div className={`flex h-screen overflow-hidden ${mainBg}`}>
+    <div className="flex h-screen overflow-hidden bg-[#0D1117] text-white">
       <Sidebar
         activeTab={activeTab}
         activeSector={activeSector}
-        isDark={isDark}
         onTabChange={handleTabChange}
         onSectorChange={setActiveSector}
-        onToggleDark={() => setIsDark(d => !d)}
       />
 
       <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
@@ -67,17 +52,17 @@ export default function App() {
         <header
           className="sticky top-0 z-20 flex items-center justify-between px-6 py-3 border-b"
           style={{
-            background: isLight ? '#ffffff' : '#0D1117',
-            borderColor: isLight ? '#E2E8F0' : '#2A3441',
+            background: '#0D1117',
+            borderColor: '#2A3441',
           }}
         >
           {/* Left: CGS logo + breadcrumb */}
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2 pr-3 border-r" style={{ borderColor: isLight ? '#E2E8F0' : '#2A3441' }}>
+            <div className="flex items-center gap-2 pr-3 border-r" style={{ borderColor: '#2A3441' }}>
               <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: '#E8323C' }}>
                 <span className="text-white text-[10px] font-black leading-none">S</span>
               </div>
-              <span className="text-sm font-bold" style={{ color: isLight ? '#0F172A' : '#FFFFFF' }}>CGS International</span>
+              <span className="text-sm font-bold" style={{ color: '#FFFFFF' }}>CGS International</span>
             </div>
             <div>
               <div className="text-[10px] font-medium" style={{ color: '#8B9AAB' }}>
@@ -92,7 +77,7 @@ export default function App() {
             <div className="flex items-center gap-1.5">
               <div
                 className="flex rounded-full overflow-hidden"
-                style={{ border: '1px solid #2A3441', background: isLight ? '#F1F5F9' : '#1A2332' }}
+                style={{ border: '1px solid #2A3441', background: '#1A2332' }}
               >
                 {(['retail', 'analyst'] as ViewMode[]).map(mode => (
                   <button
@@ -120,8 +105,8 @@ export default function App() {
             <div
               className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs"
               style={{
-                background: isLight ? '#F1F5F9' : '#1A2332',
-                border: `1px solid ${isLight ? '#E2E8F0' : '#2A3441'}`,
+                background: '#1A2332',
+                border: '1px solid #2A3441',
                 color: '#8B9AAB',
               }}
             >

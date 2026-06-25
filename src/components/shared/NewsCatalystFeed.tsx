@@ -1,14 +1,8 @@
 import type { NewsItem } from '../../data/companies'
 import { Tooltip } from './Tooltip'
 
-const SDG_EMOJI: Record<number, string> = {
-  3: '❤️', 5: '⚖️', 6: '💧', 7: '⚡', 8: '💼',
-  9: '🏭', 12: '♻️', 13: '🌍', 14: '🌊', 15: '🌿', 16: '⚖️',
-}
-
 function sdgLabel(n: number): string {
-  const emoji = SDG_EMOJI[n]
-  return emoji ? `${emoji}${n}` : `${n}`
+  return `SDG ${n}`
 }
 
 const SENTIMENT_STYLE: Record<NewsItem['sentiment'], { bg: string; color: string; label: string }> = {
