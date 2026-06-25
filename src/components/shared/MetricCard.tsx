@@ -15,7 +15,7 @@ interface MetricCardProps {
 
 const borderColor: Record<string, string> = {
   default: '#94A3B8',
-  teal:    '#10B981',
+  teal:    '#0066CC',
   amber:   '#F59E0B',
   red:     '#EF4444',
 }

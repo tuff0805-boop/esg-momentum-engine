@@ -19,7 +19,7 @@ interface NavItem {
 const analysisItems: (NavItem & { tab: Tab })[] = [
   { id: 'standardizer', tab: 'standardizer', label: 'Standardizer',     icon: '⊞' },
   { id: 'momentum',     tab: 'momentum',     label: 'ESG Momentum',     icon: '◈' },
-  { id: 'dcf',         tab: 'dcf',          label: 'Fin. Materiality', icon: '◉' },
+  { id: 'dcf',         tab: 'dcf',          label: 'Financial Materiality', icon: '◉' },
 ]
 
 const sectorItems: (NavItem & { sector: Sector })[] = [
