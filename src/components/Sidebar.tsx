@@ -32,7 +32,7 @@ export function Sidebar({ activeTab, activeSector, onTabChange, onSectorChange }
   return (
     <aside
       style={{
-        width: 180,
+        width: 220,
         flexShrink: 0,
         display: 'flex',
         flexDirection: 'column',
@@ -45,19 +45,15 @@ export function Sidebar({ activeTab, activeSector, onTabChange, onSectorChange }
       {/* Logo area */}
       <div
         style={{
-          height: 52,
-          minHeight: 52,
+          height: 64,
+          minHeight: 64,
           display: 'flex',
           alignItems: 'center',
           padding: '0 16px',
           borderBottom: '1px solid #1E2836',
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-          <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#E8323C' }} />
-          <span style={{ fontSize: 15, fontWeight: 800, color: '#E8323C', letterSpacing: '-0.5px' }}>CGS</span>
-          <span style={{ fontSize: 11, color: '#4A5568', marginLeft: 2 }}>iTrade</span>
-        </div>
+        <img src="/cgsi_logo.png" alt="CGS International" style={{ height: 24, width: 'auto', objectFit: 'contain' }} />
       </div>
 
       {/* Nav items */}
@@ -77,9 +73,9 @@ export function Sidebar({ activeTab, activeSector, onTabChange, onSectorChange }
                 alignItems: 'center',
                 gap: 10,
                 width: '100%',
-                height: 44,
-                padding: '0 14px',
-                fontSize: 13,
+                height: 52,
+                padding: '0 20px',
+                fontSize: 15,
                 fontWeight: isActive ? 500 : 400,
                 color: isActive ? '#E8EDF2' : '#8B9AAB',
                 background: isActive ? '#0D1117' : 'transparent',
@@ -90,10 +86,10 @@ export function Sidebar({ activeTab, activeSector, onTabChange, onSectorChange }
                 transition: 'color 0.15s, background 0.15s',
               }}
             >
-              <span style={{ fontSize: 14, opacity: isActive ? 1 : 0.6, width: 16, textAlign: 'center', flexShrink: 0 }}>
+              <span style={{ fontSize: 18, opacity: isActive ? 1 : 0.6, width: 20, textAlign: 'center', flexShrink: 0 }}>
                 {item.icon}
               </span>
-              <span style={{ flex: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+              <span style={{ flex: 1, whiteSpace: 'nowrap' }}>
                 {item.label}
               </span>
               {isActive && (
@@ -109,7 +105,7 @@ export function Sidebar({ activeTab, activeSector, onTabChange, onSectorChange }
 
       {/* Sector filter */}
       <div style={{ padding: '0 0 8px' }}>
-        <div style={{ fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 600, color: '#4A5568', padding: '12px 16px 6px' }}>
+        <div style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 600, color: '#4A5568', padding: '12px 20px 6px' }}>
           Sector
         </div>
         {SECTOR_ITEMS.map((item, i) => {
@@ -127,9 +123,9 @@ export function Sidebar({ activeTab, activeSector, onTabChange, onSectorChange }
                 alignItems: 'center',
                 gap: 8,
                 width: '100%',
-                height: 36,
-                padding: '0 14px',
-                fontSize: 12,
+                height: 44,
+                padding: '0 20px',
+                fontSize: 14,
                 fontWeight: isActive ? 500 : 400,
                 color: isActive ? '#E8EDF2' : '#8B9AAB',
                 background: isActive ? '#0D1117' : 'transparent',
@@ -154,7 +150,7 @@ export function Sidebar({ activeTab, activeSector, onTabChange, onSectorChange }
                 }}
               />
               <span style={{ flex: 1 }}>{item.label}</span>
-              <span style={{ fontSize: 10, color: '#4A5568', fontFamily: 'monospace' }}>
+              <span style={{ fontSize: 12, color: '#4A5568', fontFamily: 'monospace' }}>
                 {SECTOR_COUNTS[item.id]}
               </span>
             </motion.button>

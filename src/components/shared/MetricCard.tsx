@@ -57,10 +57,11 @@ export function MetricCard({
         background: '#0D1117',
         border: '1px solid #1E2836',
         borderRadius: 4,
-        padding: '10px 12px',
+        padding: '20px',
         display: 'flex',
         flexDirection: 'column',
-        gap: 4,
+        gap: 6,
+        minHeight: 120,
       }}
     >
       <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
@@ -70,7 +71,7 @@ export function MetricCard({
         {tooltip && <Tooltip content={tooltip} />}
       </div>
       <div style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}>
-        <span style={{ fontFamily: 'monospace', fontSize: 24, fontWeight: 500, lineHeight: 1, color: numClr, fontVariantNumeric: 'tabular-nums' }}>
+        <span style={{ fontFamily: 'monospace', fontSize: 40, fontWeight: 500, lineHeight: 1, color: numClr, fontVariantNumeric: 'tabular-nums' }}>
           {prefix}{value.toFixed(decimals)}{suffix}
         </span>
         {arrow && <span style={{ fontSize: 11, color: arrowColor }}>{arrow}</span>}

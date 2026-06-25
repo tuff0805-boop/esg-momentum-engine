@@ -47,7 +47,7 @@ export function NewsCatalystFeed({ news, compact = false }: NewsCatalystFeedProp
           >
             {/* Top row: date + badges */}
             <div className="flex items-center gap-2 flex-wrap mb-2">
-              <span style={{ fontSize: 10, color: '#4A5568', fontFamily: 'monospace' }}>{item.date}</span>
+              <span style={{ fontSize: 11, color: '#4A5568', fontFamily: 'monospace' }}>{item.date}</span>
 
               {/* Sentiment badge */}
               <span
@@ -87,7 +87,7 @@ export function NewsCatalystFeed({ news, compact = false }: NewsCatalystFeedProp
             </div>
 
             {/* Headline */}
-            <div style={{ fontSize: 13, fontWeight: 500, color: '#E8EDF2', marginBottom: 4, lineHeight: 1.4 }}>
+            <div style={{ fontSize: 14, fontWeight: 500, color: '#E8EDF2', marginBottom: 4, lineHeight: 1.4 }}>
               {item.headline}
             </div>
 
@@ -98,7 +98,7 @@ export function NewsCatalystFeed({ news, compact = false }: NewsCatalystFeedProp
 
             {/* Summary — hidden in compact mode */}
             {!compact && (
-              <div style={{ fontSize: 11, color: '#8B9AAB', lineHeight: 1.5, marginBottom: 8 }}>
+              <div style={{ fontSize: 12, color: '#8B9AAB', lineHeight: 1.5, marginBottom: 8 }}>
                 {item.summary}
               </div>
             )}

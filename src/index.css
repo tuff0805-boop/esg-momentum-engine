@@ -74,8 +74,8 @@ body {
   border-bottom: 1px solid var(--border);
 }
 .card-title {
-  font-size: 13px;
-  font-weight: 500;
+  font-size: 16px;
+  font-weight: 600;
   color: var(--text-primary);
 }
 .card-title::after {
@@ -99,22 +99,25 @@ body {
 }
 .th {
   text-align: left;
-  padding: 8px 12px;
-  font-size: 10px;
+  padding: 0 16px;
+  font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-weight: 600;
   color: var(--text-muted);
   white-space: nowrap;
+  height: 40px;
+  vertical-align: middle;
 }
 .tr {
   border-bottom: 1px solid var(--border);
   cursor: pointer;
   transition: background 0.1s;
+  height: 52px;
 }
 .tr:nth-child(even) { background: transparent; }
 .tr:hover { background: var(--bg-elevated); }
-.td { padding: 8px 12px; }
+.td { padding: 0 16px; vertical-align: middle; }
 
 /* ─── Select input ──────────────────────────────────────────────────── */
 .select-input {

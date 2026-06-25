@@ -34,14 +34,14 @@ export default function App() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', background: '#080B10' }}>
-      {/* ── Header 64px ── */}
+      {/* ── Header 72px ── */}
       <motion.header
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.4, ease: 'easeOut' }}
         style={{
-          height: 64,
-          minHeight: 64,
+          height: 72,
+          minHeight: 72,
           background: '#080B10',
           borderBottom: '1px solid #1E2836',
           display: 'flex',
@@ -52,24 +52,18 @@ export default function App() {
           zIndex: 20,
         }}
       >
-        {/* Left: logo + divider + title */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 0 }}>
-          {/* CGS Logo placeholder — swap src="/cgsi_logo.png" when file is added */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginRight: 0 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-              <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#E8323C' }} />
-              <span style={{ fontSize: 16, fontWeight: 800, color: '#E8323C', letterSpacing: '-0.5px', fontFamily: 'sans-serif' }}>CGS</span>
-            </div>
-          </div>
-          <div style={{ width: 1, height: 28, background: '#2A3A4A', margin: '0 16px' }} />
+        {/* Left: CGS logo + divider + title */}
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <img src="/cgsi_logo.png" alt="CGS International" style={{ height: 32, width: 'auto', objectFit: 'contain' }} />
+          <div style={{ width: 1, height: 28, background: '#2A3A4A', margin: '0 18px' }} />
           <div>
-            <div style={{ fontSize: 16, fontWeight: 600, color: '#E8EDF2', lineHeight: 1.2 }}>ESG Intelligence</div>
-            <div style={{ fontSize: 11, color: '#4A5568' }}>iTrade · Brown Industries · ASEAN</div>
+            <div style={{ fontSize: 18, fontWeight: 600, color: '#E8EDF2', lineHeight: 1.2 }}>ESG Intelligence</div>
+            <div style={{ fontSize: 12, color: '#4A5568' }}>iTrade · Brown Industries · ASEAN</div>
           </div>
         </div>
 
         {/* Right: toggle + divider + clock + badge */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
           {/* Retail/Analyst toggle */}
           <div style={{ display: 'flex', border: '1px solid #1E2836', borderRadius: 3, overflow: 'hidden' }}>
             {(['retail', 'analyst'] as ViewMode[]).map(mode => (
@@ -77,8 +71,8 @@ export default function App() {
                 key={mode}
                 onClick={() => setViewMode(mode)}
                 style={{
-                  padding: '4px 12px',
-                  fontSize: 12,
+                  padding: '5px 14px',
+                  fontSize: 13,
                   fontWeight: 500,
                   border: 'none',
                   cursor: 'pointer',
@@ -93,10 +87,10 @@ export default function App() {
             ))}
           </div>
           <Tooltip content="Retail view shows simplified buy/sell signals. Analyst view shows full ESG methodology, scoring model, and DCF valuation." />
-          <div style={{ width: 1, height: 16, background: '#1E2836' }} />
+          <div style={{ width: 1, height: 20, background: '#1E2836' }} />
           <SGTClock />
-          <div style={{ width: 1, height: 16, background: '#1E2836' }} />
-          <div style={{ fontSize: 10, fontWeight: 600, background: 'rgba(232,50,60,0.12)', color: '#E8323C', padding: '3px 8px', borderRadius: 3 }}>
+          <div style={{ width: 1, height: 20, background: '#1E2836' }} />
+          <div style={{ fontSize: 12, fontWeight: 600, background: 'rgba(232,50,60,0.12)', color: '#E8323C', padding: '4px 10px', borderRadius: 3 }}>
             PFT100 2026
           </div>
         </div>
@@ -153,7 +147,7 @@ function SGTClock() {
     const id = setInterval(() => setTime(getSGT()), 1000)
     return () => clearInterval(id)
   }, [])
-  return <span style={{ fontSize: 13, fontFamily: 'monospace', color: '#8B9AAB' }}>{time} SGT</span>
+  return <span style={{ fontSize: 14, fontFamily: 'monospace', color: '#8B9AAB' }}>{time} SGT</span>
 }
 
 function getSGT(): string {

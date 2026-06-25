@@ -97,7 +97,7 @@ export function MomentumMatrix({ companies, allCompanies, onSelect }: MomentumMa
 
   return (
     <div className="relative" style={{ background: '#080B10', borderRadius: 4, padding: '4px 0' }}>
-      <ResponsiveContainer width="100%" height={400}>
+      <ResponsiveContainer width="100%" height={380}>
         <ScatterChart margin={{ top: 28, right: 30, bottom: 28, left: 10 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="#1E2836" vertical={true} />
           <XAxis
@@ -105,8 +105,8 @@ export function MomentumMatrix({ companies, allCompanies, onSelect }: MomentumMa
             dataKey="x"
             name="SES"
             domain={[20, 80]}
-            label={{ value: 'Standardized ESG Score', position: 'insideBottom', offset: -14, fill: '#4A5568', fontSize: 10 }}
-            tick={{ fill: '#4A5568', fontSize: 10 }}
+            label={{ value: 'Standardized ESG Score', position: 'insideBottom', offset: -14, fill: '#4A5568', fontSize: 11 }}
+            tick={{ fill: '#4A5568', fontSize: 11 }}
             axisLine={{ stroke: '#1E2836' }}
             tickLine={false}
           />

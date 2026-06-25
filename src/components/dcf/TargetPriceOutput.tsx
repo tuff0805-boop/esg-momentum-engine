@@ -47,10 +47,10 @@ export function TargetPriceOutput({
         <Badge variant={ratingVariant(rating)}>{rating}</Badge>
       </div>
 
-      <div style={{ fontFamily: 'monospace', fontSize: 28, fontWeight: 500, color: ratingColor[rating], letterSpacing: '-0.01em', marginBottom: 2 }}>
+      <div style={{ fontFamily: 'monospace', fontSize: 40, fontWeight: 500, color: ratingColor[rating], letterSpacing: '-0.01em', marginBottom: 2 }}>
         {rating}
       </div>
-      <div style={{ fontFamily: 'monospace', fontSize: 12, color: upsidePct >= 0 ? '#00C087' : '#E8323C', marginBottom: 16 }}>
+      <div style={{ fontFamily: 'monospace', fontSize: 14, color: upsidePct >= 0 ? '#00C087' : '#E8323C', marginBottom: 16 }}>
         {upsidePct >= 0 ? '+' : ''}{upsidePct.toFixed(1)}% ESG financial materiality impact
       </div>
 
@@ -62,7 +62,7 @@ export function TargetPriceOutput({
         ].map(s => (
           <div key={s.label} style={{ background: '#080B10', border: '1px solid #1E2836', borderRadius: 4, padding: '8px 10px', textAlign: 'center' }}>
             <div style={{ fontSize: 10, color: '#4A5568', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 4 }}>{s.label}</div>
-            <div style={{ fontFamily: 'monospace', fontSize: 14, fontWeight: 500, color: s.color }}>{fmt(s.price)}</div>
+            <div style={{ fontFamily: 'monospace', fontSize: 20, fontWeight: 500, color: s.color }}>{fmt(s.price)}</div>
           </div>
         ))}
       </div>

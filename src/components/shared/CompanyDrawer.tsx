@@ -63,8 +63,8 @@ export function CompanyDrawer({ company, allCompanies, onClose }: CompanyDrawerP
             {/* Header */}
             <div className="sticky top-0 flex items-start justify-between px-4 py-3" style={{ background: '#080B10', borderBottom: '1px solid #1E2836', zIndex: 10 }}>
               <div>
-                <div style={{ fontSize: 16, fontWeight: 600, color: '#E8EDF2' }}>{company.name}</div>
-                <div style={{ fontSize: 12, color: '#8B9AAB', marginTop: 2 }}>{company.country} · {company.sector}</div>
+                <div style={{ fontSize: 20, fontWeight: 600, color: '#E8EDF2' }}>{company.name}</div>
+                <div style={{ fontSize: 13, color: '#8B9AAB', marginTop: 2 }}>{company.country} · {company.sector}</div>
               </div>
               <button onClick={onClose} style={{ color: '#8B9AAB', background: 'none', border: 'none', cursor: 'pointer', padding: 4 }}>
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -77,7 +77,7 @@ export function CompanyDrawer({ company, allCompanies, onClose }: CompanyDrawerP
               {/* SES + Pillars */}
               <div style={{ background: cardBg, border: `1px solid ${cardBorder}`, borderRadius: 4, padding: 16 }}>
                 <div className="flex items-center justify-between mb-3">
-                  <span style={{ fontSize: 10, color: '#8B9AAB', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Standardized ESG Score</span>
+                  <span style={{ fontSize: 12, color: '#8B9AAB', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Standardized ESG Score</span>
                   <div className="flex gap-2">
                     <Badge variant={quadrantVariant(quadrant)}>{quadrant}</Badge>
                     <Badge variant={forecastVariant(forecast)}>{forecast}</Badge>
@@ -99,20 +99,20 @@ export function CompanyDrawer({ company, allCompanies, onClose }: CompanyDrawerP
                   { label: 'Mkt Cap',      val: `$${company.mcap}B`,                            color: '#FFFFFF' },
                 ].map(item => (
                   <div key={item.label} style={{ background: cardBg, border: `1px solid ${cardBorder}`, borderRadius: 4, padding: '8px 12px', textAlign: 'center' }}>
-                    <div style={{ fontSize: 11, color: '#8B9AAB', marginBottom: 4 }}>{item.label}</div>
-                    <div className="font-mono" style={{ fontSize: 15, fontWeight: 600, color: item.color }}>{item.val}</div>
+                    <div style={{ fontSize: 12, color: '#8B9AAB', marginBottom: 4 }}>{item.label}</div>
+                    <div className="font-mono" style={{ fontSize: 16, fontWeight: 600, color: item.color }}>{item.val}</div>
                   </div>
                 ))}
               </div>
 
               {/* Provider Scores */}
               <div style={{ background: cardBg, border: `1px solid ${cardBorder}`, borderRadius: 4, padding: 16 }}>
-                <div style={{ fontSize: 10, color: '#8B9AAB', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 12 }}>Provider Scores</div>
+                <div style={{ fontSize: 12, color: '#8B9AAB', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 12 }}>Provider Scores</div>
                 <div className="grid grid-cols-3 gap-3">
                   {[['MSCI', company.msci], ['Sustainalytics', company.sustainalytics], ['Bloomberg', company.bloomberg]].map(([k, v]) => (
                     <div key={k as string} className="text-center">
-                      <div style={{ fontSize: 11, color: '#8B9AAB', marginBottom: 2 }}>{k}</div>
-                      <div className="font-mono" style={{ fontSize: 15, fontWeight: 600, color: '#E8EDF2' }}>{v}</div>
+                      <div style={{ fontSize: 12, color: '#8B9AAB', marginBottom: 2 }}>{k}</div>
+                      <div className="font-mono" style={{ fontSize: 16, fontWeight: 600, color: '#E8EDF2' }}>{v}</div>
                     </div>
                   ))}
                 </div>
@@ -120,7 +120,7 @@ export function CompanyDrawer({ company, allCompanies, onClose }: CompanyDrawerP
 
               {/* ESG Events */}
               <div>
-                <div style={{ fontSize: 10, color: '#8B9AAB', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 10 }}>ESG Events</div>
+                <div style={{ fontSize: 14, fontWeight: 600, color: '#E8EDF2', marginBottom: 10 }}>ESG Events</div>
                 <div className="flex flex-col gap-2">
                   {company.events.map((ev, i) => (
                     <div key={i} className="flex items-center gap-3 px-3 py-2.5" style={{ background: cardBg, border: `1px solid ${cardBorder}`, borderRadius: 4 }}>
@@ -150,8 +150,8 @@ export function CompanyDrawer({ company, allCompanies, onClose }: CompanyDrawerP
                       ['WACC reduction',  `-${dcf.waccReduction.toFixed(0)} basis points`],
                     ].map(([k, v]) => (
                       <div key={k}>
-                        <div style={{ fontSize: 11, color: '#8B9AAB' }}>{k}</div>
-                        <div className="font-mono" style={{ fontSize: 13, color: '#FFFFFF' }}>{v}</div>
+                        <div style={{ fontSize: 12, color: '#8B9AAB' }}>{k}</div>
+                        <div className="font-mono" style={{ fontSize: 14, color: '#FFFFFF' }}>{v}</div>
                       </div>
                     ))}
                   </div>

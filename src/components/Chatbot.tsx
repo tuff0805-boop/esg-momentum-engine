@@ -259,7 +259,7 @@ export function Chatbot() {
           {/* Header */}
           <div style={{ padding: '12px 14px', borderBottom: '1px solid #1E2836', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <div>
-              <div style={{ fontSize: 14, fontWeight: 700, color: '#FFFFFF' }}>ESG AI Analyst</div>
+              <div style={{ fontSize: 15, fontWeight: 700, color: '#FFFFFF' }}>ESG AI Analyst</div>
               <div style={{ fontSize: 10, color: '#8B9AAB', marginTop: 1 }}>
                 25 curated answers · ESG knowledge base
               </div>
@@ -292,7 +292,7 @@ export function Chatbot() {
                       style={{
                         background: '#0D1117', border: '1px solid #1E2836',
                         borderRadius: 3, padding: '8px 12px',
-                        color: '#8B9AAB', fontSize: 12, textAlign: 'left',
+                        color: '#8B9AAB', fontSize: 13, textAlign: 'left',
                         cursor: 'pointer', transition: 'background 0.1s, border-color 0.1s',
                       }}
                       onMouseEnter={e => {
@@ -323,7 +323,7 @@ export function Chatbot() {
                     borderRadius: msg.role === 'user' ? '8px 8px 2px 8px' : '8px 8px 8px 2px',
                     background: msg.role === 'user' ? '#0A2A52' : '#0D1117',
                     color: '#E8EDF2',
-                    fontSize: 12,
+                    fontSize: 13,
                     lineHeight: 1.55,
                     border: msg.role === 'user' ? '1px solid #1E2836' : '1px solid #1E2836',
                     whiteSpace: 'pre-wrap',

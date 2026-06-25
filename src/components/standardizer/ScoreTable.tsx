@@ -60,8 +60,8 @@ export function ScoreTable({ companies, allCompanies, onSelect, hidePillars = fa
                 className="tr group"
               >
                 <td className="td">
-                  <div className="font-semibold text-primary group-hover:text-accent transition-colors">{c.name}</div>
-                  <div className="text-secondary text-[10px]">{c.country} · {c.sector}</div>
+                  <div className="font-semibold text-primary group-hover:text-accent transition-colors" style={{ fontSize: 15 }}>{c.name}</div>
+                  <div className="text-secondary" style={{ fontSize: 12 }}>{c.country} · {c.sector}</div>
                 </td>
                 <td className="td font-mono text-right text-primary">{c.msci}</td>
                 <td className="td font-mono text-right text-primary">{c.sustainalytics}</td>

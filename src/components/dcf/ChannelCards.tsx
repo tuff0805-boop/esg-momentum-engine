@@ -90,9 +90,9 @@ export function ChannelCards({ revUp, opSave, capexDrag, waccReduction }: Channe
             <ch.Icon color={ch.iconColor} />
             <Tooltip content={ch.tooltip} />
           </div>
-          <div style={{ fontFamily: 'monospace', fontSize: 20, fontWeight: 500, marginBottom: 4, color: ch.numColor }}>{ch.value}</div>
-          <div style={{ fontSize: 10, color: '#4A5568', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600 }}>{ch.label}</div>
-          <div style={{ fontSize: 11, color: '#8B9AAB', marginTop: 2 }}>{ch.desc}</div>
+          <div style={{ fontFamily: 'monospace', fontSize: 28, fontWeight: 500, marginBottom: 4, color: ch.numColor }}>{ch.value}</div>
+          <div style={{ fontSize: 11, color: '#4A5568', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600 }}>{ch.label}</div>
+          <div style={{ fontSize: 12, color: '#8B9AAB', marginTop: 2 }}>{ch.desc}</div>
         </div>
       ))}
     </div>
