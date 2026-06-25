@@ -30,12 +30,6 @@ export function MomentumPanel({ activeSector, onSelect, animKey, viewMode = 'ana
 
   return (
     <div className="flex flex-col gap-6">
-      <div style={{ fontSize: 11, fontStyle: 'italic', color: '#4A5568', marginBottom: 4 }}>
-        {isRetail
-          ? 'Top momentum signals — companies improving ESG scores the fastest are flagged Overweight.'
-          : 'We measure how fast a company\'s ESG is improving, not just where it stands today. Companies improving fastest are flagged as Overweight.'}
-      </div>
-
       {/* Retail: signal cards at top */}
       {isRetail && (
         <RetailSignalCard companies={filtered} allCompanies={ALL_COMPANIES} onSelect={onSelect} />

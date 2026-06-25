@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect } from 'react'
 import type { Company } from './data/companies'
 import { companies as ALL_COMPANIES } from './data/companies'
-import { Sidebar } from './components/Sidebar'
+import { SubNav } from './components/SubNav'
 import { StandardizerPanel } from './components/standardizer/StandardizerPanel'
 import { MomentumPanel } from './components/momentum/MomentumPanel'
 import { DCFPanel } from './components/dcf/DCFPanel'
@@ -13,18 +13,12 @@ type Sector   = 'All' | 'Energy' | 'Materials' | 'Industrials'
 type Tab      = 'standardizer' | 'momentum' | 'dcf'
 type ViewMode = 'retail' | 'analyst'
 
-const TAB_LABELS: Record<Tab, string> = {
-  standardizer: 'ESG Score Standardizer',
-  momentum:     'ESG Momentum',
-  dcf:          'Financial Materiality Index',
-}
-
 export default function App() {
-  const [activeSector, setActiveSector]     = useState<Sector>('All')
-  const [activeTab, setActiveTab]           = useState<Tab>('standardizer')
+  const [activeSector, setActiveSector]       = useState<Sector>('All')
+  const [activeTab, setActiveTab]             = useState<Tab>('standardizer')
   const [selectedCompany, setSelectedCompany] = useState<Company | null>(null)
-  const [viewMode, setViewMode]             = useState<ViewMode>('analyst')
-  const [tabKey, setTabKey]                 = useState(0)
+  const [viewMode, setViewMode]               = useState<ViewMode>('analyst')
+  const [tabKey, setTabKey]                   = useState(0)
 
   const handleTabChange = (t: Tab) => {
     setActiveTab(t)
@@ -39,87 +33,75 @@ export default function App() {
   const onSelect = useCallback((c: Company) => setSelectedCompany(c), [])
 
   return (
-    <div className="flex h-screen overflow-hidden bg-[#0D1117] text-white">
-      <Sidebar
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', background: '#080B10' }}>
+      <header
+        style={{
+          height: 48,
+          minHeight: 48,
+          background: '#080B10',
+          borderBottom: '1px solid #1E2836',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          padding: '0 16px',
+          flexShrink: 0,
+          zIndex: 20,
+        }}
+      >
+        {/* Left: logo + title */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <div style={{ width: 26, height: 26, borderRadius: 5, background: '#00C087', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+            <span style={{ color: '#fff', fontSize: 9, fontWeight: 900, letterSpacing: '-0.5px' }}>ESG</span>
+          </div>
+          <div>
+            <div style={{ fontSize: 14, fontWeight: 600, color: '#E8EDF2', lineHeight: 1.2 }}>ESG Intelligence</div>
+            <div style={{ fontSize: 11, color: '#4A5568' }}>iTrade · CGS International</div>
+          </div>
+        </div>
+
+        {/* Right: clock + badge + toggle */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <SGTClock />
+          <div style={{ width: 1, height: 16, background: '#1E2836' }} />
+          <div style={{ fontSize: 10, fontWeight: 600, background: 'rgba(232,50,60,0.12)', color: '#E8323C', padding: '2px 8px', borderRadius: 3 }}>
+            PFT100 2026
+          </div>
+          <div style={{ width: 1, height: 16, background: '#1E2836' }} />
+          {/* Retail/Analyst toggle */}
+          <div style={{ display: 'flex', border: '1px solid #1E2836', borderRadius: 3, overflow: 'hidden' }}>
+            {(['retail', 'analyst'] as ViewMode[]).map(mode => (
+              <button
+                key={mode}
+                onClick={() => setViewMode(mode)}
+                style={{
+                  padding: '3px 10px',
+                  fontSize: 11,
+                  fontWeight: 500,
+                  border: 'none',
+                  cursor: 'pointer',
+                  background: viewMode === mode ? '#E8323C' : 'transparent',
+                  color: viewMode === mode ? '#FFFFFF' : '#8B9AAB',
+                  transition: 'background 0.12s, color 0.12s',
+                  textTransform: 'capitalize',
+                }}
+              >
+                {mode}
+              </button>
+            ))}
+          </div>
+          <Tooltip content="Retail view shows simplified buy/sell signals. Analyst view shows full ESG methodology, scoring model, and DCF valuation." />
+        </div>
+      </header>
+
+      <SubNav
         activeTab={activeTab}
         activeSector={activeSector}
         onTabChange={handleTabChange}
         onSectorChange={setActiveSector}
       />
 
-      <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
-        {/* Top navbar */}
-        <header
-          className="sticky top-0 z-20 flex items-center justify-between px-4 py-2 border-b"
-          style={{
-            background: '#080B10',
-            borderColor: '#1E2836',
-            minHeight: 48,
-          }}
-        >
-          {/* Left: CGS logo + breadcrumb */}
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2 pr-3 border-r" style={{ borderColor: '#1E2836' }}>
-              <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: '#E8323C' }}>
-                <span className="text-white text-[10px] font-black leading-none">S</span>
-              </div>
-              <span className="text-sm font-bold" style={{ color: '#E8EDF2' }}>CGS International</span>
-            </div>
-            <div>
-              <div className="text-[10px] font-medium" style={{ color: '#8B9AAB' }}>
-                iTrade ESG Intelligence &middot; {TAB_LABELS[activeTab]}
-              </div>
-            </div>
-          </div>
-
-          {/* Right: view toggle + search + clock + badge */}
-          <div className="flex items-center gap-3">
-            {/* Retail / Analyst toggle */}
-            <div className="flex items-center gap-1.5">
-              <div
-                className="flex rounded overflow-hidden"
-                style={{ border: '1px solid #1E2836', background: '#080B10' }}
-              >
-                {(['retail', 'analyst'] as ViewMode[]).map(mode => (
-                  <button
-                    key={mode}
-                    onClick={() => setViewMode(mode)}
-                    style={{
-                      padding: '3px 10px',
-                      fontSize: 10,
-                      fontWeight: 600,
-                      border: 'none',
-                      cursor: 'pointer',
-                      background: viewMode === mode ? '#E8323C' : 'transparent',
-                      color: viewMode === mode ? '#FFFFFF' : '#8B9AAB',
-                      transition: 'background 0.15s, color 0.15s',
-                      textTransform: 'capitalize',
-                    }}
-                  >
-                    {mode}
-                  </button>
-                ))}
-              </div>
-              <Tooltip content="Retail view shows simplified buy/sell signals. Analyst view shows full ESG methodology, scoring model, and DCF valuation." />
-            </div>
-
-            <button style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#4A5568', padding: '6px', display: 'flex', alignItems: 'center' }}>
-              <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-              </svg>
-            </button>
-            <SGTClock className="hidden sm:block" style={{ fontSize: 11, fontFamily: 'monospace', color: '#4A5568' }} />
-            <div
-              className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded text-[10px] font-semibold"
-              style={{ background: 'rgba(232,50,60,0.10)', color: '#E8323C', fontSize: 10 }}
-            >
-              <span>PFT100</span>
-              <span style={{ opacity: 0.6 }}>2026</span>
-            </div>
-          </div>
-        </header>
-
-        <main className="flex-1 p-4 max-w-screen-xl w-full mx-auto">
+      <div style={{ flex: 1, overflowY: 'auto' }}>
+        <main style={{ maxWidth: 1440, margin: '0 auto', padding: '12px 16px' }}>
           {activeTab === 'standardizer' && (
             <StandardizerPanel activeSector={activeSector} onSelect={onSelect} animKey={tabKey} viewMode={viewMode} />
           )}
@@ -130,6 +112,9 @@ export default function App() {
             <DCFPanel activeSector={activeSector} onSelect={onSelect} viewMode={viewMode} />
           )}
         </main>
+        <footer style={{ padding: '8px 16px', textAlign: 'center', fontSize: 10, color: '#4A5568', borderTop: '1px solid #1E2836', flexShrink: 0 }}>
+          CGS International · iTrade ESG Intelligence Module · PolyFinTech100 2026
+        </footer>
       </div>
 
       <CompanyDrawer
@@ -138,19 +123,18 @@ export default function App() {
         onClose={() => setSelectedCompany(null)}
       />
 
-      {/* AI Chatbot — analyst view only */}
       {viewMode === 'analyst' && <Chatbot />}
     </div>
   )
 }
 
-function SGTClock({ className, style }: { className?: string; style?: React.CSSProperties }) {
+function SGTClock() {
   const [time, setTime] = useState(() => getSGT())
   useEffect(() => {
     const id = setInterval(() => setTime(getSGT()), 1000)
     return () => clearInterval(id)
   }, [])
-  return <span className={className} style={style}>{time} SGT</span>
+  return <span style={{ fontSize: 12, fontFamily: 'monospace', color: '#8B9AAB' }}>{time} SGT</span>
 }
 
 function getSGT(): string {

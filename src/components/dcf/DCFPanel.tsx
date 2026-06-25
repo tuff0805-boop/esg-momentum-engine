@@ -50,12 +50,6 @@ export function DCFPanel({ activeSector, onSelect, viewMode = 'analyst' }: DCFPa
 
   return (
     <div className="flex flex-col gap-6">
-      <div style={{ fontSize: 11, fontStyle: 'italic', color: '#4A5568', marginBottom: 4 }}>
-        {isRetail
-          ? 'ESG-adjusted target prices — how sustainability improvements affect what each company is worth.'
-          : 'We translate ESG improvements into financial impact — showing how much they affect the company\'s target price through four channels.'}
-      </div>
-
       {/* Retail: signal cards */}
       {isRetail && (
         <RetailSignalCard companies={filtered} allCompanies={ALL_COMPANIES} onSelect={onSelect} />
