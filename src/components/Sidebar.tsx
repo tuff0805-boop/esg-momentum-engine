@@ -53,7 +53,7 @@ export function Sidebar({ activeTab, activeSector, onTabChange, onSectorChange }
           borderBottom: '1px solid #1E2836',
         }}
       >
-        <img src="/cgsi_logo.png" alt="CGS International" style={{ height: 24, width: 'auto', objectFit: 'contain' }} />
+        <img src="/cgsi_logo.png" alt="CGS International" style={{ height: 24, width: 'auto', objectFit: 'contain', mixBlendMode: 'multiply', filter: 'contrast(1.1)' }} />
       </div>
 
       {/* Nav items */}

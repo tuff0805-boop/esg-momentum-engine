@@ -53,12 +53,12 @@ export default function App() {
         }}
       >
         {/* Left: CGS logo + divider + title */}
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <img src="/cgsi_logo.png" alt="CGS International" style={{ height: 32, width: 'auto', objectFit: 'contain' }} />
-          <div style={{ width: 1, height: 28, background: '#2A3A4A', margin: '0 18px' }} />
-          <div>
-            <div style={{ fontSize: 18, fontWeight: 600, color: '#E8EDF2', lineHeight: 1.2 }}>ESG Intelligence</div>
-            <div style={{ fontSize: 12, color: '#4A5568' }}>iTrade · Brown Industries · ASEAN</div>
+        <div style={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
+          <img src="/cgsi_logo.png" alt="CGS International" style={{ height: 32, width: 'auto', objectFit: 'contain', mixBlendMode: 'multiply', filter: 'contrast(1.1)' }} />
+          <div style={{ width: 1, height: 28, background: '#2A3A4A', margin: '0 18px', flexShrink: 0 }} />
+          <div style={{ flexShrink: 0 }}>
+            <div style={{ fontSize: 18, fontWeight: 600, color: '#E8EDF2', lineHeight: 1.2, whiteSpace: 'nowrap' }}>ESG Intelligence</div>
+            <div style={{ fontSize: 12, color: '#4A5568', whiteSpace: 'nowrap' }}>iTrade · Brown Industries · ASEAN</div>
           </div>
         </div>
 
