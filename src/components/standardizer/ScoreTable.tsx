@@ -10,16 +10,6 @@ interface ScoreTableProps {
   onSelect: (c: Company) => void
 }
 
-function PillarMini({ value, color }: { value: number; color: string }) {
-  return (
-    <div className="flex-1 bg-white/5 rounded-full h-1 overflow-hidden">
-      <div
-        className={`h-full rounded-full ${color}`}
-        style={{ width: `${value}%` }}
-      />
-    </div>
-  )
-}
 
 function DisagreementBadge({ value }: { value: number }) {
   if (value < 0.4) return <Badge variant="buy">Low</Badge>
@@ -72,24 +62,20 @@ export function ScoreTable({ companies, allCompanies, onSelect }: ScoreTableProp
                 <td className="td font-mono text-right text-primary">{c.msci}</td>
                 <td className="td font-mono text-right text-primary">{c.sustainalytics}</td>
                 <td className="td font-mono text-right text-primary">{c.bloomberg}</td>
-                <td className="td font-mono font-semibold text-right text-accent">{ses.toFixed(1)}</td>
+                <td className="td font-mono font-semibold text-right" style={{ color: '#00C087' }}>{ses.toFixed(1)}</td>
                 <td className="td">
                   <DisagreementBadge value={disagree} />
                 </td>
                 <td className="td">
                   <div className="flex flex-col gap-1 w-24">
-                    <div className="flex items-center gap-1">
-                      <span className="text-[9px] text-secondary w-3">E</span>
-                      <PillarMini value={pillars.E} color="bg-emerald-500" />
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <span className="text-[9px] text-secondary w-3">S</span>
-                      <PillarMini value={pillars.S} color="bg-blue-500" />
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <span className="text-[9px] text-secondary w-3">G</span>
-                      <PillarMini value={pillars.G} color="bg-purple-500" />
-                    </div>
+                    {([['E', pillars.E, '#00C087'], ['S', pillars.S, '#60A5FA'], ['G', pillars.G, '#C084FC']] as [string, number, string][]).map(([lbl, val, col]) => (
+                      <div key={lbl} className="flex items-center gap-1">
+                        <span className="text-[9px] text-secondary w-3">{lbl}</span>
+                        <div className="flex-1 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.06)', height: 4 }}>
+                          <div className="h-full rounded-full" style={{ width: `${val}%`, background: col }} />
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </td>
               </motion.tr>

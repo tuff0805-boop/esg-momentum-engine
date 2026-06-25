@@ -19,10 +19,10 @@ interface MomentumMatrixProps {
 }
 
 const quadrantColors: Record<string, string> = {
-  'Overweight': '#1D9E75',
-  'Strong Overweight': '#3B82F6',
-  'Underweight': '#E05252',
-  'Reduce': '#EF9F27',
+  'Overweight':        '#00C087',
+  'Strong Overweight': '#60A5FA',
+  'Underweight':       '#E8323C',
+  'Reduce':            '#C4A85A',
 }
 
 interface DataPoint {
@@ -36,27 +36,27 @@ interface DataPoint {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const CustomDot = (props: any) => {
   const { cx, cy, payload, onClick } = props
-  const color = quadrantColors[payload.quadrant] ?? '#94a3b8'
+  const color = quadrantColors[payload.quadrant] ?? '#8B9AAB'
   const label = payload.name.split(' ')[0]
   const labelW = label.length * 5.5 + 8
   return (
     <g onClick={() => onClick(payload.company)} style={{ cursor: 'pointer' }}>
-      <circle cx={cx} cy={cy} r={8} fill={color} stroke="#ffffff" strokeWidth={2} />
+      <circle cx={cx} cy={cy} r={8} fill={color} stroke="#1A2332" strokeWidth={2} />
       <rect
         x={cx - labelW / 2}
         y={cy - 26}
         width={labelW}
         height={14}
-        rx={4}
-        fill="white"
-        fillOpacity={0.92}
+        rx={3}
+        fill="#1A2332"
+        fillOpacity={0.95}
       />
       <text
         x={cx}
         y={cy - 15}
         textAnchor="middle"
         fontSize={9}
-        fill="#1e293b"
+        fill="#FFFFFF"
         fontWeight="600"
         fontFamily="'JetBrains Mono', monospace"
       >
@@ -72,11 +72,11 @@ const CustomTooltip = ({ active, payload }: any) => {
   const d: DataPoint = payload[0].payload
   const color = quadrantColors[d.quadrant]
   return (
-    <div style={{ background: 'var(--surface)', border: '1px solid var(--border)' }} className="rounded-lg p-3 text-xs shadow-xl">
-      <div className="font-semibold text-primary mb-1">{d.name}</div>
-      <div className="text-secondary">SES: <span className="font-mono text-accent">{d.x.toFixed(1)}</span></div>
-      <div className="text-secondary">CAGR: <span className={`font-mono ${d.y >= 0 ? 'text-accent' : 'text-danger'}`}>{d.y >= 0 ? '+' : ''}{d.y.toFixed(1)}%</span></div>
-      <div className="mt-1.5 font-medium" style={{ color }}>{d.quadrant}</div>
+    <div style={{ background: '#1A2332', border: '1px solid #2A3441', borderRadius: 8, padding: '10px 12px', fontSize: 12, boxShadow: '0 4px 12px rgba(0,0,0,0.5)' }}>
+      <div style={{ fontWeight: 600, color: '#FFFFFF', marginBottom: 4 }}>{d.name}</div>
+      <div style={{ color: '#8B9AAB' }}>Score: <span style={{ fontFamily: 'monospace', color: '#00C087' }}>{d.x.toFixed(1)}</span></div>
+      <div style={{ color: '#8B9AAB' }}>CAGR: <span style={{ fontFamily: 'monospace', color: d.y >= 0 ? '#00C087' : '#E8323C' }}>{d.y >= 0 ? '+' : ''}{d.y.toFixed(1)}%</span></div>
+      <div style={{ marginTop: 6, fontWeight: 600, color }}>{d.quadrant}</div>
     </div>
   )
 }
@@ -107,24 +107,23 @@ export function MomentumMatrix({ companies, allCompanies, onSelect }: MomentumMa
   }))
   const data = applyJitter(rawData)
 
-  // Dynamic Y domain with 2-unit breathing room so dots near extremes don't clip
   const cagrValues = data.map(d => d.y)
   const yMin = cagrValues.length ? Math.floor(Math.min(...cagrValues) - 2) : -6
   const yMax = cagrValues.length ? Math.ceil(Math.max(...cagrValues) + 2) : 16
 
   return (
-    <div className="relative">
+    <div className="relative" style={{ background: '#1A2332', borderRadius: 8, padding: '8px 0' }}>
       <ResponsiveContainer width="100%" height={400}>
         <ScatterChart margin={{ top: 28, right: 30, bottom: 28, left: 10 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" />
+          <CartesianGrid strokeDasharray="3 3" stroke="#2A3441" vertical={true} />
           <XAxis
             type="number"
             dataKey="x"
             name="SES"
             domain={[20, 80]}
-            label={{ value: 'SES Score', position: 'insideBottom', offset: -14, fill: '#64748b', fontSize: 11 }}
-            tick={{ fill: '#64748b', fontSize: 10, fontFamily: 'JetBrains Mono, monospace' }}
-            axisLine={{ stroke: '#E2E8F0' }}
+            label={{ value: 'Standardized ESG Score', position: 'insideBottom', offset: -14, fill: '#8B9AAB', fontSize: 11 }}
+            tick={{ fill: '#8B9AAB', fontSize: 10, fontFamily: 'JetBrains Mono, monospace' }}
+            axisLine={{ stroke: '#2A3441' }}
             tickLine={false}
           />
           <YAxis
@@ -133,27 +132,26 @@ export function MomentumMatrix({ companies, allCompanies, onSelect }: MomentumMa
             name="ESG CAGR"
             domain={[yMin, yMax]}
             tickFormatter={v => `${Number(v).toFixed(1)}%`}
-            label={{ value: 'ESG CAGR', angle: -90, position: 'insideLeft', fill: '#64748b', fontSize: 11 }}
-            tick={{ fill: '#64748b', fontSize: 10, fontFamily: 'JetBrains Mono, monospace' }}
-            axisLine={{ stroke: '#E2E8F0' }}
+            label={{ value: 'ESG CAGR', angle: -90, position: 'insideLeft', fill: '#8B9AAB', fontSize: 11 }}
+            tick={{ fill: '#8B9AAB', fontSize: 10, fontFamily: 'JetBrains Mono, monospace' }}
+            axisLine={{ stroke: '#2A3441' }}
             tickLine={false}
           />
           <Tooltip content={<CustomTooltip />} />
           <ReferenceLine
             x={avgSES}
-            stroke="#94a3b8"
-            strokeOpacity={0.3}
+            stroke="#4B5563"
+            strokeOpacity={0.8}
             strokeDasharray="4 4"
-            label={{ value: 'Avg SES', position: 'top', fill: '#94a3b8', fontSize: 10 }}
+            label={{ value: 'Avg Score', position: 'top', fill: '#4B5563', fontSize: 10 }}
           />
           <ReferenceLine
             y={0}
-            stroke="#94a3b8"
-            strokeOpacity={0.3}
+            stroke="#4B5563"
+            strokeOpacity={0.8}
             strokeDasharray="4 4"
-            label={{ value: 'CAGR=0', position: 'right', fill: '#94a3b8', fontSize: 10 }}
+            label={{ value: 'CAGR=0', position: 'right', fill: '#4B5563', fontSize: 10 }}
           />
-
           <Scatter
             data={data}
             shape={(props: unknown) => <CustomDot {...(props as Record<string, unknown>)} onClick={onSelect} />}
@@ -165,11 +163,10 @@ export function MomentumMatrix({ companies, allCompanies, onSelect }: MomentumMa
         </ScatterChart>
       </ResponsiveContainer>
 
-      {/* Corner quadrant labels */}
-      <div className="absolute top-7 left-16 text-[10px] font-semibold pointer-events-none" style={{ color: '#10B981', opacity: 0.6 }}>Overweight</div>
-      <div className="absolute top-7 right-8 text-[10px] font-semibold pointer-events-none" style={{ color: '#3B82F6', opacity: 0.6 }}>Strong Overweight</div>
-      <div className="absolute bottom-14 left-16 text-[10px] font-semibold pointer-events-none" style={{ color: '#EF4444', opacity: 0.6 }}>Underweight</div>
-      <div className="absolute bottom-14 right-8 text-[10px] font-semibold pointer-events-none" style={{ color: '#F59E0B', opacity: 0.6 }}>Reduce</div>
+      <div className="absolute top-7 left-16 text-[10px] font-semibold pointer-events-none" style={{ color: '#00C087', opacity: 0.7 }}>Overweight</div>
+      <div className="absolute top-7 right-8 text-[10px] font-semibold pointer-events-none" style={{ color: '#60A5FA', opacity: 0.7 }}>Strong Overweight</div>
+      <div className="absolute bottom-14 left-16 text-[10px] font-semibold pointer-events-none" style={{ color: '#E8323C', opacity: 0.7 }}>Underweight</div>
+      <div className="absolute bottom-14 right-8 text-[10px] font-semibold pointer-events-none" style={{ color: '#C4A85A', opacity: 0.7 }}>Reduce</div>
     </div>
   )
 }

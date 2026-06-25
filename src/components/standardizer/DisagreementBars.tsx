@@ -15,9 +15,9 @@ export function DisagreementBars({ companies, allCompanies }: DisagreementBarsPr
   const max = Math.max(...data.map(d => d.value), 1)
 
   const color = (v: number) => {
-    if (v < 0.4) return 'bg-teal-500'
-    if (v < 0.8) return 'bg-blue-500'
-    return 'bg-amber-500'
+    if (v < 0.4) return '#00C087'
+    if (v < 0.8) return '#C4A85A'
+    return '#E8323C'
   }
 
   return (
@@ -25,9 +25,10 @@ export function DisagreementBars({ companies, allCompanies }: DisagreementBarsPr
       {data.map((d, i) => (
         <div key={d.name} className="flex items-center gap-3">
           <div className="text-xs text-secondary text-right w-36 truncate">{d.name}</div>
-          <div className="flex-1 rounded-full h-2 overflow-hidden" style={{ background: 'var(--border)' }}>
+          <div className="flex-1 rounded-full h-2 overflow-hidden" style={{ background: '#2A3441' }}>
             <motion.div
-              className={`h-full rounded-full ${color(d.value)}`}
+              className="h-full rounded-full"
+              style={{ background: color(d.value) }}
               initial={{ width: 0 }}
               animate={{ width: `${(d.value / max) * 100}%` }}
               transition={{ delay: i * 0.04, duration: 0.5, ease: 'easeOut' }}
@@ -36,10 +37,10 @@ export function DisagreementBars({ companies, allCompanies }: DisagreementBarsPr
           <div className="font-mono text-xs text-secondary w-8 text-right">{d.value.toFixed(2)}</div>
         </div>
       ))}
-      <div className="flex gap-4 mt-2 text-[10px] text-secondary">
-        <span><span className="inline-block w-2 h-2 rounded-full bg-teal-500 mr-1" />Low (&lt;0.4)</span>
-        <span><span className="inline-block w-2 h-2 rounded-full bg-blue-500 mr-1" />Medium (0.4-0.8)</span>
-        <span><span className="inline-block w-2 h-2 rounded-full bg-amber-500 mr-1" />High (&gt;0.8) — alpha signal</span>
+      <div className="flex gap-4 mt-2" style={{ fontSize: 10, color: '#8B9AAB' }}>
+        <span><span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', background: '#00C087', marginRight: 4 }}/>Low (&lt;0.4)</span>
+        <span><span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', background: '#C4A85A', marginRight: 4 }}/>Medium (0.4–0.8)</span>
+        <span><span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', background: '#E8323C', marginRight: 4 }}/>High (&gt;0.8) — alpha signal</span>
       </div>
     </div>
   )

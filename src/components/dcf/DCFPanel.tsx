@@ -139,9 +139,9 @@ export function DCFPanel({ activeSector, onSelect }: DCFPanelProps) {
                   <td className="td text-secondary">{r.company.sector}</td>
                   <td className="td"><Badge variant={quadrantVariant(r.quadrant)}>{r.quadrant.split(' ').map((w: string) => w[0]).join('')}</Badge></td>
                   <td className="td font-mono text-right text-primary">{fmt(r.company.base_price)}</td>
-                  <td className="td font-mono text-right text-accent">{fmt(r.dcf.adjPrice)}</td>
+                  <td className="td font-mono text-right" style={{ color: '#00C087' }}>{fmt(r.dcf.adjPrice)}</td>
                   <td className="td font-mono text-right font-semibold">
-                    <span className={r.dcf.upsidePct >= 0 ? 'text-accent' : 'text-danger'}>
+                    <span style={{ color: r.dcf.upsidePct >= 0 ? '#00C087' : '#E8323C' }}>
                       {r.dcf.upsidePct >= 0 ? '+' : ''}{r.dcf.upsidePct.toFixed(1)}%
                     </span>
                   </td>
@@ -163,8 +163,8 @@ export function DCFPanel({ activeSector, onSelect }: DCFPanelProps) {
 }
 
 function quadrantBorderColor(q: string): string {
-  if (q === 'Overweight') return '#10B981'
-  if (q === 'Strong Overweight') return '#3B82F6'
-  if (q === 'Underweight') return '#EF4444'
-  return '#F59E0B'
+  if (q === 'Overweight')        return '#00C087'
+  if (q === 'Strong Overweight') return '#60A5FA'
+  if (q === 'Underweight')       return '#E8323C'
+  return '#C4A85A'
 }

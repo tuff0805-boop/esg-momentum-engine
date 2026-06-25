@@ -23,10 +23,10 @@ export function Leaderboard({ companies, allCompanies, onSelect }: LeaderboardPr
     .sort((a, b) => b.momentum - a.momentum)
 
   function quadrantBorder(q: string): string {
-    if (q === 'Overweight') return '#10B981'
-    if (q === 'Strong Overweight') return '#3B82F6'
-    if (q === 'Underweight') return '#EF4444'
-    return '#F59E0B'
+    if (q === 'Overweight')        return '#00C087'
+    if (q === 'Strong Overweight') return '#60A5FA'
+    if (q === 'Underweight')       return '#E8323C'
+    return '#C4A85A'
   }
 
   return (
@@ -50,30 +50,28 @@ export function Leaderboard({ companies, allCompanies, onSelect }: LeaderboardPr
               className="tr group"
               style={{ borderLeft: `3px solid ${quadrantBorder(r.quadrant)}` }}
             >
-              <td className="td font-mono text-secondary">{i + 1}</td>
+              <td className="td font-mono" style={{ color: '#8B9AAB' }}>{i + 1}</td>
               <td className="td">
-                <div className="font-semibold text-primary group-hover:text-accent transition-colors">{r.company.name}</div>
-                <div className="text-secondary text-[10px]">{r.company.country} · {r.company.sector}</div>
+                <div className="font-semibold" style={{ color: '#FFFFFF' }}>{r.company.name}</div>
+                <div style={{ fontSize: 10, color: '#8B9AAB' }}>{r.company.country} · {r.company.sector}</div>
               </td>
-              <td className="td font-mono text-right text-primary">{r.ses.toFixed(1)}</td>
+              <td className="td font-mono text-right" style={{ color: '#FFFFFF' }}>{r.ses.toFixed(1)}</td>
               <td className="td font-mono font-semibold text-right">
-                <span className={r.cagr >= 0 ? 'text-accent' : 'text-danger'}>
+                <span style={{ color: r.cagr >= 0 ? '#00C087' : '#E8323C' }}>
                   {r.cagr >= 0 ? '+' : ''}{r.cagr.toFixed(1)}%
                 </span>
               </td>
-              <td className="td font-mono text-right text-primary">{r.eventScore}/100</td>
+              <td className="td font-mono text-right" style={{ color: '#FFFFFF' }}>{r.eventScore}/100</td>
               <td className="td">
                 <div className="flex items-center gap-2">
-                  <div className="w-20 rounded-full h-1.5 overflow-hidden" style={{ background: 'var(--border)' }}>
-                    <div className="h-full rounded-full" style={{ background: '#0066CC', width: `${r.momentum}%` }} />
+                  <div className="w-20 rounded-full h-1.5 overflow-hidden" style={{ background: '#2A3441' }}>
+                    <div className="h-full rounded-full" style={{ background: '#00C087', width: `${r.momentum}%` }} />
                   </div>
-                  <span className="font-mono text-primary">{r.momentum}</span>
+                  <span className="font-mono" style={{ color: '#FFFFFF' }}>{r.momentum}</span>
                 </div>
               </td>
               <td className="td">
-                <Badge variant={quadrantVariant(r.quadrant)}>
-                  {r.quadrant}
-                </Badge>
+                <Badge variant={quadrantVariant(r.quadrant)}>{r.quadrant}</Badge>
               </td>
               <td className="td">
                 <Badge variant={forecastVariant(r.forecast)}>{r.forecast}</Badge>

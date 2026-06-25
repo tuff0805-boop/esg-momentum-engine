@@ -39,13 +39,13 @@ function IconShield({ color }: { color: string }) {
 
 export function ChannelCards({ revUp, opSave, capexDrag, waccReduction }: ChannelCardsProps) {
   type IconFC = (props: { color: string }) => React.JSX.Element
-  const channels: { label: string; value: string; numColor: string; borderColor: string; desc: string; tooltip: string; Icon: IconFC; iconColor: string }[] = [
+  const channels: { label: string; value: string; numColor: string; topColor: string; desc: string; tooltip: string; Icon: IconFC; iconColor: string }[] = [
     {
       label: 'Revenue Uplift',
       value: `+${revUp.toFixed(2)}%`,
-      numColor: '#0066CC',
-      borderColor: 'rgba(0,102,204,0.25)',
-      iconColor: '#0066CC',
+      numColor: '#00C087',
+      topColor: 'rgba(0,192,135,0.4)',
+      iconColor: '#00C087',
       Icon: IconRevenue,
       desc: 'ESG premium pricing power',
       tooltip: 'ESG leadership drives demand shift and pricing power. Example: A packaging company with certified sustainable materials commands 3-8% premium pricing from FMCG customers with Scope 3 commitments. Revenue uplift = multiplier x max uplift from the company transition roadmap.',
@@ -53,9 +53,9 @@ export function ChannelCards({ revUp, opSave, capexDrag, waccReduction }: Channe
     {
       label: 'Operating Cost Save',
       value: `-${opSave.toFixed(2)}%`,
-      numColor: '#0066CC',
-      borderColor: 'rgba(0,102,204,0.25)',
-      iconColor: '#0066CC',
+      numColor: '#00C087',
+      topColor: 'rgba(0,192,135,0.4)',
+      iconColor: '#00C087',
       Icon: IconCoin,
       desc: 'Energy & waste efficiency gains',
       tooltip: 'ESG efficiency improvements reduce OPEX via energy savings, waste reduction and regulatory penalty avoidance. Example: A cement plant adopting waste-heat recovery cuts fuel costs by 6-12% while avoiding carbon levy exposure worth $2-5/tonne. Saving = multiplier x max OPEX saving.',
@@ -63,9 +63,9 @@ export function ChannelCards({ revUp, opSave, capexDrag, waccReduction }: Channe
     {
       label: 'Capex Drag (J-Curve)',
       value: `+${capexDrag.toFixed(2)}% Year 1-2`,
-      numColor: '#F59E0B',
-      borderColor: 'rgba(245,158,11,0.25)',
-      iconColor: '#F59E0B',
+      numColor: '#E8323C',
+      topColor: 'rgba(232,50,60,0.4)',
+      iconColor: '#E8323C',
       Icon: IconBuilding,
       desc: 'Front-loaded transition capex',
       tooltip: 'Green transition capex front-loads costs in years 1-2 before generating savings. The J-curve reflects this: higher upfront capital spend early, normalising and becoming accretive by year 3+. Example: Solar retrofit for an industrial facility costs 2-3% of asset base upfront but delivers 18-22% IRR over 10 years.',
@@ -73,9 +73,9 @@ export function ChannelCards({ revUp, opSave, capexDrag, waccReduction }: Channe
     {
       label: 'Risk / WACC Reduction',
       value: `-${waccReduction.toFixed(0)} basis points`,
-      numColor: '#3B82F6',
-      borderColor: 'rgba(59,130,246,0.25)',
-      iconColor: '#3B82F6',
+      numColor: '#0066CC',
+      topColor: 'rgba(0,102,204,0.4)',
+      iconColor: '#0066CC',
       Icon: IconShield,
       desc: 'Governance & ESG mandate inflows',
       tooltip: 'ESG improvement reduces cost of capital via governance quality and reduced regulatory risk premium. Institutional ESG mandates narrow credit spreads and cost of equity. Example: A company achieving MSCI upgrade from BB to A can see WACC compress 30-50bps as ESG-screened bond funds enter the register.',
@@ -85,7 +85,7 @@ export function ChannelCards({ revUp, opSave, capexDrag, waccReduction }: Channe
   return (
     <div className="grid grid-cols-2 gap-4">
       {channels.map(ch => (
-        <div key={ch.label} className="card p-4" style={{ borderTop: `3px solid ${ch.borderColor}` }}>
+        <div key={ch.label} className="card p-4" style={{ borderTop: `3px solid ${ch.topColor}` }}>
           <div className="flex items-start justify-between mb-2">
             <ch.Icon color={ch.iconColor} />
             <Tooltip content={ch.tooltip} />

@@ -13,18 +13,20 @@ interface MetricCardProps {
   animKey?: string | number
 }
 
+// Left accent border colors
 const borderColor: Record<string, string> = {
-  default: '#94A3B8',
-  teal:    '#0066CC',
-  amber:   '#F59E0B',
-  red:     '#EF4444',
+  default: 'transparent',
+  teal:    '#00C087',
+  amber:   '#C4A85A',
+  red:     '#E8323C',
 }
 
-const textColor: Record<string, string> = {
-  default: 'text-primary',
-  teal:    'text-accent',
-  amber:   'text-amber',
-  red:     'text-danger',
+// Large number text colors
+const numColor: Record<string, string> = {
+  default: '#FFFFFF',
+  teal:    '#00C087',
+  amber:   '#C4A85A',
+  red:     '#E8323C',
 }
 
 export function MetricCard({
@@ -38,30 +40,39 @@ export function MetricCard({
   color = 'default',
   trendDirection,
 }: MetricCardProps) {
-  const border = borderColor[color] ?? borderColor.default
-  const cls    = textColor[color] ?? textColor.default
+  const border  = borderColor[color] ?? borderColor.default
+  const numClr  = numColor[color] ?? numColor.default
 
   let arrow = ''
-  if (trendDirection === 'up')        arrow = '▲'
-  else if (trendDirection === 'down') arrow = '▼'
-  else if (!trendDirection) {
-    if (color === 'teal' || color === 'amber') arrow = '▲'
-    else if (color === 'red')                  arrow = '▼'
+  let arrowColor = '#8B9AAB'
+  if (trendDirection === 'up') {
+    arrow = '▲'; arrowColor = '#00C087'
+  } else if (trendDirection === 'down') {
+    arrow = '▼'; arrowColor = '#E8323C'
+  } else if (!trendDirection) {
+    if (color === 'teal') { arrow = '▲'; arrowColor = '#00C087' }
+    else if (color === 'amber') { arrow = '▲'; arrowColor = '#C4A85A' }
+    else if (color === 'red')   { arrow = '▼'; arrowColor = '#E8323C' }
   }
 
   return (
-    <div className="card p-5 flex flex-col gap-1" style={{ borderLeft: `3px solid ${border}` }}>
+    <div
+      className="card p-5 flex flex-col gap-1"
+      style={{ borderLeft: border !== 'transparent' ? `3px solid ${border}` : undefined }}
+    >
       <div className="flex items-center gap-1.5">
-        <span className="text-[11px] text-secondary uppercase tracking-[0.08em] font-semibold">{label}</span>
+        <span style={{ fontSize: 10, color: '#8B9AAB', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600 }}>
+          {label}
+        </span>
         {tooltip && <Tooltip content={tooltip} />}
       </div>
       <div className="flex items-baseline gap-1.5">
-        <span className={`font-mono text-[32px] font-bold leading-none tracking-tight ${cls}`}>
+        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 30, fontWeight: 700, lineHeight: 1, letterSpacing: '-0.02em', color: numClr }}>
           {prefix}{value.toFixed(decimals)}{suffix}
         </span>
-        {arrow && <span className={`text-sm ${cls}`}>{arrow}</span>}
+        {arrow && <span style={{ fontSize: 13, color: arrowColor }}>{arrow}</span>}
       </div>
-      {subLabel && <div className="text-[11px] text-secondary">{subLabel}</div>}
+      {subLabel && <div style={{ fontSize: 11, color: '#8B9AAB', marginTop: 2 }}>{subLabel}</div>}
     </div>
   )
 }
