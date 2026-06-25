@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion'
 import { Tooltip } from './Tooltip'
 
 interface MetricCardProps {
@@ -11,6 +12,7 @@ interface MetricCardProps {
   color?: 'default' | 'teal' | 'amber' | 'red'
   trendDirection?: 'up' | 'down' | 'neutral'
   animKey?: string | number
+  index?: number
 }
 
 const numColor: Record<string, string> = {
@@ -30,6 +32,7 @@ export function MetricCard({
   tooltip,
   color = 'default',
   trendDirection,
+  index = 0,
 }: MetricCardProps) {
   const numClr = numColor[color] ?? numColor.default
 
@@ -46,7 +49,10 @@ export function MetricCard({
   }
 
   return (
-    <div
+    <motion.div
+      initial={{ scale: 0.96, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      transition={{ delay: (index ?? 0) * 0.08, duration: 0.25, ease: 'easeOut' }}
       style={{
         background: '#0D1117',
         border: '1px solid #1E2836',
@@ -70,6 +76,6 @@ export function MetricCard({
         {arrow && <span style={{ fontSize: 11, color: arrowColor }}>{arrow}</span>}
       </div>
       {subLabel && <div style={{ fontSize: 11, color: '#4A5568', marginTop: 1 }}>{subLabel}</div>}
-    </div>
+    </motion.div>
   )
 }

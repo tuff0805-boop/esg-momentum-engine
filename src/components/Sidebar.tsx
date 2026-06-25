@@ -1,6 +1,6 @@
-import React from 'react'
+import { motion } from 'framer-motion'
 
-type Tab = 'standardizer' | 'momentum' | 'dcf'
+type Tab    = 'standardizer' | 'momentum' | 'dcf'
 type Sector = 'All' | 'Energy' | 'Materials' | 'Industrials'
 
 interface SidebarProps {
@@ -10,170 +10,169 @@ interface SidebarProps {
   onSectorChange: (s: Sector) => void
 }
 
-const analysisItems: { id: string; tab: Tab; label: string; icon: string }[] = [
-  { id: 'standardizer', tab: 'standardizer', label: 'Standardizer',        icon: '⊞' },
-  { id: 'momentum',     tab: 'momentum',     label: 'ESG Momentum',         icon: '◈' },
-  { id: 'dcf',         tab: 'dcf',          label: 'Financial Materiality', icon: '◉' },
+const NAV_ITEMS: { id: Tab; label: string; icon: string }[] = [
+  { id: 'standardizer', label: 'ESG Standardizer',    icon: '▦' },
+  { id: 'momentum',     label: 'ESG Momentum',         icon: '◈' },
+  { id: 'dcf',         label: 'Financial Materiality', icon: '◎' },
 ]
 
-const sectorItems: { id: string; sector: Sector; label: string; icon: string }[] = [
-  { id: 'all',         sector: 'All',         label: 'All Companies', icon: '○' },
-  { id: 'energy',      sector: 'Energy',      label: 'Energy',        icon: '⚡' },
-  { id: 'materials',   sector: 'Materials',   label: 'Materials',     icon: '◆' },
-  { id: 'industrials', sector: 'Industrials', label: 'Industrials',   icon: '⚙' },
+const SECTOR_ITEMS: { id: Sector; label: string }[] = [
+  { id: 'All',         label: 'All Companies' },
+  { id: 'Energy',      label: 'Energy' },
+  { id: 'Materials',   label: 'Materials' },
+  { id: 'Industrials', label: 'Industrials' },
 ]
+
+const SECTOR_COUNTS: Record<Sector, number> = { All: 10, Energy: 3, Materials: 4, Industrials: 3 }
+const SECTOR_DOTS: Record<Sector, string> = {
+  All: '#E8EDF2', Energy: '#C4A85A', Materials: '#00C087', Industrials: '#1E6FD9'
+}
 
 export function Sidebar({ activeTab, activeSector, onTabChange, onSectorChange }: SidebarProps) {
-  const sidebarBg    = '#080B10'
-  const borderCol    = '#1E2836'
-  const labelCol     = '#4A5568'
-  const inactiveText = '#8B9AAB'
-  const activeText   = '#E8EDF2'
-  const hoverBg      = '#131920'
-  const activeBg     = '#0D1117'
-  const footerText   = '#4A5568'
-  const titleText    = '#E8EDF2'
-  const subtitleText = '#8B9AAB'
-
-  const navItemBase: React.CSSProperties = {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '10px',
-    width: '100%',
-    padding: '6px 10px',
-    borderRadius: '4px',
-    fontSize: '13px',
-    fontWeight: 500,
-    cursor: 'pointer',
-    border: 'none',
-    background: 'transparent',
-    textAlign: 'left',
-    transition: 'background 0.12s, color 0.12s',
-    borderLeft: '3px solid transparent',
-    marginBottom: '2px',
-  }
-
-  const tabStyle = (id: string): React.CSSProperties => ({
-    ...navItemBase,
-    background: activeTab === id ? activeBg : 'transparent',
-    color: activeTab === id ? activeText : inactiveText,
-    borderLeft: activeTab === id ? '3px solid #E8323C' : '3px solid transparent',
-    fontWeight: activeTab === id ? 700 : 500,
-  })
-
-  const sectorStyle = (s: string): React.CSSProperties => ({
-    ...navItemBase,
-    background: activeSector === s ? activeBg : 'transparent',
-    color: activeSector === s ? activeText : inactiveText,
-    borderLeft: activeSector === s ? '3px solid #E8323C' : '3px solid transparent',
-    fontWeight: activeSector === s ? 700 : 500,
-  })
-
-  const sectionLabel: React.CSSProperties = {
-    fontSize: '10px',
-    textTransform: 'uppercase',
-    letterSpacing: '0.1em',
-    fontWeight: 600,
-    color: labelCol,
-    padding: '0 12px',
-    marginTop: '12px',
-    marginBottom: '4px',
-    display: 'block',
-  }
-
   return (
     <aside
       style={{
-        width: 200,
+        width: 180,
         flexShrink: 0,
         display: 'flex',
         flexDirection: 'column',
-        height: '100vh',
-        position: 'sticky',
-        top: 0,
-        background: sidebarBg,
-        borderRight: `1px solid ${borderCol}`,
+        height: '100%',
+        background: '#080B10',
+        borderRight: '1px solid #1E2836',
+        position: 'relative',
       }}
     >
       {/* Logo area */}
-      <div style={{ padding: '14px 12px 12px', borderBottom: `1px solid ${borderCol}` }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <div
-            style={{
-              width: 28,
-              height: 28,
-              borderRadius: 6,
-              background: '#00C087',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              flexShrink: 0,
-            }}
-          >
-            <span style={{ color: '#fff', fontSize: 11, fontWeight: 900 }}>ESG</span>
-          </div>
-          <div>
-            <div style={{ fontSize: 13, fontWeight: 700, color: titleText, lineHeight: 1.2 }}>ESG Intelligence</div>
-            <div style={{ fontSize: 10, color: subtitleText, marginTop: 1 }}>iTrade &middot; CGS International</div>
-          </div>
+      <div
+        style={{
+          height: 52,
+          minHeight: 52,
+          display: 'flex',
+          alignItems: 'center',
+          padding: '0 16px',
+          borderBottom: '1px solid #1E2836',
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+          <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#E8323C' }} />
+          <span style={{ fontSize: 15, fontWeight: 800, color: '#E8323C', letterSpacing: '-0.5px' }}>CGS</span>
+          <span style={{ fontSize: 11, color: '#4A5568', marginLeft: 2 }}>iTrade</span>
         </div>
       </div>
 
-      {/* Nav */}
-      <nav style={{ flex: 1, overflowY: 'auto', padding: '8px 8px' }}>
-        <span style={sectionLabel}>View</span>
-        {analysisItems.map(item => (
-          <button
-            key={item.id}
-            onClick={() => onTabChange(item.tab)}
-            style={tabStyle(item.id)}
-            onMouseEnter={e => {
-              if (activeTab !== item.id) (e.currentTarget as HTMLElement).style.background = hoverBg
-            }}
-            onMouseLeave={e => {
-              if (activeTab !== item.id) (e.currentTarget as HTMLElement).style.background = 'transparent'
-            }}
-          >
-            <span style={{ fontSize: 12, opacity: 0.7, width: 16, textAlign: 'center' }}>{item.icon}</span>
-            <span style={{ flex: 1 }}>{item.label}</span>
-            {activeTab === item.id && (
-              <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#E8323C', flexShrink: 0 }} />
-            )}
-          </button>
-        ))}
-
-        <span style={sectionLabel}>Filter by Sector</span>
-        <div style={{ fontSize: 10, color: labelCol, padding: '0 12px 6px', lineHeight: 1.4 }}>
-          Filters all views simultaneously
-        </div>
-        {sectorItems.map(item => (
-          <button
-            key={item.id}
-            onClick={() => onSectorChange(item.sector)}
-            style={sectorStyle(item.sector)}
-            title="Selecting a sector filters the data shown in all three views above"
-            onMouseEnter={e => {
-              if (activeSector !== item.sector) (e.currentTarget as HTMLElement).style.background = hoverBg
-            }}
-            onMouseLeave={e => {
-              if (activeSector !== item.sector) (e.currentTarget as HTMLElement).style.background = 'transparent'
-            }}
-          >
-            <span style={{ fontSize: 12, opacity: 0.7, width: 16, textAlign: 'center' }}>{item.icon}</span>
-            <span style={{ flex: 1 }}>{item.label}</span>
-            {activeSector === item.sector && (
-              <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#E8323C', flexShrink: 0 }} />
-            )}
-          </button>
-        ))}
-
+      {/* Nav items */}
+      <nav style={{ padding: '8px 0' }}>
+        {NAV_ITEMS.map((item, i) => {
+          const isActive = activeTab === item.id
+          return (
+            <motion.button
+              key={item.id}
+              onClick={() => onTabChange(item.id)}
+              initial={{ x: -10, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ delay: i * 0.05, duration: 0.2 }}
+              whileHover={{ x: 2 }}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 10,
+                width: '100%',
+                height: 44,
+                padding: '0 14px',
+                fontSize: 13,
+                fontWeight: isActive ? 500 : 400,
+                color: isActive ? '#E8EDF2' : '#8B9AAB',
+                background: isActive ? '#0D1117' : 'transparent',
+                border: 'none',
+                borderLeft: isActive ? '2px solid #E8323C' : '2px solid transparent',
+                cursor: 'pointer',
+                textAlign: 'left',
+                transition: 'color 0.15s, background 0.15s',
+              }}
+            >
+              <span style={{ fontSize: 14, opacity: isActive ? 1 : 0.6, width: 16, textAlign: 'center', flexShrink: 0 }}>
+                {item.icon}
+              </span>
+              <span style={{ flex: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                {item.label}
+              </span>
+              {isActive && (
+                <span style={{ width: 5, height: 5, borderRadius: '50%', background: '#E8323C', flexShrink: 0 }} />
+              )}
+            </motion.button>
+          )
+        })}
       </nav>
 
+      {/* Divider */}
+      <div style={{ height: 1, background: '#1E2836', margin: '4px 16px' }} />
+
+      {/* Sector filter */}
+      <div style={{ padding: '0 0 8px' }}>
+        <div style={{ fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 600, color: '#4A5568', padding: '12px 16px 6px' }}>
+          Sector
+        </div>
+        {SECTOR_ITEMS.map((item, i) => {
+          const isActive = activeSector === item.id
+          const dot      = SECTOR_DOTS[item.id]
+          return (
+            <motion.button
+              key={item.id}
+              onClick={() => onSectorChange(item.id)}
+              initial={{ x: -10, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ delay: 0.15 + i * 0.05, duration: 0.2 }}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 8,
+                width: '100%',
+                height: 36,
+                padding: '0 14px',
+                fontSize: 12,
+                fontWeight: isActive ? 500 : 400,
+                color: isActive ? '#E8EDF2' : '#8B9AAB',
+                background: isActive ? '#0D1117' : 'transparent',
+                border: 'none',
+                cursor: 'pointer',
+                textAlign: 'left',
+                transition: 'color 0.15s, background 0.15s',
+              }}
+              onMouseEnter={e => {
+                if (!isActive) (e.currentTarget as HTMLElement).style.color = '#E8EDF2'
+              }}
+              onMouseLeave={e => {
+                if (!isActive) (e.currentTarget as HTMLElement).style.color = '#8B9AAB'
+              }}
+            >
+              <span
+                style={{
+                  width: 6, height: 6, borderRadius: '50%',
+                  background: isActive ? dot : '#2A3A4A',
+                  flexShrink: 0,
+                  transition: 'background 0.15s',
+                }}
+              />
+              <span style={{ flex: 1 }}>{item.label}</span>
+              <span style={{ fontSize: 10, color: '#4A5568', fontFamily: 'monospace' }}>
+                {SECTOR_COUNTS[item.id]}
+              </span>
+            </motion.button>
+          )
+        })}
+      </div>
+
       {/* Footer */}
-      <div style={{ padding: '10px 12px', borderTop: `1px solid ${borderCol}` }}>
-        <div style={{ fontSize: 10, color: footerText, lineHeight: 1.6 }}>
-          <div style={{ fontWeight: 600, marginBottom: 1 }}>CGS International &middot; iTrade ESG Intelligence Module</div>
+      <div
+        style={{
+          marginTop: 'auto',
+          borderTop: '1px solid #1E2836',
+          padding: '12px 16px',
+        }}
+      >
+        <div style={{ fontSize: 10, color: '#4A5568', lineHeight: 1.6 }}>
           <div>PolyFinTech100 2026</div>
+          <div>CGS International</div>
         </div>
       </div>
     </aside>

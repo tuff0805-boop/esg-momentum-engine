@@ -1,7 +1,8 @@
 import { useState, useCallback, useEffect } from 'react'
+import { motion } from 'framer-motion'
 import type { Company } from './data/companies'
 import { companies as ALL_COMPANIES } from './data/companies'
-import { SubNav } from './components/SubNav'
+import { Sidebar } from './components/Sidebar'
 import { StandardizerPanel } from './components/standardizer/StandardizerPanel'
 import { MomentumPanel } from './components/momentum/MomentumPanel'
 import { DCFPanel } from './components/dcf/DCFPanel'
@@ -23,7 +24,6 @@ export default function App() {
   const handleTabChange = (t: Tab) => {
     setActiveTab(t)
     setTabKey(k => k + 1)
-    window.scrollTo({ top: 0, behavior: 'instant' })
   }
 
   useEffect(() => {
@@ -34,39 +34,42 @@ export default function App() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', background: '#080B10' }}>
-      <header
+      {/* ── Header 64px ── */}
+      <motion.header
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.4, ease: 'easeOut' }}
         style={{
-          height: 48,
-          minHeight: 48,
+          height: 64,
+          minHeight: 64,
           background: '#080B10',
           borderBottom: '1px solid #1E2836',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          padding: '0 16px',
+          padding: '0 24px',
           flexShrink: 0,
           zIndex: 20,
         }}
       >
-        {/* Left: logo + title */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <div style={{ width: 26, height: 26, borderRadius: 5, background: '#00C087', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-            <span style={{ color: '#fff', fontSize: 9, fontWeight: 900, letterSpacing: '-0.5px' }}>ESG</span>
+        {/* Left: logo + divider + title */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 0 }}>
+          {/* CGS Logo placeholder — swap src="/cgsi_logo.png" when file is added */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginRight: 0 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+              <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#E8323C' }} />
+              <span style={{ fontSize: 16, fontWeight: 800, color: '#E8323C', letterSpacing: '-0.5px', fontFamily: 'sans-serif' }}>CGS</span>
+            </div>
           </div>
+          <div style={{ width: 1, height: 28, background: '#2A3A4A', margin: '0 16px' }} />
           <div>
-            <div style={{ fontSize: 14, fontWeight: 600, color: '#E8EDF2', lineHeight: 1.2 }}>ESG Intelligence</div>
-            <div style={{ fontSize: 11, color: '#4A5568' }}>iTrade · CGS International</div>
+            <div style={{ fontSize: 16, fontWeight: 600, color: '#E8EDF2', lineHeight: 1.2 }}>ESG Intelligence</div>
+            <div style={{ fontSize: 11, color: '#4A5568' }}>iTrade · Brown Industries · ASEAN</div>
           </div>
         </div>
 
-        {/* Right: clock + badge + toggle */}
+        {/* Right: toggle + divider + clock + badge */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <SGTClock />
-          <div style={{ width: 1, height: 16, background: '#1E2836' }} />
-          <div style={{ fontSize: 10, fontWeight: 600, background: 'rgba(232,50,60,0.12)', color: '#E8323C', padding: '2px 8px', borderRadius: 3 }}>
-            PFT100 2026
-          </div>
-          <div style={{ width: 1, height: 16, background: '#1E2836' }} />
           {/* Retail/Analyst toggle */}
           <div style={{ display: 'flex', border: '1px solid #1E2836', borderRadius: 3, overflow: 'hidden' }}>
             {(['retail', 'analyst'] as ViewMode[]).map(mode => (
@@ -74,8 +77,8 @@ export default function App() {
                 key={mode}
                 onClick={() => setViewMode(mode)}
                 style={{
-                  padding: '3px 10px',
-                  fontSize: 11,
+                  padding: '4px 12px',
+                  fontSize: 12,
                   fontWeight: 500,
                   border: 'none',
                   cursor: 'pointer',
@@ -90,31 +93,47 @@ export default function App() {
             ))}
           </div>
           <Tooltip content="Retail view shows simplified buy/sell signals. Analyst view shows full ESG methodology, scoring model, and DCF valuation." />
+          <div style={{ width: 1, height: 16, background: '#1E2836' }} />
+          <SGTClock />
+          <div style={{ width: 1, height: 16, background: '#1E2836' }} />
+          <div style={{ fontSize: 10, fontWeight: 600, background: 'rgba(232,50,60,0.12)', color: '#E8323C', padding: '3px 8px', borderRadius: 3 }}>
+            PFT100 2026
+          </div>
         </div>
-      </header>
+      </motion.header>
 
-      <SubNav
-        activeTab={activeTab}
-        activeSector={activeSector}
-        onTabChange={handleTabChange}
-        onSectorChange={setActiveSector}
-      />
+      {/* ── Body row: Sidebar + Main ── */}
+      <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
+        <Sidebar
+          activeTab={activeTab}
+          activeSector={activeSector}
+          onTabChange={handleTabChange}
+          onSectorChange={setActiveSector}
+        />
 
-      <div style={{ flex: 1, overflowY: 'auto' }}>
-        <main style={{ maxWidth: 1440, margin: '0 auto', padding: '12px 16px' }}>
-          {activeTab === 'standardizer' && (
-            <StandardizerPanel activeSector={activeSector} onSelect={onSelect} animKey={tabKey} viewMode={viewMode} />
-          )}
-          {activeTab === 'momentum' && (
-            <MomentumPanel activeSector={activeSector} onSelect={onSelect} animKey={tabKey} viewMode={viewMode} />
-          )}
-          {activeTab === 'dcf' && (
-            <DCFPanel activeSector={activeSector} onSelect={onSelect} viewMode={viewMode} />
-          )}
-        </main>
-        <footer style={{ padding: '8px 16px', textAlign: 'center', fontSize: 10, color: '#4A5568', borderTop: '1px solid #1E2836', flexShrink: 0 }}>
-          CGS International · iTrade ESG Intelligence Module · PolyFinTech100 2026
-        </footer>
+        <div style={{ flex: 1, overflowY: 'auto', background: '#080B10' }}>
+          <main style={{ maxWidth: 1400, margin: '0 auto', padding: '14px 20px' }}>
+            <motion.div
+              key={tabKey}
+              initial={{ x: 8, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.2, ease: 'easeOut' }}
+            >
+              {activeTab === 'standardizer' && (
+                <StandardizerPanel activeSector={activeSector} onSelect={onSelect} animKey={tabKey} viewMode={viewMode} />
+              )}
+              {activeTab === 'momentum' && (
+                <MomentumPanel activeSector={activeSector} onSelect={onSelect} animKey={tabKey} viewMode={viewMode} />
+              )}
+              {activeTab === 'dcf' && (
+                <DCFPanel activeSector={activeSector} onSelect={onSelect} viewMode={viewMode} />
+              )}
+            </motion.div>
+          </main>
+          <footer style={{ padding: '10px 20px', textAlign: 'center', fontSize: 10, color: '#4A5568', borderTop: '1px solid #1E2836' }}>
+            CGS International · iTrade ESG Intelligence Module · PolyFinTech100 2026
+          </footer>
+        </div>
       </div>
 
       <CompanyDrawer
@@ -134,7 +153,7 @@ function SGTClock() {
     const id = setInterval(() => setTime(getSGT()), 1000)
     return () => clearInterval(id)
   }, [])
-  return <span style={{ fontSize: 12, fontFamily: 'monospace', color: '#8B9AAB' }}>{time} SGT</span>
+  return <span style={{ fontSize: 13, fontFamily: 'monospace', color: '#8B9AAB' }}>{time} SGT</span>
 }
 
 function getSGT(): string {

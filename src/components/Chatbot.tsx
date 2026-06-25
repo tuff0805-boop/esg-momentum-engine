@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
+import { motion } from 'framer-motion'
 import { Tooltip } from './shared/Tooltip'
 
 interface Message {
@@ -217,7 +218,11 @@ export function Chatbot() {
     <>
       {/* Floating button */}
       {!open && (
-        <div style={{ position: 'fixed', bottom: 24, right: 24, zIndex: 100 }}>
+        <motion.div
+          animate={open ? {} : { scale: [1, 1.03, 1] }}
+          transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+          style={{ position: 'fixed', bottom: 24, right: 24, zIndex: 100 }}
+        >
           <button
             onClick={() => setOpen(true)}
             title="Ask our AI Analyst any question about the ESG data, company comparisons, or investment signals shown in this dashboard."
@@ -236,7 +241,7 @@ export function Chatbot() {
             </svg>
             <span style={{ fontSize: 13, fontWeight: 600 }}>AI Analyst</span>
           </button>
-        </div>
+        </motion.div>
       )}
 
       {/* Chat panel */}
