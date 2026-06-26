@@ -17,8 +17,7 @@ interface DCFPanelProps {
 
 function fmt(v: number): string {
   if (v >= 1000) return v.toLocaleString(undefined, { maximumFractionDigits: 0 })
-  if (v >= 10) return v.toFixed(2)
-  return v.toFixed(3)
+  return v.toFixed(2)
 }
 
 const SECTOR_VALUES = new Set<string>(['Energy', 'Materials', 'Industrials'])
@@ -143,7 +142,7 @@ export function DCFPanel({ activeSector, onSelect, viewMode = 'analyst' }: DCFPa
           <table className="w-full text-xs min-w-[640px]">
             <thead>
               <tr className="table-head-row">
-                {['Company', 'Sector', 'ESG Positioning', 'Base Price', 'ESG Target Price', 'Upside', 'Rating'].map(h => (
+                {['Company', 'Sector', 'ESG Positioning', 'Base Price', 'ESG Target Price', 'Potential Upside', 'Rating'].map(h => (
                   <th key={h} className="th">{h}</th>
                 ))}
               </tr>
@@ -166,7 +165,7 @@ export function DCFPanel({ activeSector, onSelect, viewMode = 'analyst' }: DCFPa
                   <td className="td text-secondary">{r.company.sector}</td>
                   <td className="td"><Badge variant={quadrantVariant(r.quadrant)}>{r.quadrant.split(' ').map((w: string) => w[0]).join('')}</Badge></td>
                   <td className="td font-mono text-right text-primary">{fmt(r.company.base_price)}</td>
-                  <td className="td font-mono text-right" style={{ color: '#00C087' }}>{fmt(r.dcf.adjPrice)}</td>
+                  <td className="td font-mono text-right" style={{ color: '#00C087' }}>{r.dcf.adjPrice.toFixed(2)}</td>
                   <td className="td font-mono text-right font-semibold">
                     <span style={{ color: r.dcf.upsidePct >= 0 ? '#00C087' : '#E8323C' }}>
                       {r.dcf.upsidePct >= 0 ? '+' : ''}{r.dcf.upsidePct.toFixed(1)}%
@@ -190,8 +189,8 @@ export function DCFPanel({ activeSector, onSelect, viewMode = 'analyst' }: DCFPa
 }
 
 function quadrantBorderColor(q: string): string {
-  if (q === 'Overweight')        return '#00C087'
-  if (q === 'Strong Overweight') return '#60A5FA'
-  if (q === 'Underweight')       return '#E8323C'
+  if (q === 'Outperform')  return '#00C087'
+  if (q === 'Strong Buy')  return '#60A5FA'
+  if (q === 'Underperform') return '#E8323C'
   return '#C4A85A'
 }

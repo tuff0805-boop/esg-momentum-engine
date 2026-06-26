@@ -14,7 +14,7 @@ interface ScoreTableProps {
 function DisagreementBadge({ value }: { value: number }) {
   if (value < 0.4) return <Badge variant="buy">Low</Badge>
   if (value < 0.8) return <Badge variant="accumulate">Med</Badge>
-  return <Badge variant="overrated-leaders">High</Badge>
+  return <Badge variant="reduce">High</Badge>
 }
 
 export function ScoreTable({ companies, allCompanies, onSelect, hidePillars = false }: ScoreTableProps) {
@@ -73,7 +73,7 @@ export function ScoreTable({ companies, allCompanies, onSelect, hidePillars = fa
                 {!hidePillars && (
                   <td className="td">
                     <div className="flex flex-col gap-1 w-24">
-                      {([['E', pillars.E, '#00C087'], ['S', pillars.S, '#60A5FA'], ['G', pillars.G, '#C084FC']] as [string, number, string][]).map(([lbl, val, col]) => (
+                      {([['E', pillars.E, '#00C087'], ['S', pillars.S, '#60A5FA'], ['G', pillars.G, '#C084FC'], ['I', pillars.I, '#F59E0B']] as [string, number, string][]).map(([lbl, val, col]) => (
                         <div key={lbl} className="flex items-center gap-1">
                           <span className="text-[9px] text-secondary w-3">{lbl}</span>
                           <div className="flex-1 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.06)', height: 4 }}>

@@ -1,44 +1,46 @@
 import React from 'react'
 
 type BadgeVariant =
-  | 'hidden-winners'
-  | 'future-leaders'
-  | 'value-traps'
-  | 'overrated-leaders'
-  | 'buy'
-  | 'accumulate'
-  | 'hold'
+  | 'outperform'
+  | 'strong-buy'
+  | 'underperform'
   | 'reduce'
+  | 'dollar-cost'
+  | 'hold'
   | 'upgrade'
   | 'downgrade'
-  | 'watch'
+  | 'monitor'
   | 'stable'
   | 'pillar-e'
   | 'pillar-s'
   | 'pillar-g'
+  | 'pillar-i'
   | 'severity-1'
   | 'severity-2'
   | 'severity-3'
+  | 'buy'
+  | 'accumulate'
 
 const variantStyles: Record<BadgeVariant, { bg: string; color: string; border: string }> = {
-  'hidden-winners':    { bg: '#003D2B', color: '#00C087', border: '#005A3F' },
-  'future-leaders':    { bg: '#0A2A52', color: '#60A5FA', border: '#0F3D7A' },
-  'value-traps':       { bg: '#3D0A0C', color: '#E8323C', border: '#5A1014' },
-  'overrated-leaders': { bg: '#2A1A00', color: '#C4A85A', border: '#3D2600' },
-  buy:        { bg: '#003D2B', color: '#00C087', border: '#005A3F' },
-  accumulate: { bg: '#0A2A52', color: '#60A5FA', border: '#0F3D7A' },
-  hold:       { bg: '#2A1A00', color: '#C4A85A', border: '#3D2600' },
-  reduce:     { bg: '#3D0A0C', color: '#E8323C', border: '#5A1014' },
-  upgrade:    { bg: '#003D2B', color: '#00C087', border: '#005A3F' },
-  downgrade:  { bg: '#3D0A0C', color: '#E8323C', border: '#5A1014' },
-  watch:      { bg: '#2A1A00', color: '#C4A85A', border: '#3D2600' },
-  stable:     { bg: '#131920', color: '#8B9AAB', border: '#1E2836' },
-  'pillar-e': { bg: '#003D2B', color: '#00C087', border: '#005A3F' },
-  'pillar-s': { bg: '#0A2A52', color: '#60A5FA', border: '#0F3D7A' },
-  'pillar-g': { bg: '#1A0A2E', color: '#C084FC', border: '#2D1050' },
-  'severity-1': { bg: '#131920', color: '#8B9AAB', border: '#1E2836' },
-  'severity-2': { bg: '#2A1A00', color: '#C4A85A', border: '#3D2600' },
-  'severity-3': { bg: '#3D0A0C', color: '#E8323C', border: '#5A1014' },
+  'outperform':    { bg: '#003D2B', color: '#00C087', border: '#005A3F' },
+  'strong-buy':    { bg: '#0A2A52', color: '#60A5FA', border: '#0F3D7A' },
+  'underperform':  { bg: '#3D0A0C', color: '#E8323C', border: '#5A1014' },
+  'reduce':        { bg: '#2A1A00', color: '#C4A85A', border: '#3D2600' },
+  'dollar-cost':   { bg: '#003D3A', color: '#2DD4BF', border: '#005450' },
+  'hold':          { bg: '#131920', color: '#8B9AAB', border: '#1E2836' },
+  'buy':           { bg: '#003D2B', color: '#00C087', border: '#005A3F' },
+  'accumulate':    { bg: '#0A2A52', color: '#60A5FA', border: '#0F3D7A' },
+  'upgrade':       { bg: '#003D2B', color: '#00C087', border: '#005A3F' },
+  'downgrade':     { bg: '#3D0A0C', color: '#E8323C', border: '#5A1014' },
+  'monitor':       { bg: '#2A1A00', color: '#C4A85A', border: '#3D2600' },
+  'stable':        { bg: '#131920', color: '#8B9AAB', border: '#1E2836' },
+  'pillar-e':      { bg: '#003D2B', color: '#00C087', border: '#005A3F' },
+  'pillar-s':      { bg: '#0A2A52', color: '#60A5FA', border: '#0F3D7A' },
+  'pillar-g':      { bg: '#1A0A2E', color: '#C084FC', border: '#2D1050' },
+  'pillar-i':      { bg: '#2A1A00', color: '#F59E0B', border: '#3D2600' },
+  'severity-1':    { bg: '#131920', color: '#8B9AAB', border: '#1E2836' },
+  'severity-2':    { bg: '#2A1A00', color: '#C4A85A', border: '#3D2600' },
+  'severity-3':    { bg: '#3D0A0C', color: '#E8323C', border: '#5A1014' },
 }
 
 interface BadgeProps {
@@ -73,22 +75,35 @@ export function Badge({ variant, children, className = '' }: BadgeProps) {
 }
 
 export function quadrantVariant(q: string): BadgeVariant {
-  if (q === 'Overweight')        return 'hidden-winners'
-  if (q === 'Strong Overweight') return 'future-leaders'
-  if (q === 'Underweight')       return 'value-traps'
-  return 'overrated-leaders'
+  if (q === 'Outperform')   return 'outperform'
+  if (q === 'Strong Buy')   return 'strong-buy'
+  if (q === 'Underperform') return 'underperform'
+  return 'reduce'
 }
 
 export function ratingVariant(r: string): BadgeVariant {
-  if (r === 'Overweight') return 'buy'
-  if (r === 'Accumulate') return 'accumulate'
-  if (r === 'Neutral')    return 'hold'
+  if (r === 'Strong Buy')          return 'strong-buy'
+  if (r === 'Dollar-Cost Strategy') return 'dollar-cost'
+  if (r === 'Hold')                return 'hold'
   return 'reduce'
 }
 
 export function forecastVariant(f: string): BadgeVariant {
   if (f === 'Rating Upgrade Expected') return 'upgrade'
   if (f === 'Rating Downgrade Risk')   return 'downgrade'
-  if (f === 'Watch')                   return 'watch'
+  if (f === 'Monitor')                 return 'monitor'
   return 'stable'
+}
+
+export function esgSignalVariant(s: string): BadgeVariant {
+  if (s === 'Outperform')   return 'outperform'
+  if (s === 'Underperform') return 'underperform'
+  return 'hold'
+}
+
+export function actionVariant(a: string): BadgeVariant {
+  if (a === 'Strong Buy')           return 'strong-buy'
+  if (a === 'Dollar-Cost Strategy') return 'dollar-cost'
+  if (a === 'Hold')                 return 'hold'
+  return 'reduce'
 }

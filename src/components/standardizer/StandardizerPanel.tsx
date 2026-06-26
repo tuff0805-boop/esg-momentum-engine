@@ -3,7 +3,7 @@ import type { Company } from '../../data/companies'
 import { calcSES, calcDisagreement, getQuadrant } from '../../lib/esg'
 import { MetricCard } from '../shared/MetricCard'
 import { ScoreTable } from './ScoreTable'
-import { DisagreementBars } from './DisagreementBars'
+import { DistributionChart } from './DistributionChart'
 import { RetailSignalCard } from '../shared/RetailSignalCard'
 
 interface StandardizerPanelProps {
@@ -24,7 +24,7 @@ export function StandardizerPanel({ activeSector, onSelect, animKey, viewMode = 
     ? filtered.reduce((s, c) => s + calcSES(c, ALL_COMPANIES), 0) / filtered.length
     : 0
   const highDisagreeCount = filtered.filter(c => calcDisagreement(c, ALL_COMPANIES) >= 0.8).length
-  const hiddenWinnersCount = filtered.filter(c => getQuadrant(c, ALL_COMPANIES) === 'Overweight').length
+  const hiddenWinnersCount = filtered.filter(c => getQuadrant(c, ALL_COMPANIES) === 'Outperform').length
 
   const isRetail = viewMode === 'retail'
 
@@ -88,14 +88,10 @@ export function StandardizerPanel({ activeSector, onSelect, animKey, viewMode = 
         />
       </div>
 
-      {/* Provider Disagreement — analyst only */}
+      {/* Score Distribution Bell Curve — analyst only */}
       {!isRetail && (
         <div className="card p-5">
-          <div className="mb-4">
-            <div className="card-title">Provider Disagreement</div>
-            <div className="card-subtitle">Standard deviation of z-scores across MSCI, Sustainalytics and Bloomberg · high = alpha signal</div>
-          </div>
-          <DisagreementBars companies={filtered} allCompanies={ALL_COMPANIES} />
+          <DistributionChart companies={filtered} allCompanies={ALL_COMPANIES} />
         </div>
       )}
     </div>

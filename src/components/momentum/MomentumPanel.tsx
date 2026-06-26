@@ -22,7 +22,7 @@ export function MomentumPanel({ activeSector, onSelect, animKey, viewMode = 'ana
     : ALL_COMPANIES
 
   const avgCAGR      = filtered.length ? filtered.reduce((s, c) => s + calcCAGR(c), 0) / filtered.length : 0
-  const hiddenWinners = filtered.filter(c => getQuadrant(c, ALL_COMPANIES) === 'Overweight').length
+  const hiddenWinners = filtered.filter(c => getQuadrant(c, ALL_COMPANIES) === 'Outperform').length
   const upgradeLikely = filtered.filter(c => getRaterForecast(c, ALL_COMPANIES) === 'Rating Upgrade Expected').length
   const downgradeRisk = filtered.filter(c => getRaterForecast(c, ALL_COMPANIES) === 'Rating Downgrade Risk').length
 
@@ -49,7 +49,7 @@ export function MomentumPanel({ activeSector, onSelect, animKey, viewMode = 'ana
             animKey={animKey}
           />
           <MetricCard
-            label="Overweight"
+            label="Outperform"
             value={hiddenWinners}
             subLabel="Low score · rising trajectory"
             tooltip="Companies below-average Standardized ESG Score but with positive ESG CAGR — potential re-rating candidates."
@@ -88,10 +88,10 @@ export function MomentumPanel({ activeSector, onSelect, animKey, viewMode = 'ana
           </div>
           <div className="px-5 pb-4 flex gap-4 flex-wrap">
             {[
-              { label: 'Overweight',        color: '#00C087' },
-              { label: 'Strong Overweight', color: '#60A5FA' },
-              { label: 'Underweight',       color: '#E8323C' },
-              { label: 'Reduce',            color: '#C4A85A' },
+              { label: 'Outperform',  color: '#00C087' },
+              { label: 'Strong Buy',  color: '#60A5FA' },
+              { label: 'Underperform', color: '#E8323C' },
+              { label: 'Reduce',      color: '#C4A85A' },
             ].map(q => (
               <div key={q.label} className="flex items-center gap-1.5 text-xs text-secondary">
                 <div className="w-2.5 h-2.5 rounded-full" style={{ background: q.color }} />

@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import type { Company } from '../../data/companies'
 import { calcSES, calcCAGR, calcEventScore, calcMomentum, getQuadrant, getRaterForecast } from '../../lib/esg'
 import { Badge, quadrantVariant, forecastVariant } from '../shared/Badge'
+import { Tooltip } from '../shared/Tooltip'
 
 interface LeaderboardProps {
   companies: Company[]
@@ -23,9 +24,9 @@ export function Leaderboard({ companies, allCompanies, onSelect }: LeaderboardPr
     .sort((a, b) => b.momentum - a.momentum)
 
   function qBorderColor(q: string): string {
-    if (q === 'Overweight')        return '#00C087'
-    if (q === 'Strong Overweight') return '#1E6FD9'
-    if (q === 'Underweight')       return '#E8323C'
+    if (q === 'Outperform')  return '#00C087'
+    if (q === 'Strong Buy')  return '#1E6FD9'
+    if (q === 'Underperform') return '#E8323C'
     return '#C4A85A'
   }
 
@@ -34,8 +35,23 @@ export function Leaderboard({ companies, allCompanies, onSelect }: LeaderboardPr
       <table style={{ width: '100%', fontSize: 13, minWidth: 680, borderCollapse: 'collapse' }}>
         <thead>
           <tr style={{ borderBottom: '1px solid #1E2836', background: '#080B10', position: 'sticky', top: 0 }}>
-            {['#', 'Company', 'Std. ESG', 'CAGR', 'Fwd Signal', 'Momentum', 'Quadrant', 'Rating Forecast'].map(h => (
+            {['#', 'Company', 'Std. ESG', 'CAGR'].map(h => (
               <th key={h} style={{ padding: '0 16px', height: 40, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600, color: '#4A5568', textAlign: h === '#' ? 'center' : 'left', whiteSpace: 'nowrap', verticalAlign: 'middle' }}>{h}</th>
+            ))}
+            {/* Forward Signal column with tooltip */}
+            <th style={{ padding: '0 16px', height: 40, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600, color: '#4A5568', textAlign: 'center', whiteSpace: 'nowrap', verticalAlign: 'middle' }}>
+              <span style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'center', gap: 1 }}>
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+                  Forward Signal
+                  <Tooltip content="Forward Signal Score measures leading ESG indicators — certifications, green bonds, sustainability hiring, and controversy flags — that precede official rating upgrades by 12-18 months." />
+                </span>
+                <span style={{ fontSize: 9, color: '#4A5568', textTransform: 'none', letterSpacing: 0, fontWeight: 400 }}>(leading indicators)</span>
+              </span>
+            </th>
+            {/* Momentum column */}
+            <th style={{ padding: '0 16px', height: 40, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600, color: '#4A5568', textAlign: 'center', whiteSpace: 'nowrap', verticalAlign: 'middle' }}>Momentum</th>
+            {['Quadrant', 'Rating Forecast'].map(h => (
+              <th key={h} style={{ padding: '0 16px', height: 40, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600, color: '#4A5568', textAlign: 'left', whiteSpace: 'nowrap', verticalAlign: 'middle' }}>{h}</th>
             ))}
           </tr>
         </thead>
@@ -62,9 +78,9 @@ export function Leaderboard({ companies, allCompanies, onSelect }: LeaderboardPr
                   {r.cagr >= 0 ? '+' : ''}{r.cagr.toFixed(1)}%
                 </span>
               </td>
-              <td style={{ padding: '0 16px', fontFamily: 'monospace', textAlign: 'right', color: '#E8EDF2', verticalAlign: 'middle' }}>{r.eventScore}/100</td>
-              <td style={{ padding: '0 16px', verticalAlign: 'middle' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+              <td style={{ padding: '0 16px', fontFamily: 'monospace', textAlign: 'center', color: '#E8EDF2', verticalAlign: 'middle' }}>{r.eventScore}/100</td>
+              <td style={{ padding: '0 16px', verticalAlign: 'middle', textAlign: 'center' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
                   <div style={{ width: 64, height: 4, background: '#1E2836', borderRadius: 2, overflow: 'hidden' }}>
                     <div style={{ height: '100%', background: '#00C087', width: `${r.momentum}%`, borderRadius: 2 }} />
                   </div>

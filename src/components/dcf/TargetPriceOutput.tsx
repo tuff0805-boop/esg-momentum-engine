@@ -1,4 +1,5 @@
-import { Badge, ratingVariant } from '../shared/Badge'
+import { Badge, ratingVariant, esgSignalVariant, actionVariant } from '../shared/Badge'
+import { getDCFRating } from '../../lib/esg'
 
 interface TargetPriceOutputProps {
   bearPrice: number
@@ -6,7 +7,7 @@ interface TargetPriceOutputProps {
   adjPrice: number
   bullPrice: number
   upsidePct: number
-  rating: 'Overweight' | 'Accumulate' | 'Neutral' | 'Underweight'
+  rating: 'Strong Buy' | 'Dollar-Cost Strategy' | 'Hold' | 'Reduce'
   multiplier: number
   quadrant: string
   baseWACC: number
@@ -14,10 +15,10 @@ interface TargetPriceOutputProps {
   waccReduction: number
 }
 
-function fmt(v: number): string {
-  if (v >= 1000) return v.toLocaleString(undefined, { maximumFractionDigits: 0 })
-  if (v >= 10) return v.toFixed(2)
-  return v.toFixed(3)
+function getESGSignalFromQuadrant(quadrant: string): 'Outperform' | 'Neutral' | 'Underperform' {
+  if (quadrant === 'Strong Buy' || quadrant === 'Outperform') return 'Outperform'
+  if (quadrant === 'Reduce' || quadrant === 'Underperform') return 'Underperform'
+  return 'Neutral'
 }
 
 export function TargetPriceOutput({
@@ -25,12 +26,8 @@ export function TargetPriceOutput({
   upsidePct, rating, multiplier, quadrant,
   baseWACC, adjWACC, waccReduction,
 }: TargetPriceOutputProps) {
-  const ratingColor: Record<string, string> = {
-    Overweight:  '#00C087',
-    Accumulate:  '#1E6FD9',
-    Neutral:     '#C4A85A',
-    Underweight: '#E8323C',
-  }
+  const esgSignal = getESGSignalFromQuadrant(quadrant)
+  const suggestedAction = getDCFRating(upsidePct)
 
   const low  = bearPrice * 0.85
   const high = bullPrice * 1.05
@@ -47,9 +44,18 @@ export function TargetPriceOutput({
         <Badge variant={ratingVariant(rating)}>{rating}</Badge>
       </div>
 
-      <div style={{ fontFamily: 'monospace', fontSize: 40, fontWeight: 500, color: ratingColor[rating], letterSpacing: '-0.01em', marginBottom: 2 }}>
-        {rating}
+      {/* ESG Signal + Suggested Action rows */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 12 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span style={{ fontSize: 10, color: '#4A5568', textTransform: 'uppercase', letterSpacing: '0.08em', width: 120 }}>ESG Signal</span>
+          <Badge variant={esgSignalVariant(esgSignal)}>{esgSignal}</Badge>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span style={{ fontSize: 10, color: '#4A5568', textTransform: 'uppercase', letterSpacing: '0.08em', width: 120 }}>Suggested Action</span>
+          <Badge variant={actionVariant(suggestedAction)}>{suggestedAction}</Badge>
+        </div>
       </div>
+
       <div style={{ fontFamily: 'monospace', fontSize: 14, color: upsidePct >= 0 ? '#00C087' : '#E8323C', marginBottom: 16 }}>
         {upsidePct >= 0 ? '+' : ''}{upsidePct.toFixed(1)}% ESG financial materiality impact
       </div>
@@ -62,7 +68,7 @@ export function TargetPriceOutput({
         ].map(s => (
           <div key={s.label} style={{ background: '#080B10', border: '1px solid #1E2836', borderRadius: 4, padding: '8px 10px', textAlign: 'center' }}>
             <div style={{ fontSize: 10, color: '#4A5568', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 4 }}>{s.label}</div>
-            <div style={{ fontFamily: 'monospace', fontSize: 20, fontWeight: 500, color: s.color }}>{fmt(s.price)}</div>
+            <div style={{ fontFamily: 'monospace', fontSize: 20, fontWeight: 500, color: s.color }}>{s.price.toFixed(2)}</div>
           </div>
         ))}
       </div>
@@ -83,8 +89,8 @@ export function TargetPriceOutput({
           />
         ))}
         <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 9, color: '#4A5568', marginTop: 6 }}>
-          <span>Bear {fmt(bearPrice)}</span>
-          <span>Bull {fmt(bullPrice)}</span>
+          <span>Bear {bearPrice.toFixed(2)}</span>
+          <span>Bull {bullPrice.toFixed(2)}</span>
         </div>
       </div>
 

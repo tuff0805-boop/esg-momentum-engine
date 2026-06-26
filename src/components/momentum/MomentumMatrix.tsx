@@ -19,10 +19,10 @@ interface MomentumMatrixProps {
 }
 
 const quadrantColors: Record<string, string> = {
-  'Overweight':        '#00C087',
-  'Strong Overweight': '#60A5FA',
-  'Underweight':       '#E8323C',
-  'Reduce':            '#C4A85A',
+  'Outperform':  '#00C087',
+  'Strong Buy':  '#60A5FA',
+  'Underperform': '#E8323C',
+  'Reduce':      '#C4A85A',
 }
 
 interface DataPoint {
@@ -145,9 +145,9 @@ export function MomentumMatrix({ companies, allCompanies, onSelect }: MomentumMa
         </ScatterChart>
       </ResponsiveContainer>
 
-      <div className="absolute top-7 left-16 text-[10px] font-semibold pointer-events-none" style={{ color: '#4A5568', opacity: 0.6 }}>Overweight</div>
-      <div className="absolute top-7 right-8 text-[10px] font-semibold pointer-events-none" style={{ color: '#4A5568', opacity: 0.6 }}>Strong Overweight</div>
-      <div className="absolute bottom-14 left-16 text-[10px] font-semibold pointer-events-none" style={{ color: '#4A5568', opacity: 0.6 }}>Underweight</div>
+      <div className="absolute top-7 left-16 text-[10px] font-semibold pointer-events-none" style={{ color: '#4A5568', opacity: 0.6 }}>Outperform</div>
+      <div className="absolute top-7 right-8 text-[10px] font-semibold pointer-events-none" style={{ color: '#4A5568', opacity: 0.6 }}>Strong Buy</div>
+      <div className="absolute bottom-14 left-16 text-[10px] font-semibold pointer-events-none" style={{ color: '#4A5568', opacity: 0.6 }}>Underperform</div>
       <div className="absolute bottom-14 right-8 text-[10px] font-semibold pointer-events-none" style={{ color: '#4A5568', opacity: 0.6 }}>Reduce</div>
     </div>
   )

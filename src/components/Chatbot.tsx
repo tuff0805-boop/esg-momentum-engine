@@ -16,7 +16,7 @@ interface FAQ {
 }
 
 const SUGGESTED = [
-  'Why is Wilmar International flagged Overweight?',
+  'Why is Wilmar International flagged Outperform?',
   'Which company has the highest ESG momentum?',
   'Compare PTT PCL and Sembcorp on climate action',
   'What SDG goals does the Materials sector score highest on?',
@@ -28,19 +28,19 @@ const FALLBACK = "I can answer questions about the 10 ASEAN companies in this un
 
 const FAQ_KB: FAQ[] = [
   {
-    keywords: ['wilmar', 'overweight', 'flagged'],
-    question: 'Why is Wilmar International flagged Overweight?',
-    answer: 'Wilmar International is flagged Overweight due to its strong ESG CAGR of +12.2% over 5 years — the highest in the Materials sector. Key catalysts include RSPO certification expansion, a strengthened no-deforestation policy, and an active smallholder ESG programme. These initiatives map to SDG 12 (Responsible Consumption) and SDG 15 (Life on Land), signalling structural ESG improvement ahead of official rating agency updates.',
+    keywords: ['wilmar', 'outperform', 'flagged', 'overweight'],
+    question: 'Why is Wilmar International flagged Outperform?',
+    answer: 'Wilmar International is flagged Outperform due to its strong ESG CAGR of +12.2% over 5 years — the highest in the Materials sector. Key catalysts include RSPO certification expansion, a strengthened no-deforestation policy, and an active smallholder ESG programme. These initiatives map to SDG 12 (Responsible Consumption) and SDG 15 (Life on Land), signalling structural ESG improvement ahead of official rating agency updates.',
   },
   {
     keywords: ['highest', 'momentum', 'best', 'top'],
     question: 'Which company has the highest ESG momentum?',
-    answer: 'Wilmar International leads the universe with the highest combined ESG Momentum Score of 76/100, driven by a 5-year ESG CAGR of +12.2% and a Forward Signal Score of 87/100. Merdeka Copper Gold ranks second with +16.1% CAGR despite a lower Standardized ESG Score, placing it firmly in the Overweight quadrant. Both are flagged as candidates for rating agency upgrades.',
+    answer: 'Wilmar International leads the universe with the highest combined ESG Momentum Score of 76/100, driven by a 5-year ESG CAGR of +12.2% and a Forward Signal Score of 87/100. Merdeka Copper Gold ranks second with +16.1% CAGR despite a lower Standardized ESG Score, placing it firmly in the Outperform quadrant. Both are flagged as candidates for rating agency upgrades.',
   },
   {
     keywords: ['ptt', 'sembcorp', 'compare', 'climate', 'comparison'],
     question: 'Compare PTT PCL and Sembcorp on climate action',
-    answer: 'Sembcorp Industries leads on climate action with a Standardized ESG Score of 63.9 vs PTT PCL\'s 55.7. Sembcorp has committed to net-zero by 2050 and issued a SGD 675M green bond, mapping to SDG 7 and SDG 13. PTT PCL launched a 500MW green hydrogen pilot but was fined THB 45M for an effluent discharge violation in 2025, creating a mixed signal. Both are classified as Strong Overweight, but Sembcorp carries lower regulatory risk.',
+    answer: 'Sembcorp Industries leads on climate action with a Standardized ESG Score of 63.9 vs PTT PCL\'s 55.7. Sembcorp has committed to net-zero by 2050 and issued a SGD 675M green bond, mapping to SDG 7 and SDG 13. PTT PCL launched a 500MW green hydrogen pilot but was fined THB 45M for an effluent discharge violation in 2025, creating a mixed signal. Both are classified as Strong Buy, but Sembcorp carries lower regulatory risk.',
   },
   {
     keywords: ['sdg', 'materials', 'sector', 'goals'],
@@ -55,7 +55,7 @@ const FAQ_KB: FAQ[] = [
   {
     keywords: ['rating', 'upgrade', 'expected', 'which'],
     question: 'Which companies have Rating Upgrade Expected?',
-    answer: 'Wilmar International is the primary candidate for a rating agency upgrade, driven by consistent ESG CAGR of +12.2% and three major positive catalyst events including RSPO expansion and a no-deforestation policy upgrade. Sembcorp Industries is also flagged as Stable/+ with strong green bond issuance signalling imminent disclosure improvements. Rating upgrades from MSCI or Sustainalytics typically follow 12-18 months after the leading signal events we track.',
+    answer: 'Wilmar International is the primary candidate for a rating agency upgrade, driven by consistent ESG CAGR of +12.2% and three major positive catalyst events including RSPO expansion and a no-deforestation policy upgrade. Sembcorp Industries is also flagged as Stable with strong green bond issuance signalling imminent disclosure improvements. Rating upgrades from MSCI or Sustainalytics typically follow 12-18 months after the leading signal events we track.',
   },
   {
     keywords: ['downgrade', 'risk', 'avoid'],
@@ -68,9 +68,9 @@ const FAQ_KB: FAQ[] = [
     answer: 'The Standardizer resolves the inconsistency problem where MSCI, Sustainalytics, and Bloomberg rate the same company very differently. Each provider\'s raw score is converted to a z-score — measuring how far the company sits from that provider\'s own universe average. The three z-scores are then averaged into one Standardized ESG Score on a 0-100 scale. Where providers strongly disagree (high standard deviation), we flag the company as High Provider Divergence — a signal that the company is under-researched and potentially mispriced.',
   },
   {
-    keywords: ['hidden', 'overweight', 'quadrant', 'opportunity'],
-    question: 'What is the Overweight quadrant?',
-    answer: 'The Overweight quadrant identifies companies with a low current Standardized ESG Score but strong positive ESG momentum trajectory. These companies are improving faster than the market has priced in — the market still values them based on their current low score, not their trajectory. CGS International\'s own research shows ESG improvers outperform the MSCI ASEAN benchmark by 8x over 5 years. Overweight companies represent the primary alpha opportunity in ESG investing.',
+    keywords: ['outperform', 'overweight', 'quadrant', 'opportunity', 'hidden'],
+    question: 'What is the Outperform quadrant?',
+    answer: 'The Outperform quadrant identifies companies with a low current Standardized ESG Score but strong positive ESG momentum trajectory. These companies are improving faster than the market has priced in — the market still values them based on their current low score, not their trajectory. CGS International\'s own research shows ESG improvers outperform the MSCI ASEAN benchmark by 8x over 5 years. Outperform companies represent the primary alpha opportunity in ESG investing.',
   },
   {
     keywords: ['cagr', 'compound', 'annual', 'growth', 'rate', 'calculate'],
@@ -80,37 +80,37 @@ const FAQ_KB: FAQ[] = [
   {
     keywords: ['merdeka', 'copper', 'gold'],
     question: 'Tell me about Merdeka Copper Gold',
-    answer: 'Merdeka Copper Gold has the highest ESG CAGR in the universe at +16.1%, driven by a community investment fund, a major tailings management upgrade (SDG 6, 14), and a sustainability hiring surge. Despite a low current Standardized ESG Score of 28.5, its rapid improvement trajectory places it firmly in the Overweight quadrant with a Financial Materiality upside of +4.0%. The tailings upgrade is the key catalyst — it directly reduces regulatory and environmental liability risk, which flows through to WACC reduction.',
+    answer: 'Merdeka Copper Gold has the highest ESG CAGR in the universe at +16.1%, driven by a community investment fund, a major tailings management upgrade (SDG 6, 14), and a sustainability hiring surge. Despite a low current Standardized ESG Score of 28.5, its rapid improvement trajectory places it firmly in the Outperform quadrant with a Financial Materiality upside of +4.0%. The tailings upgrade is the key catalyst — it directly reduces regulatory and environmental liability risk, which flows through to WACC reduction.',
   },
   {
     keywords: ['adaro', 'energy', 'coal', 'indonesia'],
     question: 'What is Adaro Energy\'s ESG outlook?',
-    answer: 'Adaro Energy presents a mixed ESG picture. Its coal-to-renewables roadmap and ISO 14001 certification are positive leading signals, but an environmental fine in 2025 creates a negative offset. With a Standardized ESG Score of 43.7 and ESG CAGR of +9.5%, it sits in the Overweight quadrant — improving from a low base. The WACC reduction from improved governance is limited to 20 basis points given the regulatory fine overhang. Monitor the renewables roadmap execution for confirmation.',
+    answer: 'Adaro Energy presents a mixed ESG picture. Its coal-to-renewables roadmap and ISO 14001 certification are positive leading signals, but an environmental fine in 2025 creates a negative offset. With a Standardized ESG Score of 43.7 and ESG CAGR of +9.5%, it sits in the Outperform quadrant — improving from a low base. The WACC reduction from improved governance is limited to 20 basis points given the regulatory fine overhang. Monitor the renewables roadmap execution for confirmation.',
   },
   {
     keywords: ['sembcorp', 'industries', 'singapore'],
     question: "What is Sembcorp Industries' investment signal?",
-    answer: 'Sembcorp Industries is rated Strong Overweight with the highest Standardized ESG Score in the Energy sector at 63.9. Its SGD 675M green bond issuance, renewable energy joint venture, and net-zero 2050 commitment map to SDG 7 and SDG 13. The Financial Materiality Index shows a +10.5% ESG-adjusted target price upside — the highest Buy signal in the Energy sector. Sembcorp\'s ESG momentum score of 36/100 is lower than its peers due to a large base effect, but its absolute score quality is strongest.',
+    answer: 'Sembcorp Industries is rated Strong Buy with the highest Standardized ESG Score in the Energy sector at 63.9. Its SGD 675M green bond issuance, renewable energy joint venture, and net-zero 2050 commitment map to SDG 7 and SDG 13. The Financial Materiality Index shows a +10.5% ESG-adjusted target price upside — the highest Buy signal in the Energy sector. Sembcorp\'s ESG momentum score of 36/100 is lower than its peers due to a large base effect, but its absolute score quality is strongest.',
   },
   {
     keywords: ['thai', 'union', 'group', 'seafood'],
     question: 'Tell me about Thai Union Group',
-    answer: 'Thai Union Group is rated Strong Overweight with a Standardized ESG Score of 63.1 and ESG CAGR of +6.5%. Its full sustainable packaging rollout (SDG 12), MSC certification renewal (SDG 14), and living wage policy adoption (SDG 8) represent three simultaneous positive ESG catalysts across all three pillars. The Financial Materiality Index assigns an ESG-adjusted target price uplift of +8.5%, driven primarily by operating cost savings from cheaper sustainable packaging materials and WACC reduction from improved governance.',
+    answer: 'Thai Union Group is rated Strong Buy with a Standardized ESG Score of 63.1 and ESG CAGR of +6.5%. Its full sustainable packaging rollout (SDG 12), MSC certification renewal (SDG 14), and living wage policy adoption (SDG 8) represent three simultaneous positive ESG catalysts across all three pillars. The Financial Materiality Index assigns an ESG-adjusted target price uplift of +8.5%, driven primarily by operating cost savings from cheaper sustainable packaging materials and WACC reduction from improved governance.',
   },
   {
     keywords: ['astra', 'international', 'indonesia', 'ev', 'electric'],
     question: "What is Astra International's ESG positioning?",
-    answer: "Astra International is rated Strong Overweight with a Standardized ESG Score of 54.9 and strong ESG CAGR of +8.1%. The EV manufacturing joint venture is the key leading signal — it maps to SDG 9 (Industry Innovation) and SDG 13 (Climate Action) and positions Astra ahead of Indonesia's automotive electrification mandate. The Scope 3 emissions disclosure initiation is a significant governance improvement. Financial Materiality shows +7.1% ESG-adjusted target price upside, driven by revenue growth from the EV transition.",
+    answer: "Astra International is rated Strong Buy with a Standardized ESG Score of 54.9 and strong ESG CAGR of +8.1%. The EV manufacturing joint venture is the key leading signal — it maps to SDG 9 (Industry Innovation) and SDG 13 (Climate Action) and positions Astra ahead of Indonesia's automotive electrification mandate. The Scope 3 emissions disclosure initiation is a significant governance improvement. Financial Materiality shows +7.1% ESG-adjusted target price upside, driven by revenue growth from the EV transition.",
   },
   {
     keywords: ['seatrium', 'offshore', 'wind', 'shipbuilding'],
     question: "What is Seatrium's ESG signal?",
-    answer: "Seatrium is rated Overweight with a Standardized ESG Score of 45.8 and ESG CAGR of +10.2%. The offshore wind contract win is the primary catalyst — it directly maps to SDG 7 (Affordable Clean Energy) and signals a structural shift in Seatrium's revenue mix toward clean energy infrastructure. Green shipbuilding certification and a governance board refresh complete the three-pillar ESG improvement. Financial Materiality shows +6.4% upside, primarily from revenue diversification into offshore wind.",
+    answer: "Seatrium is rated Outperform with a Standardized ESG Score of 45.8 and ESG CAGR of +10.2%. The offshore wind contract win is the primary catalyst — it directly maps to SDG 7 (Affordable Clean Energy) and signals a structural shift in Seatrium's revenue mix toward clean energy infrastructure. Green shipbuilding certification and a governance board refresh complete the three-pillar ESG improvement. Financial Materiality shows +6.4% upside, primarily from revenue diversification into offshore wind.",
   },
   {
     keywords: ['indocement', 'cement', 'indonesia'],
     question: "Tell me about Indocement's ESG trajectory",
-    answer: "Indocement is one of the clearest Overweight opportunities in the universe — it has a low Standardized ESG Score of 36.0 but a strong ESG CAGR of +11.3%. Its waste-heat recovery project reduces energy costs while lowering emissions, and sustainability hiring increased 38% in 2025. These are leading indicators of score improvement before rating agencies update. Financial Materiality shows +5.3% upside. The key risk is scoring inconsistency — Indocement has the lowest provider divergence in the universe, suggesting ratings are converging, which may accelerate the upgrade timeline.",
+    answer: "Indocement is one of the clearest Outperform opportunities in the universe — it has a low Standardized ESG Score of 36.0 but a strong ESG CAGR of +11.3%. Its waste-heat recovery project reduces energy costs while lowering emissions, and sustainability hiring increased 38% in 2025. These are leading indicators of score improvement before rating agencies update. Financial Materiality shows +5.3% upside. The key risk is scoring inconsistency — Indocement has the lowest provider divergence in the universe, suggesting ratings are converging, which may accelerate the upgrade timeline.",
   },
   {
     keywords: ['siam', 'cement', 'group', 'thailand'],
@@ -130,7 +130,7 @@ const FAQ_KB: FAQ[] = [
   {
     keywords: ['retail', 'investor', 'simple', 'beginner'],
     question: 'How do I use this as a retail investor?',
-    answer: 'Switch to Retail View using the toggle in the top header. Retail View shows simplified buy/sell signals — Overweight (buy more), Accumulate (gradually buy), Neutral (hold), or Underweight (reduce). Each signal comes with a plain English reason and an ESG-adjusted target price. You do not need to understand the underlying methodology — just look at the signal and the target price, then make your decision through your CGS iTrade account.',
+    answer: 'Switch to Retail View using the toggle in the top header. Retail View shows simplified signals — Outperform (ESG signal), Strong Buy / Dollar-Cost Strategy / Hold / Reduce (suggested action), and bear/base/bull target prices. Each card shows an ESG-adjusted target price and potential upside. You do not need to understand the underlying methodology — just look at the signal and the target price, then make your decision through your CGS iTrade account.',
   },
   {
     keywords: ['institutional', 'analyst', 'professional', 'b2b'],
@@ -140,7 +140,7 @@ const FAQ_KB: FAQ[] = [
   {
     keywords: ['cgsi', 'itrade', 'integrate', 'platform', 'how'],
     question: 'How does this integrate with CGS iTrade?',
-    answer: "The ESG Momentum Engine is designed as a native iTrade ESG Intelligence module. In the full integration, the ESG signal (Overweight/Accumulate/Neutral/Underweight) appears directly on the stock quote page alongside the price and volume data. Investors can click through to the full ESG analysis without leaving the trading interface. The target price adjustment from the Financial Materiality Index updates the consensus target price displayed in iTrade's research section.",
+    answer: "The ESG Momentum Engine is designed as a native iTrade ESG Intelligence module. In the full integration, the ESG signal (Outperform/Neutral/Underperform) and suggested action (Strong Buy/Dollar-Cost Strategy/Hold/Reduce) appear directly on the stock quote page alongside the price and volume data. Investors can click through to the full ESG analysis without leaving the trading interface. The target price adjustment from the Financial Materiality Index updates the consensus target price displayed in iTrade's research section.",
   },
   {
     keywords: ['energy', 'sector', 'oil', 'gas'],
@@ -150,7 +150,7 @@ const FAQ_KB: FAQ[] = [
   {
     keywords: ['buy', 'sell', 'accumulate', 'neutral', 'underweight', 'signal'],
     question: 'What do the investment ratings mean?',
-    answer: 'Overweight: ESG momentum strongly supports buying — target price upside exceeds 8%. Accumulate: positive ESG trend supports gradual position building — upside 3-8%. Neutral: ESG signals are mixed or stable — hold current position, upside -3% to +3%. Underweight: ESG trajectory is deteriorating — reduce exposure, downside risk exceeds 3%. All ratings are derived from the Financial Materiality Index and reflect ESG impact on target price, not traditional fundamental analysis.',
+    answer: 'ESG Signal: Outperform (improving trajectory), Neutral (stable), Underperform (declining trajectory). Suggested Action: Strong Buy — ESG upside exceeds 8%; Dollar-Cost Strategy — upside 3-8%; Hold — ESG signals stable, upside -3% to +3%; Reduce — ESG trajectory deteriorating, downside exceeds 3%. All ratings derive from the Financial Materiality Index and reflect ESG impact on target price, not traditional fundamental analysis.',
   },
 ]
 
