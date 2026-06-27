@@ -15,6 +15,7 @@ export interface NewsItem {
   sdgGoals: number[]
   pillar: 'E' | 'S' | 'G' | 'ESG'
   eventType: string
+  severity?: 1 | 2 | 3
 }
 
 export interface Company {

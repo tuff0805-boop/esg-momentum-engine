@@ -23,9 +23,10 @@ const PILLAR_STYLE: Record<string, { bg: string; color: string }> = {
 interface NewsCatalystFeedProps {
   news: NewsItem[]
   compact?: boolean
+  onEventClick?: (item: NewsItem) => void
 }
 
-export function NewsCatalystFeed({ news, compact = false }: NewsCatalystFeedProps) {
+export function NewsCatalystFeed({ news, compact = false, onEventClick }: NewsCatalystFeedProps) {
   if (!news || news.length === 0) {
     return <div style={{ color: '#8B9AAB', fontSize: 12, padding: '8px 0' }}>No news available.</div>
   }
@@ -38,11 +39,15 @@ export function NewsCatalystFeed({ news, compact = false }: NewsCatalystFeedProp
         return (
           <div
             key={item.id}
+            onClick={() => onEventClick?.(item)}
+            onMouseEnter={e => { if (onEventClick) (e.currentTarget as HTMLElement).style.borderColor = '#2A3A4A' }}
+            onMouseLeave={e => { if (onEventClick) (e.currentTarget as HTMLElement).style.borderColor = '#1E2836' }}
             style={{
               background: '#0D1117',
               border: '1px solid #1E2836',
               borderRadius: 4,
               padding: compact ? '10px 12px' : '10px 12px',
+              cursor: onEventClick ? 'pointer' : 'default',
             }}
           >
             {/* Top row: date + badges */}

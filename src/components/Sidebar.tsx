@@ -8,6 +8,7 @@ interface SidebarProps {
   activeSector: Sector
   onTabChange: (t: Tab) => void
   onSectorChange: (s: Sector) => void
+  onBackToLanding?: () => void
 }
 
 const NAV_ITEMS: { id: Tab; label: string; icon: string }[] = [
@@ -28,7 +29,7 @@ const SECTOR_DOTS: Record<Sector, string> = {
   All: '#E8EDF2', Energy: '#C4A85A', Materials: '#00C087', Industrials: '#1E6FD9'
 }
 
-export function Sidebar({ activeTab, activeSector, onTabChange, onSectorChange }: SidebarProps) {
+export function Sidebar({ activeTab, activeSector, onTabChange, onSectorChange, onBackToLanding }: SidebarProps) {
   return (
     <aside
       style={{
@@ -169,6 +170,11 @@ export function Sidebar({ activeTab, activeSector, onTabChange, onSectorChange }
           <div>PolyFinTech100 2026</div>
           <div>CGS International</div>
         </div>
+        {onBackToLanding && (
+          <button onClick={onBackToLanding} style={{ marginTop: 8, fontSize: 11, color: '#4A5568', background: 'none', border: 'none', cursor: 'pointer', padding: 0, display: 'flex', alignItems: 'center', gap: 4 }}>
+            ← Overview
+          </button>
+        )}
       </div>
     </aside>
   )

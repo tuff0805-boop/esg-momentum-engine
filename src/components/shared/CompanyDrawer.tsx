@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion'
-import type { Company } from '../../data/companies'
+import type { Company, NewsItem } from '../../data/companies'
 import {
   calcSES, calcCAGR, calcMomentum, calcPillars, calcDCF,
   getQuadrant, getRaterForecast, getESGSignal, getActionRating,
@@ -11,6 +11,7 @@ interface CompanyDrawerProps {
   company: Company | null
   allCompanies: Company[]
   onClose: () => void
+  onEventClick?: (item: NewsItem) => void
 }
 
 function PillarBar({ label, value, color }: { label: string; value: number; color: string }) {
@@ -30,7 +31,7 @@ function PillarBar({ label, value, color }: { label: string; value: number; colo
   )
 }
 
-export function CompanyDrawer({ company, allCompanies, onClose }: CompanyDrawerProps) {
+export function CompanyDrawer({ company, allCompanies, onClose, onEventClick }: CompanyDrawerProps) {
   const ses       = company ? calcSES(company, allCompanies) : 0
   const cagr      = company ? calcCAGR(company) : 0
   const momentum  = company ? calcMomentum(company, allCompanies) : 0
@@ -190,7 +191,7 @@ export function CompanyDrawer({ company, allCompanies, onClose }: CompanyDrawerP
               <div style={{ overflowY: 'auto', padding: 16, borderLeft: `1px solid ${border}`, borderRight: `1px solid ${border}` }}>
                 <div style={{ fontSize: 14, fontWeight: 600, color: '#E8EDF2', marginBottom: 12 }}>News &amp; Catalysts</div>
                 {company.news && company.news.length > 0
-                  ? <NewsCatalystFeed news={company.news} />
+                  ? <NewsCatalystFeed news={company.news} onEventClick={onEventClick} />
                   : <div style={{ color: '#8B9AAB', fontSize: 12 }}>No news available.</div>
                 }
               </div>

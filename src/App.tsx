@@ -1,7 +1,8 @@
 import { useState, useCallback, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import type { Company } from './data/companies'
+import type { Company, NewsItem } from './data/companies'
 import { companies as ALL_COMPANIES } from './data/companies'
+import { calcSES } from './lib/esg'
 import { Sidebar } from './components/Sidebar'
 import { StandardizerPanel } from './components/standardizer/StandardizerPanel'
 import { MomentumPanel } from './components/momentum/MomentumPanel'
@@ -9,17 +10,22 @@ import { DCFPanel } from './components/dcf/DCFPanel'
 import { CompanyDrawer } from './components/shared/CompanyDrawer'
 import { Chatbot } from './components/Chatbot'
 import { Tooltip } from './components/shared/Tooltip'
+import { LandingPage } from './components/LandingPage'
+import { Ticker } from './components/Ticker'
+import { EventAnalyticsModal } from './components/EventAnalyticsModal'
 
 type Sector   = 'All' | 'Energy' | 'Materials' | 'Industrials'
 type Tab      = 'standardizer' | 'momentum' | 'dcf'
 type ViewMode = 'retail' | 'analyst'
 
 export default function App() {
+  const [showLanding, setShowLanding]         = useState(true)
   const [activeSector, setActiveSector]       = useState<Sector>('All')
   const [activeTab, setActiveTab]             = useState<Tab>('standardizer')
   const [selectedCompany, setSelectedCompany] = useState<Company | null>(null)
   const [viewMode, setViewMode]               = useState<ViewMode>('analyst')
   const [tabKey, setTabKey]                   = useState(0)
+  const [selectedEvent, setSelectedEvent]     = useState<{ item: NewsItem; companyName: string; ses: number } | null>(null)
 
   const handleTabChange = (t: Tab) => {
     setActiveTab(t)
@@ -31,6 +37,15 @@ export default function App() {
   }, [activeSector])
 
   const onSelect = useCallback((c: Company) => setSelectedCompany(c), [])
+
+  if (showLanding) {
+    return (
+      <LandingPage
+        onLaunch={() => setShowLanding(false)}
+        onTabSelect={(tab) => { setShowLanding(false); setActiveTab(tab as Tab); setTabKey(k => k + 1) }}
+      />
+    )
+  }
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', background: '#080B10' }}>
@@ -105,10 +120,11 @@ export default function App() {
           activeSector={activeSector}
           onTabChange={handleTabChange}
           onSectorChange={setActiveSector}
+          onBackToLanding={() => setShowLanding(true)}
         />
 
-        <div style={{ flex: 1, overflowY: 'auto', background: '#080B10' }}>
-          <main style={{ maxWidth: 1400, margin: '0 auto', padding: '14px 20px' }}>
+        <div style={{ flex: 1, overflowY: 'auto', background: '#080B10', display: 'flex', flexDirection: 'column' }}>
+          <main style={{ flex: 1, maxWidth: 1400, margin: '0 auto', padding: '14px 20px', width: '100%' }}>
             <motion.div
               key={tabKey}
               initial={{ x: 8, opacity: 0 }}
@@ -129,6 +145,7 @@ export default function App() {
           <footer style={{ padding: '10px 20px', textAlign: 'center', fontSize: 10, color: '#4A5568', borderTop: '1px solid #1E2836' }}>
             CGS International · iTrade ESG Intelligence Module · PolyFinTech100 2026
           </footer>
+          <Ticker />
         </div>
       </div>
 
@@ -136,7 +153,22 @@ export default function App() {
         company={selectedCompany}
         allCompanies={ALL_COMPANIES}
         onClose={() => setSelectedCompany(null)}
+        onEventClick={(item) => {
+          if (selectedCompany) {
+            const ses = calcSES(selectedCompany, ALL_COMPANIES)
+            setSelectedEvent({ item, companyName: selectedCompany.name, ses })
+          }
+        }}
       />
+
+      {selectedEvent && (
+        <EventAnalyticsModal
+          item={selectedEvent.item}
+          companyName={selectedEvent.companyName}
+          companySES={selectedEvent.ses}
+          onClose={() => setSelectedEvent(null)}
+        />
+      )}
 
       {viewMode === 'analyst' && <Chatbot />}
     </div>
