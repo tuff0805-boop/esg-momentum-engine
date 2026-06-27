@@ -109,63 +109,51 @@ export function LandingPage({ onLaunch, onTabSelect }: LandingPageProps) {
         </div>
       </div>
 
-      {/* HERO SECTION */}
-      <div style={{ minHeight: '55vh', display: 'flex', alignItems: 'center', justifyContent: 'center',
-        flexDirection: 'column', textAlign: 'center', padding: '80px 24px' }}>
-        <motion.div initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.6 }}>
-          <div style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.2em', color: '#E8323C', marginBottom: 20 }}>
-            Introducing
-          </div>
-          <h1 style={{ fontSize: 52, fontWeight: 700, color: '#E8EDF2', lineHeight: 1.1, margin: '0 auto 8px' }}>
-            The Next Generation of
-          </h1>
-          <h1 style={{ fontSize: 52, fontWeight: 700, lineHeight: 1.1, margin: '0 auto 24px',
-            background: 'linear-gradient(135deg, #00C087, #1E6FD9)',
-            WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
-            ESG Intelligence.
-          </h1>
-          <motion.p initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.2, duration: 0.5 }}
-            style={{ fontSize: 16, color: '#8B9AAB', maxWidth: 560, margin: '0 auto 40px', lineHeight: 1.7 }}>
-            From static scores to dynamic intelligence. We find the companies becoming great before the market does — and we put a price on it.
-          </motion.p>
-          <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.3, duration: 0.5 }}>
-            <motion.button
-              animate={{ scale: [1, 1.02, 1] }} transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-              onClick={onLaunch}
-              style={{ fontSize: 16, fontWeight: 600, color: '#fff', background: '#E8323C', border: 'none',
-                borderRadius: 6, padding: '14px 32px', cursor: 'pointer', marginBottom: 16 }}
-              whileHover={{ scale: 1.04 }}
-            >
-              Launch Dashboard →
-            </motion.button>
-            <div>
-              <a onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
-                style={{ fontSize: 12, color: '#00C087', cursor: 'pointer', textDecoration: 'none' }}>
-                View methodology ↓
-              </a>
-            </div>
-          </motion.div>
-        </motion.div>
-      </div>
-
-      {/* STATS BAR */}
-      <div style={{ borderTop: '1px solid #1E2836', borderBottom: '1px solid #1E2836',
-        padding: '32px 40px', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 24 }}>
-        {STATS.map((s, i) => (
-          <motion.div key={i} initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.1 * i, duration: 0.5 }}
-            style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: 36, fontWeight: 700, color: '#00C087', fontFamily: 'monospace' }}>{s.value}</div>
-            <div style={{ fontSize: 12, color: '#8B9AAB', marginTop: 4 }}>{s.label}</div>
-          </motion.div>
-        ))}
-      </div>
+      {/* HERO SECTION — single motion.div, no nested motion initial:opacity:0 */}
+      <motion.div
+        initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.6 }}
+        style={{ minHeight: '55vh', display: 'flex', alignItems: 'center', justifyContent: 'center',
+          flexDirection: 'column', textAlign: 'center', padding: '80px 24px' }}
+      >
+        <div style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.2em', color: '#E8323C', marginBottom: 20 }}>
+          Introducing
+        </div>
+        <h1 style={{ fontSize: 52, fontWeight: 700, color: '#E8EDF2', lineHeight: 1.1, margin: '0 auto 8px' }}>
+          The Next Generation of
+        </h1>
+        <h1 style={{ fontSize: 52, fontWeight: 700, lineHeight: 1.1, margin: '0 auto 24px',
+          background: 'linear-gradient(135deg, #00C087, #1E6FD9)',
+          WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+          ESG Intelligence.
+        </h1>
+        <p style={{ fontSize: 16, color: '#8B9AAB', maxWidth: 560, margin: '0 auto 40px', lineHeight: 1.7 }}>
+          From static scores to dynamic intelligence. We find the companies becoming great before the market does — and we put a price on it.
+        </p>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16 }}>
+          <motion.button
+            animate={{ scale: [1, 1.02, 1] }}
+            transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut', delay: 0.6 }}
+            onClick={onLaunch}
+            whileHover={{ scale: 1.04 }}
+            style={{ fontSize: 16, fontWeight: 600, color: '#fff', background: '#E8323C', border: 'none',
+              borderRadius: 6, padding: '14px 32px', cursor: 'pointer' }}
+          >
+            Launch Dashboard →
+          </motion.button>
+          <a
+            onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
+            style={{ fontSize: 12, color: '#00C087', cursor: 'pointer', textDecoration: 'none' }}
+          >
+            View methodology ↓
+          </a>
+        </div>
+      </motion.div>
 
       {/* FEATURES SECTION */}
-      <div id="features" style={{ padding: '80px 40px', maxWidth: 1100, margin: '0 auto', width: '100%' }}>
+      <div id="features" style={{ padding: '64px 40px', maxWidth: 1200, margin: '0 auto', width: '100%' }}>
         <div style={{ fontSize: 13, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#8B9AAB',
           marginBottom: 32, textAlign: 'center' }}>How It Works</div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 24 }}>
           {FEATURES.map((f, i) => (
             <motion.div key={f.num}
               initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }}
@@ -184,6 +172,19 @@ export function LandingPage({ onLaunch, onTabSelect }: LandingPageProps) {
             </motion.div>
           ))}
         </div>
+      </div>
+
+      {/* STATS BAR — between features and ticker */}
+      <div style={{ borderTop: '1px solid #1E2836', borderBottom: '1px solid #1E2836',
+        padding: '32px 40px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 24 }}>
+        {STATS.map((s, i) => (
+          <motion.div key={i} initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.1 * i, duration: 0.5 }}
+            style={{ textAlign: 'center' }}>
+            <div style={{ fontSize: 36, fontWeight: 700, color: '#00C087', fontFamily: 'monospace' }}>{s.value}</div>
+            <div style={{ fontSize: 12, color: '#8B9AAB', marginTop: 4 }}>{s.label}</div>
+          </motion.div>
+        ))}
       </div>
 
       {/* TICKER */}
