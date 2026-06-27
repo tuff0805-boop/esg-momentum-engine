@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 
-type Tab    = 'standardizer' | 'momentum' | 'dcf' | 'screener' | 'compare'
+type Tab    = 'standardizer' | 'momentum' | 'dcf' | 'screener' | 'compare' | 'portfolio'
 type Sector = 'All' | 'Energy' | 'Materials' | 'Industrials'
 
 interface SidebarProps {
@@ -17,6 +17,7 @@ const NAV_ITEMS: { id: Tab; label: string; icon: string }[] = [
   { id: 'dcf',         label: 'Financial Materiality', icon: '◎' },
   { id: 'screener',   label: 'ESG Screener',          icon: '⚙' },
   { id: 'compare',   label: 'Compare',               icon: '⊞' },
+  { id: 'portfolio', label: 'Portfolio',              icon: '◫' },
 ]
 
 const SECTOR_ITEMS: { id: Sector; label: string }[] = [

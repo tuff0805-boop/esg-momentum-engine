@@ -15,9 +15,10 @@ import { Ticker } from './components/Ticker'
 import { EventAnalyticsModal } from './components/EventAnalyticsModal'
 import { ESGScreener } from './components/screener/ESGScreener'
 import { CompanyComparison } from './components/comparison/CompanyComparison'
+import { PortfolioBuilder } from './components/portfolio/PortfolioBuilder'
 
 type Sector   = 'All' | 'Energy' | 'Materials' | 'Industrials'
-type Tab      = 'standardizer' | 'momentum' | 'dcf' | 'screener' | 'compare'
+type Tab      = 'standardizer' | 'momentum' | 'dcf' | 'screener' | 'compare' | 'portfolio'
 type ViewMode = 'retail' | 'analyst'
 
 export default function App() {
@@ -153,6 +154,9 @@ export default function App() {
               )}
               {activeTab === 'compare' && (
                 <CompanyComparison allCompanies={ALL_COMPANIES} onSelectCompany={onSelect} />
+              )}
+              {activeTab === 'portfolio' && (
+                <PortfolioBuilder allCompanies={ALL_COMPANIES} onSelectCompany={onSelect} />
               )}
             </motion.div>
           </main>
