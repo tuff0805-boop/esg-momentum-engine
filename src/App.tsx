@@ -14,9 +14,10 @@ import { LandingPage } from './components/LandingPage'
 import { Ticker } from './components/Ticker'
 import { EventAnalyticsModal } from './components/EventAnalyticsModal'
 import { ESGScreener } from './components/screener/ESGScreener'
+import { CompanyComparison } from './components/comparison/CompanyComparison'
 
 type Sector   = 'All' | 'Energy' | 'Materials' | 'Industrials'
-type Tab      = 'standardizer' | 'momentum' | 'dcf' | 'screener'
+type Tab      = 'standardizer' | 'momentum' | 'dcf' | 'screener' | 'compare'
 type ViewMode = 'retail' | 'analyst'
 
 export default function App() {
@@ -149,6 +150,9 @@ export default function App() {
               )}
               {activeTab === 'screener' && (
                 <ESGScreener allCompanies={ALL_COMPANIES} onSelect={onSelect} />
+              )}
+              {activeTab === 'compare' && (
+                <CompanyComparison allCompanies={ALL_COMPANIES} onSelectCompany={onSelect} />
               )}
             </motion.div>
           </main>
