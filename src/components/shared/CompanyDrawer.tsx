@@ -6,6 +6,7 @@ import {
 } from '../../lib/esg'
 import { Badge, quadrantVariant, forecastVariant, esgSignalVariant, actionVariant } from './Badge'
 import { NewsCatalystFeed } from './NewsCatalystFeed'
+import { ScoreTrendChart } from './ScoreTrendChart'
 
 interface CompanyDrawerProps {
   company: Company | null
@@ -140,6 +141,14 @@ export function CompanyDrawer({ company, allCompanies, onClose, onEventClick }: 
                   <PillarBar label="S" value={pillars.S} color="#60A5FA" />
                   <PillarBar label="G" value={pillars.G} color="#C084FC" />
                   <PillarBar label="I" value={pillars.I} color="#F59E0B" />
+                </div>
+
+                {/* ESG Score History */}
+                <div>
+                  <div style={{ fontSize: 10, color: '#8B9AAB', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8 }}>
+                    ESG Score History (2019–2024)
+                  </div>
+                  <ScoreTrendChart company={company} allCompanies={allCompanies} height={160} showPillars={true} />
                 </div>
 
                 {/* Provider scores */}

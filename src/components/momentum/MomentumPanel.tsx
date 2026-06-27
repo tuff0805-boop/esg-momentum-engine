@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { companies as ALL_COMPANIES } from '../../data/companies'
 import type { Company } from '../../data/companies'
 import { calcCAGR, getQuadrant, getRaterForecast } from '../../lib/esg'
@@ -6,6 +7,7 @@ import { MomentumMatrix } from './MomentumMatrix'
 import { EventFeed } from './EventFeed'
 import { Leaderboard } from './Leaderboard'
 import { RetailSignalCard } from '../shared/RetailSignalCard'
+import { ScoreTrendChart } from '../shared/ScoreTrendChart'
 
 interface MomentumPanelProps {
   activeSector: string
@@ -27,6 +29,7 @@ export function MomentumPanel({ activeSector, onSelect, animKey, viewMode = 'ana
   const downgradeRisk = filtered.filter(c => getRaterForecast(c, ALL_COMPANIES) === 'Rating Downgrade Risk').length
 
   const isRetail = viewMode === 'retail'
+  const [momentumSubTab, setMomentumSubTab] = useState<'matrix' | 'leaderboard' | 'trends'>('matrix')
 
   return (
     <div className="flex flex-col gap-6">
@@ -76,8 +79,27 @@ export function MomentumPanel({ activeSector, onSelect, animKey, viewMode = 'ana
         </div>
       )}
 
-      {/* Matrix — analyst only */}
+      {/* Analyst: sub-tab nav */}
       {!isRetail && (
+        <div style={{ display: 'flex', gap: 0, borderBottom: '1px solid #1E2836', marginBottom: 0 }}>
+          {[
+            { id: 'matrix' as const, label: '◈ Momentum Matrix' },
+            { id: 'leaderboard' as const, label: '≡ Leaderboard' },
+            { id: 'trends' as const, label: '↗ Score Trends' },
+          ].map(t => (
+            <button key={t.id} onClick={() => setMomentumSubTab(t.id)} style={{
+              padding: '8px 20px', fontSize: 13, fontWeight: momentumSubTab === t.id ? 500 : 400,
+              color: momentumSubTab === t.id ? '#E8EDF2' : '#8B9AAB',
+              background: 'none', border: 'none',
+              borderBottom: momentumSubTab === t.id ? '2px solid #E8323C' : '2px solid transparent',
+              cursor: 'pointer', marginBottom: -1, transition: 'color 0.12s',
+            }}>{t.label}</button>
+          ))}
+        </div>
+      )}
+
+      {/* Matrix tab — analyst only */}
+      {!isRetail && momentumSubTab === 'matrix' && (
         <div className="card overflow-hidden">
           <div className="card-header">
             <div className="card-title">ESG Momentum Matrix</div>
@@ -102,9 +124,9 @@ export function MomentumPanel({ activeSector, onSelect, animKey, viewMode = 'ana
         </div>
       )}
 
-      <div className={`grid grid-cols-1 gap-6 ${!isRetail ? 'lg:grid-cols-3' : ''}`}>
-        {/* Leading Signals — analyst only */}
-        {!isRetail && (
+      {/* Leaderboard tab — analyst only */}
+      {!isRetail && momentumSubTab === 'leaderboard' && (
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
           <div className="card overflow-hidden">
             <div className="card-header">
               <div className="card-title">Leading Signals</div>
@@ -114,17 +136,53 @@ export function MomentumPanel({ activeSector, onSelect, animKey, viewMode = 'ana
               <EventFeed companies={filtered} />
             </div>
           </div>
-        )}
+          <div className="card overflow-hidden lg:col-span-2">
+            <div className="card-header">
+              <div className="card-title">Momentum Leaderboard</div>
+              <div className="card-subtitle">Sorted by combined momentum score · 60% CAGR + 40% event score</div>
+            </div>
+            <Leaderboard companies={filtered} allCompanies={ALL_COMPANIES} onSelect={onSelect} />
+          </div>
+        </div>
+      )}
 
-        {/* Leaderboard — always visible */}
-        <div className={`card overflow-hidden ${!isRetail ? 'lg:col-span-2' : ''}`}>
+      {/* Trends tab — analyst only */}
+      {!isRetail && momentumSubTab === 'trends' && (
+        <div className="card overflow-hidden">
+          <div className="card-header">
+            <div className="card-title">5-Year ESG Score Trajectories</div>
+            <div className="card-subtitle">Upward trajectory = Outperform signal · Click any company to view full analysis</div>
+          </div>
+          <div style={{ padding: 16, display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 16 }}>
+            {filtered.map(company => (
+              <div
+                key={company.name}
+                onClick={() => onSelect(company)}
+                style={{ background: '#080B10', border: '1px solid #1E2836', borderRadius: 4, padding: '10px 12px', cursor: 'pointer' }}
+                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = '#2A3A4A' }}
+                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = '#1E2836' }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8 }}>
+                  <span style={{ fontSize: 13, fontWeight: 500, color: '#E8EDF2' }}>{company.name}</span>
+                  <span style={{ fontSize: 10, color: '#4A5568', background: '#131920', border: '1px solid #1E2836', borderRadius: 2, padding: '0 5px' }}>{company.country}</span>
+                </div>
+                <ScoreTrendChart company={company} allCompanies={ALL_COMPANIES} height={140} showPillars={false} compact={false} />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Retail: always show leaderboard */}
+      {isRetail && (
+        <div className="card overflow-hidden">
           <div className="card-header">
             <div className="card-title">Momentum Leaderboard</div>
             <div className="card-subtitle">Sorted by combined momentum score · 60% CAGR + 40% event score</div>
           </div>
           <Leaderboard companies={filtered} allCompanies={ALL_COMPANIES} onSelect={onSelect} />
         </div>
-      </div>
+      )}
     </div>
   )
 }

@@ -3,6 +3,7 @@ import type { Company } from '../../data/companies'
 import { calcSES, calcCAGR, calcEventScore, calcMomentum, getQuadrant, getRaterForecast } from '../../lib/esg'
 import { Badge, quadrantVariant, forecastVariant } from '../shared/Badge'
 import { Tooltip } from '../shared/Tooltip'
+import { ScoreTrendChart } from '../shared/ScoreTrendChart'
 
 interface LeaderboardProps {
   companies: Company[]
@@ -35,8 +36,12 @@ export function Leaderboard({ companies, allCompanies, onSelect }: LeaderboardPr
       <table style={{ width: '100%', fontSize: 13, minWidth: 680, borderCollapse: 'collapse' }}>
         <thead>
           <tr style={{ borderBottom: '1px solid #1E2836', background: '#080B10', position: 'sticky', top: 0 }}>
-            {['#', 'Company', 'Std. ESG', 'CAGR'].map(h => (
+            {['#', 'Company', 'Std. ESG'].map(h => (
               <th key={h} style={{ padding: '0 16px', height: 40, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600, color: '#4A5568', textAlign: h === '#' ? 'center' : 'left', whiteSpace: 'nowrap', verticalAlign: 'middle' }}>{h}</th>
+            ))}
+            <th style={{ padding: '0 16px', height: 40, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600, color: '#4A5568', textAlign: 'center', whiteSpace: 'nowrap', verticalAlign: 'middle' }}>ESG Trend</th>
+            {['CAGR'].map(h => (
+              <th key={h} style={{ padding: '0 16px', height: 40, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600, color: '#4A5568', textAlign: 'left', whiteSpace: 'nowrap', verticalAlign: 'middle' }}>{h}</th>
             ))}
             {/* Forward Signal column with tooltip */}
             <th style={{ padding: '0 16px', height: 40, fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600, color: '#4A5568', textAlign: 'center', whiteSpace: 'nowrap', verticalAlign: 'middle' }}>
@@ -73,6 +78,9 @@ export function Leaderboard({ companies, allCompanies, onSelect }: LeaderboardPr
                 <div style={{ fontSize: 12, color: '#4A5568' }}>{r.company.country} · {r.company.sector}</div>
               </td>
               <td style={{ padding: '0 16px', fontFamily: 'monospace', textAlign: 'right', color: '#E8EDF2', verticalAlign: 'middle' }}>{r.ses.toFixed(1)}</td>
+              <td style={{ padding: '0 8px', verticalAlign: 'middle', width: 80 }}>
+                <ScoreTrendChart company={r.company} allCompanies={allCompanies} height={48} showPillars={false} compact={true} />
+              </td>
               <td style={{ padding: '0 16px', fontFamily: 'monospace', fontWeight: 500, textAlign: 'right', verticalAlign: 'middle' }}>
                 <span style={{ color: r.cagr >= 0 ? '#00C087' : '#E8323C' }}>
                   {r.cagr >= 0 ? '+' : ''}{r.cagr.toFixed(1)}%
