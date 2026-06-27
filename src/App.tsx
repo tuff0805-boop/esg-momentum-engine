@@ -13,9 +13,10 @@ import { Tooltip } from './components/shared/Tooltip'
 import { LandingPage } from './components/LandingPage'
 import { Ticker } from './components/Ticker'
 import { EventAnalyticsModal } from './components/EventAnalyticsModal'
+import { ESGScreener } from './components/screener/ESGScreener'
 
 type Sector   = 'All' | 'Energy' | 'Materials' | 'Industrials'
-type Tab      = 'standardizer' | 'momentum' | 'dcf'
+type Tab      = 'standardizer' | 'momentum' | 'dcf' | 'screener'
 type ViewMode = 'retail' | 'analyst'
 
 export default function App() {
@@ -145,6 +146,9 @@ export default function App() {
               )}
               {activeTab === 'dcf' && (
                 <DCFPanel activeSector={activeSector} onSelect={onSelect} viewMode={viewMode} />
+              )}
+              {activeTab === 'screener' && (
+                <ESGScreener allCompanies={ALL_COMPANIES} onSelect={onSelect} />
               )}
             </motion.div>
           </main>
