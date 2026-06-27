@@ -1,21 +1,25 @@
+import { useState } from 'react'
 import { companies as ALL_COMPANIES } from '../../data/companies'
-import type { Company } from '../../data/companies'
+import type { Company, NewsItem } from '../../data/companies'
 import { calcSES, calcDisagreement, getQuadrant } from '../../lib/esg'
 import { MetricCard } from '../shared/MetricCard'
 import { ScoreTable } from './ScoreTable'
 import { DistributionChart } from './DistributionChart'
 import { RetailSignalCard } from '../shared/RetailSignalCard'
+import { PillarEventFeed } from './PillarEventFeed'
 
 interface StandardizerPanelProps {
   activeSector: string
   onSelect: (c: Company) => void
   animKey: string | number
   viewMode?: 'retail' | 'analyst'
+  onEventClick?: (item: NewsItem, companyName: string, ses: number) => void
 }
 
 const SECTOR_VALUES = new Set<string>(['Energy', 'Materials', 'Industrials'])
 
-export function StandardizerPanel({ activeSector, onSelect, animKey, viewMode = 'analyst' }: StandardizerPanelProps) {
+export function StandardizerPanel({ activeSector, onSelect, animKey, viewMode = 'analyst', onEventClick }: StandardizerPanelProps) {
+  const [subTab, setSubTab] = useState<'events' | 'scores'>('events')
   const filtered = SECTOR_VALUES.has(activeSector)
     ? ALL_COMPANIES.filter(c => c.sector === activeSector)
     : ALL_COMPANIES
@@ -30,6 +34,38 @@ export function StandardizerPanel({ activeSector, onSelect, animKey, viewMode = 
 
   return (
     <div className="flex flex-col gap-6">
+      {/* Sub-tab switcher */}
+      <div style={{ display: 'flex', gap: 0, borderBottom: '1px solid #1E2836', marginBottom: 4 }}>
+        {(['events', 'scores'] as const).map(tab => (
+          <button
+            key={tab}
+            onClick={() => setSubTab(tab)}
+            style={{
+              padding: '8px 20px',
+              fontSize: 13,
+              fontWeight: subTab === tab ? 500 : 400,
+              color: subTab === tab ? '#E8EDF2' : '#8B9AAB',
+              background: 'none',
+              border: 'none',
+              borderBottom: subTab === tab ? '2px solid #E8323C' : '2px solid transparent',
+              cursor: 'pointer',
+              marginBottom: -1,
+              transition: 'color 0.12s',
+            }}
+          >
+            {tab === 'events' ? '⬡ Pillar Events' : '▦ Provider Scores'}
+          </button>
+        ))}
+      </div>
+
+      {subTab === 'events' ? (
+        <PillarEventFeed
+          companies={filtered}
+          allCompanies={ALL_COMPANIES}
+          onEventClick={onEventClick ?? (() => {})}
+        />
+      ) : (
+        <>
       {/* Retail view: top signal cards */}
       {isRetail && (
         <RetailSignalCard companies={filtered} allCompanies={ALL_COMPANIES} onSelect={onSelect} />
@@ -93,6 +129,8 @@ export function StandardizerPanel({ activeSector, onSelect, animKey, viewMode = 
         <div className="card p-5">
           <DistributionChart companies={filtered} allCompanies={ALL_COMPANIES} />
         </div>
+      )}
+        </>
       )}
     </div>
   )

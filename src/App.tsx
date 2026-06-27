@@ -132,7 +132,13 @@ export default function App() {
               transition={{ duration: 0.2, ease: 'easeOut' }}
             >
               {activeTab === 'standardizer' && (
-                <StandardizerPanel activeSector={activeSector} onSelect={onSelect} animKey={tabKey} viewMode={viewMode} />
+                <StandardizerPanel
+                  activeSector={activeSector}
+                  onSelect={onSelect}
+                  animKey={tabKey}
+                  viewMode={viewMode}
+                  onEventClick={(item, companyName, ses) => setSelectedEvent({ item, companyName, ses })}
+                />
               )}
               {activeTab === 'momentum' && (
                 <MomentumPanel activeSector={activeSector} onSelect={onSelect} animKey={tabKey} viewMode={viewMode} />
