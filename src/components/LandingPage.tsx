@@ -137,9 +137,7 @@ export function LandingPage({ onLaunch, onTabSelect }: LandingPageProps) {
           <h1 style={{ fontSize: 52, fontWeight: 700, color: '#E8EDF2', lineHeight: 1.1, margin: '0 auto 8px' }}>
             The Next Generation of
           </h1>
-          <h1 style={{ fontSize: 52, fontWeight: 700, lineHeight: 1.1, margin: '0 auto 24px',
-            background: 'linear-gradient(135deg, #00C087, #1E6FD9)',
-            WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+          <h1 style={{ fontSize: 52, fontWeight: 700, lineHeight: 1.1, margin: '0 auto 24px', color: '#E8323C' }}>
             ESG Intelligence.
           </h1>
           <p style={{ fontSize: 16, color: '#8B9AAB', maxWidth: 560, margin: '0 auto 40px', lineHeight: 1.7 }}>
