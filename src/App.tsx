@@ -3,7 +3,9 @@ import { motion } from 'framer-motion'
 import type { Company, NewsItem } from './data/companies'
 import { companies as ALL_COMPANIES } from './data/companies'
 import { calcSES } from './lib/esg'
-import { Sidebar } from './components/Sidebar'
+import { TopNav } from './components/TopNav'
+import { MethodologyPage } from './components/methodology/MethodologyPage'
+import { GuidedTour } from './components/GuidedTour'
 import { StandardizerPanel } from './components/standardizer/StandardizerPanel'
 import { MomentumPanel } from './components/momentum/MomentumPanel'
 import { DCFPanel } from './components/dcf/DCFPanel'
@@ -18,7 +20,7 @@ import { CompanyComparison } from './components/comparison/CompanyComparison'
 import { PortfolioBuilder } from './components/portfolio/PortfolioBuilder'
 
 type Sector   = 'All' | 'Energy' | 'Materials' | 'Industrials'
-type Tab      = 'standardizer' | 'momentum' | 'dcf' | 'screener' | 'compare' | 'portfolio'
+type Tab      = 'standardizer' | 'momentum' | 'dcf' | 'screener' | 'compare' | 'portfolio' | 'methodology'
 type ViewMode = 'retail' | 'analyst'
 
 export default function App() {
@@ -29,6 +31,7 @@ export default function App() {
   const [viewMode, setViewMode]               = useState<ViewMode>('analyst')
   const [tabKey, setTabKey]                   = useState(0)
   const [selectedEvent, setSelectedEvent]     = useState<{ item: NewsItem; companyName: string; ses: number } | null>(null)
+  const [showTour, setShowTour]               = useState(false)
 
   const handleTabChange = (t: Tab) => {
     setActiveTab(t)
@@ -116,55 +119,55 @@ export default function App() {
         </div>
       </motion.header>
 
-      {/* ── Body row: Sidebar + Main ── */}
-      <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
-        <Sidebar
-          activeTab={activeTab}
-          activeSector={activeSector}
-          onTabChange={handleTabChange}
-          onSectorChange={setActiveSector}
-          onBackToLanding={() => setShowLanding(true)}
-        />
+      {/* ── Top Nav ── */}
+      <TopNav
+        activeTab={activeTab}
+        onTabChange={handleTabChange}
+        activeSector={activeSector}
+        onSectorChange={setActiveSector}
+        onHelpClick={() => setShowTour(true)}
+      />
 
-        <div style={{ flex: 1, overflowY: 'auto', background: '#080B10', display: 'flex', flexDirection: 'column' }}>
-          <main style={{ flex: 1, maxWidth: 1400, margin: '0 auto', padding: '14px 20px', width: '100%' }}>
-            <motion.div
-              key={tabKey}
-              initial={{ x: 8, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.2, ease: 'easeOut' }}
-            >
-              {activeTab === 'standardizer' && (
-                <StandardizerPanel
-                  activeSector={activeSector}
-                  onSelect={onSelect}
-                  animKey={tabKey}
-                  viewMode={viewMode}
-                  onEventClick={(item, companyName, ses) => setSelectedEvent({ item, companyName, ses })}
-                />
-              )}
-              {activeTab === 'momentum' && (
-                <MomentumPanel activeSector={activeSector} onSelect={onSelect} animKey={tabKey} viewMode={viewMode} />
-              )}
-              {activeTab === 'dcf' && (
-                <DCFPanel activeSector={activeSector} onSelect={onSelect} viewMode={viewMode} />
-              )}
-              {activeTab === 'screener' && (
-                <ESGScreener allCompanies={ALL_COMPANIES} onSelect={onSelect} />
-              )}
-              {activeTab === 'compare' && (
-                <CompanyComparison allCompanies={ALL_COMPANIES} onSelectCompany={onSelect} />
-              )}
-              {activeTab === 'portfolio' && (
-                <PortfolioBuilder allCompanies={ALL_COMPANIES} onSelectCompany={onSelect} />
-              )}
-            </motion.div>
-          </main>
-          <footer style={{ padding: '10px 20px', textAlign: 'center', fontSize: 10, color: '#4A5568', borderTop: '1px solid #1E2836' }}>
-            CGS International · iTrade ESG Intelligence Module · PolyFinTech100 2026
-          </footer>
-          <Ticker />
-        </div>
+      {/* ── Main content — full width ── */}
+      <div style={{ flex: 1, overflowY: 'auto', background: '#080B10', display: 'flex', flexDirection: 'column' }}>
+        <main style={{ flex: 1, maxWidth: 1400, margin: '0 auto', padding: '14px 24px', width: '100%' }}>
+          <motion.div
+            key={tabKey}
+            initial={{ x: 8, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+          >
+            {activeTab === 'standardizer' && (
+              <StandardizerPanel
+                activeSector={activeSector}
+                onSelect={onSelect}
+                animKey={tabKey}
+                viewMode={viewMode}
+                onEventClick={(item, companyName, ses) => setSelectedEvent({ item, companyName, ses })}
+              />
+            )}
+            {activeTab === 'momentum' && (
+              <MomentumPanel activeSector={activeSector} onSelect={onSelect} animKey={tabKey} viewMode={viewMode} />
+            )}
+            {activeTab === 'dcf' && (
+              <DCFPanel activeSector={activeSector} onSelect={onSelect} viewMode={viewMode} />
+            )}
+            {activeTab === 'screener' && (
+              <ESGScreener allCompanies={ALL_COMPANIES} onSelect={onSelect} />
+            )}
+            {activeTab === 'compare' && (
+              <CompanyComparison allCompanies={ALL_COMPANIES} onSelectCompany={onSelect} />
+            )}
+            {activeTab === 'portfolio' && (
+              <PortfolioBuilder allCompanies={ALL_COMPANIES} onSelectCompany={onSelect} />
+            )}
+            {activeTab === 'methodology' && <MethodologyPage />}
+          </motion.div>
+        </main>
+        <footer style={{ padding: '10px 20px', textAlign: 'center', fontSize: 10, color: '#4A5568', borderTop: '1px solid #1E2836' }}>
+          CGS International · iTrade ESG Intelligence Module · PolyFinTech100 2026
+        </footer>
+        <Ticker />
       </div>
 
       <CompanyDrawer
@@ -189,6 +192,7 @@ export default function App() {
       )}
 
       {viewMode === 'analyst' && <Chatbot />}
+      {showTour && <GuidedTour activeTab={activeTab} onClose={() => setShowTour(false)} />}
     </div>
   )
 }
