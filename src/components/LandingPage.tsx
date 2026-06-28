@@ -109,44 +109,61 @@ export function LandingPage({ onLaunch, onTabSelect }: LandingPageProps) {
         </div>
       </div>
 
-      {/* HERO SECTION — single motion.div, no nested motion initial:opacity:0 */}
+      {/* HERO SECTION */}
       <motion.div
         initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.6 }}
-        style={{ minHeight: '55vh', display: 'flex', alignItems: 'center', justifyContent: 'center',
-          flexDirection: 'column', textAlign: 'center', padding: '80px 24px' }}
+        style={{
+          minHeight: '55vh', display: 'flex', alignItems: 'center', justifyContent: 'center',
+          flexDirection: 'column', textAlign: 'center', padding: '80px 24px',
+          position: 'relative',
+          backgroundImage: 'url(/windmill.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }}
       >
-        <div style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.2em', color: '#E8323C', marginBottom: 20 }}>
-          Introducing
-        </div>
-        <h1 style={{ fontSize: 52, fontWeight: 700, color: '#E8EDF2', lineHeight: 1.1, margin: '0 auto 8px' }}>
-          The Next Generation of
-        </h1>
-        <h1 style={{ fontSize: 52, fontWeight: 700, lineHeight: 1.1, margin: '0 auto 24px',
-          background: 'linear-gradient(135deg, #00C087, #1E6FD9)',
-          WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
-          ESG Intelligence.
-        </h1>
-        <p style={{ fontSize: 16, color: '#8B9AAB', maxWidth: 560, margin: '0 auto 40px', lineHeight: 1.7 }}>
-          From static scores to dynamic intelligence. We find the companies becoming great before the market does — and we put a price on it.
-        </p>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16 }}>
-          <motion.button
-            animate={{ scale: [1, 1.02, 1] }}
-            transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut', delay: 0.6 }}
-            onClick={onLaunch}
-            whileHover={{ scale: 1.04 }}
-            whileTap={{ scale: 0.97 }}
-            style={{ fontSize: 16, fontWeight: 600, color: '#fff', background: '#E8323C', border: 'none',
-              borderRadius: 6, padding: '14px 32px', cursor: 'pointer' }}
-          >
-            Launch Dashboard →
-          </motion.button>
-          <a
-            onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
-            style={{ fontSize: 12, color: '#00C087', cursor: 'pointer', textDecoration: 'none' }}
-          >
-            View methodology ↓
-          </a>
+        {/* Dark gradient overlay */}
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          background: 'linear-gradient(to bottom, rgba(8,11,16,0.55) 0%, rgba(8,11,16,0.75) 60%, rgba(8,11,16,0.95) 100%)',
+          zIndex: 0,
+        }} />
+        {/* Text content */}
+        <div style={{ position: 'relative', zIndex: 1 }}>
+          <div style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.2em', color: '#E8323C', marginBottom: 20 }}>
+            Introducing
+          </div>
+          <h1 style={{ fontSize: 52, fontWeight: 700, color: '#E8EDF2', lineHeight: 1.1, margin: '0 auto 8px' }}>
+            The Next Generation of
+          </h1>
+          <h1 style={{ fontSize: 52, fontWeight: 700, lineHeight: 1.1, margin: '0 auto 24px',
+            background: 'linear-gradient(135deg, #00C087, #1E6FD9)',
+            WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+            ESG Intelligence.
+          </h1>
+          <p style={{ fontSize: 16, color: '#8B9AAB', maxWidth: 560, margin: '0 auto 40px', lineHeight: 1.7 }}>
+            From static scores to dynamic intelligence. We find the companies becoming great before the market does — and we put a price on it.
+          </p>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16 }}>
+            <motion.button
+              animate={{ scale: [1, 1.02, 1] }}
+              transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut', delay: 0.6 }}
+              onClick={onLaunch}
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.97 }}
+              style={{ fontSize: 16, fontWeight: 600, color: '#fff', background: '#E8323C', border: 'none',
+                borderRadius: 6, padding: '14px 32px', cursor: 'pointer' }}
+            >
+              Launch Dashboard →
+            </motion.button>
+            <a
+              onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
+              style={{ fontSize: 12, color: '#00C087', cursor: 'pointer', textDecoration: 'none' }}
+            >
+              View methodology ↓
+            </a>
+          </div>
         </div>
       </motion.div>
 
