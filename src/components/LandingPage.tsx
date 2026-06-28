@@ -100,11 +100,6 @@ export function LandingPage({ onLaunch, onTabSelect }: LandingPageProps) {
           </div>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-          <div style={{ background: '#E8323C', color: '#fff', fontSize: 11, fontWeight: 600,
-            padding: '4px 12px', borderRadius: 3, letterSpacing: '0.02em' }}>
-            PolyFinTech100 2026
-          </div>
-          <div style={{ width: 1, height: 20, background: '#1E2836' }} />
           <SGTClock />
         </div>
       </div>

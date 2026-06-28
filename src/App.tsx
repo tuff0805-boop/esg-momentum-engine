@@ -132,10 +132,6 @@ export default function App() {
           <Tooltip content="Retail view shows simplified buy/sell signals. Analyst view shows full ESG methodology, scoring model, and DCF valuation." />
           <div style={{ width: 1, height: 20, background: '#1E2836' }} />
           <SGTClock />
-          <div style={{ width: 1, height: 20, background: '#1E2836' }} />
-          <div style={{ fontSize: 12, fontWeight: 600, background: 'rgba(232,50,60,0.12)', color: '#E8323C', padding: '4px 10px', borderRadius: 3 }}>
-            PFT100 2026
-          </div>
         </div>
       </motion.header>
 
