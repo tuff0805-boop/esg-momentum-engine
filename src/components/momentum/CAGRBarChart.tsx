@@ -63,12 +63,13 @@ export function CAGRBarChart({ companies, allCompanies }: CAGRBarChartProps) {
       </div>
 
       {/* Chart */}
-      <ResponsiveContainer width="100%" height={data.length * 38 + 40}>
+      <div style={{ width: '100%', height: 380 }}>
+      <ResponsiveContainer width="100%" height="100%">
         <BarChart
           layout="vertical"
           data={data}
-          margin={{ top: 0, right: 80, bottom: 0, left: 10 }}
-          barSize={28}
+          margin={{ top: 16, right: 80, bottom: 16, left: 80 }}
+          barSize={24}
         >
           <CartesianGrid horizontal={false} stroke="#1E2836" strokeDasharray="3 3" />
           <XAxis
@@ -82,7 +83,7 @@ export function CAGRBarChart({ companies, allCompanies }: CAGRBarChartProps) {
           <YAxis
             type="category"
             dataKey="name"
-            width={72}
+            width={76}
             tick={{ fill: '#C8D3DC', fontSize: 12 }}
             axisLine={false}
             tickLine={false}
@@ -108,6 +109,7 @@ export function CAGRBarChart({ companies, allCompanies }: CAGRBarChartProps) {
           </Bar>
         </BarChart>
       </ResponsiveContainer>
+      </div>
 
       {/* Legend */}
       <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
