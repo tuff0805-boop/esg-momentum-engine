@@ -1,3 +1,4 @@
+import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import type { Company, NewsItem } from '../../data/companies'
 import {
@@ -45,13 +46,13 @@ export function CompanyDrawer({ company, allCompanies, onClose, onEventClick }: 
 
   const border = '#1E2836'
 
-  return (
+  const modal = (
     <AnimatePresence>
       {company && (
         <>
           {/* Backdrop */}
           <motion.div
-            style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.75)', zIndex: 200 }}
+            style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.75)', zIndex: 1000 }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -73,8 +74,9 @@ export function CompanyDrawer({ company, allCompanies, onClose, onEventClick }: 
               overflow: 'hidden',
               display: 'flex',
               flexDirection: 'column',
-              zIndex: 201,
+              zIndex: 1001,
             }}
+            onClick={e => e.stopPropagation()}
             initial={{ opacity: 0, scale: 0.97 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.97 }}
@@ -268,4 +270,6 @@ export function CompanyDrawer({ company, allCompanies, onClose, onEventClick }: 
       )}
     </AnimatePresence>
   )
+
+  return createPortal(modal, document.body)
 }

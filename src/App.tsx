@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import type { Company, NewsItem } from './data/companies'
 import { companies as ALL_COMPANIES } from './data/companies'
 import { calcSES } from './lib/esg'
@@ -44,17 +44,30 @@ export default function App() {
 
   const onSelect = useCallback((c: Company) => setSelectedCompany(c), [])
 
-  if (showLanding) {
-    return (
-      <LandingPage
-        onLaunch={() => setShowLanding(false)}
-        onTabSelect={(tab) => { setShowLanding(false); setActiveTab(tab as Tab); setTabKey(k => k + 1) }}
-      />
-    )
-  }
-
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', background: '#080B10' }}>
+    <AnimatePresence mode="wait">
+    {showLanding ? (
+      <motion.div
+        key="landing"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0, y: -20 }}
+        transition={{ duration: 0.3 }}
+      >
+        <LandingPage
+          onLaunch={() => setShowLanding(false)}
+          onTabSelect={(tab) => { setShowLanding(false); setActiveTab(tab as Tab); setTabKey(k => k + 1) }}
+        />
+      </motion.div>
+    ) : (
+    <motion.div
+      key="dashboard"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.35, ease: 'easeOut' }}
+      style={{ display: 'flex', flexDirection: 'column', height: '100vh', background: '#080B10' }}
+    >
       {/* ── Header 72px ── */}
       <motion.header
         initial={{ y: -20, opacity: 0 }}
@@ -193,7 +206,9 @@ export default function App() {
 
       {viewMode === 'analyst' && <Chatbot />}
       {showTour && <GuidedTour activeTab={activeTab} onClose={() => setShowTour(false)} />}
-    </div>
+    </motion.div>
+    )}
+    </AnimatePresence>
   )
 }
 

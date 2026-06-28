@@ -135,6 +135,7 @@ export function LandingPage({ onLaunch, onTabSelect }: LandingPageProps) {
             transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut', delay: 0.6 }}
             onClick={onLaunch}
             whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.97 }}
             style={{ fontSize: 16, fontWeight: 600, color: '#fff', background: '#E8323C', border: 'none',
               borderRadius: 6, padding: '14px 32px', cursor: 'pointer' }}
           >
