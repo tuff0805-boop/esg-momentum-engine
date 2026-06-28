@@ -108,6 +108,23 @@ export function CompanyDrawer({ company, allCompanies, onClose, onEventClick }: 
           </div>
         </div>
 
+        {/* Investment Thesis — full-width strip */}
+        {company.investmentThesis && (
+          <div style={{
+            margin: '0 20px 0',
+            padding: '14px 16px',
+            background: '#0D1117',
+            border: '1px solid #1E2836',
+            borderLeft: '3px solid #00C087',
+            borderRadius: 4,
+            flexShrink: 0,
+          }}>
+            <div style={{ fontSize: 10, color: '#4A5568', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 6 }}>Investment Thesis</div>
+            <div style={{ fontSize: 13, color: '#E8EDF2', lineHeight: 1.6 }}>{company.investmentThesis}</div>
+            <div style={{ fontSize: 10, color: '#4A5568', marginTop: 8 }}>ESG Momentum Engine · CGS International iTrade</div>
+          </div>
+        )}
+
             {/* Body — 3-column grid */}
             <div style={{
               flex: 1,

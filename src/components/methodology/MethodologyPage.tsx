@@ -67,8 +67,64 @@ export function MethodologyPage() {
         </div>
       </Section>
 
-      {/* SECTION 3: DATA SOURCES */}
-      <Section title="03 — Data Sources">
+      {/* SECTION 3: FORWARD SIGNAL FRAMEWORK */}
+      <Section title="03 — Forward Signal Score — Execution Quality Framework">
+        <p style={{ fontSize: 13, color: '#8B9AAB', lineHeight: 1.7, marginBottom: 20, marginTop: 0 }}>
+          The Forward Signal Score (40% of Momentum Score) measures leading indicators of ESG execution quality — signals that precede official rating agency updates by 12–18 months. These are organized into five categories, each weighted by predictive validity and data availability.
+        </p>
+        <div style={{ overflowX: 'auto' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
+            <thead>
+              <tr style={{ background: '#0D1117' }}>
+                {['Category', 'Signal', 'Data Source', 'Weight', 'Current Phase'].map(h => (
+                  <th key={h} style={{ padding: '10px 14px', textAlign: 'left', fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#4A5568', fontWeight: 600, borderBottom: '1px solid #1E2836' }}>{h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                ['Organizational Readiness', 'Sustainability hiring velocity',                     'LinkedIn job postings',                   '15%', 'Phase 1'],
+                ['Organizational Readiness', 'Project lead track record',                          'Company filings + news',                  '10%', 'Phase 2'],
+                ['Organizational Readiness', 'Executive turnover in sustainability BU',             'LinkedIn + SGX announcements',            '5%',  'Phase 2'],
+                ['Physical Execution',       'Capex disbursement vs announced plan',               'Quarterly filings',                       '15%', 'Phase 2'],
+                ['Physical Execution',       'Permit filings (EIA, construction)',                 'KLHK, ONEP, NEA registries',              '10%', 'Phase 2'],
+                ['Physical Execution',       'Satellite imagery — construction progress',           'Planet Labs, Orbital Insight',            '5%',  'Phase 3'],
+                ['Third-Party Verification', 'Equipment supplier/EPC contractor announcements',    'News NLP + SGX',                          '10%', 'Phase 1'],
+                ['Third-Party Verification', 'Certification status (RSPO, ISO 14001, SBTi)',       'Certifying bodies',                       '10%', 'Phase 1'],
+                ['Third-Party Verification', 'Patent filings related to core technology',          'Patent registries',                       '5%',  'Phase 2'],
+                ['Capital Commitment',       'Green bond tied to specific project',                'SGX + MAS filings',                       '10%', 'Phase 1'],
+                ['Capital Commitment',       'Covenant renegotiation (negative signal)',            'Bond prospectus filings',                 '5%',  'Phase 2'],
+                ['Stakeholder Sentiment',    'Analyst call NLP — management specificity',          'Earnings call transcripts',               '5%',  'Phase 2'],
+                ['Stakeholder Sentiment',    'Community/NGO sentiment near project sites',         'Local news NLP',                          '5%',  'Phase 3'],
+              ].map((row, i) => {
+                const phase = row[4]
+                const phaseBg  = phase === 'Phase 1' ? '#003D2B' : phase === 'Phase 2' ? '#0A2A52' : '#2A1A00'
+                const phaseColor = phase === 'Phase 1' ? '#00C087' : phase === 'Phase 2' ? '#60A5FA' : '#C4A85A'
+                const phaseLabel = phase === 'Phase 1' ? 'Phase 1 (Live)' : phase === 'Phase 2' ? 'Phase 2' : 'Phase 3'
+                return (
+                  <tr key={i} style={{ background: i % 2 === 0 ? '#080B10' : '#0D1117', borderBottom: '1px solid #1E2836' }}>
+                    <td style={{ padding: '9px 14px', color: '#8B9AAB', whiteSpace: 'nowrap' }}>{row[0]}</td>
+                    <td style={{ padding: '9px 14px', color: '#E8EDF2' }}>{row[1]}</td>
+                    <td style={{ padding: '9px 14px', color: '#8B9AAB' }}>{row[2]}</td>
+                    <td style={{ padding: '9px 14px', fontFamily: 'monospace', color: '#C8D3DC', textAlign: 'right', whiteSpace: 'nowrap' }}>{row[3]}</td>
+                    <td style={{ padding: '9px 14px' }}>
+                      <span style={{ fontSize: 10, fontWeight: 500, color: phaseColor, background: phaseBg, border: `1px solid ${phaseColor}44`, borderRadius: 3, padding: '2px 7px', whiteSpace: 'nowrap' }}>
+                        {phaseLabel}
+                      </span>
+                    </td>
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+        </div>
+        <div style={{ marginTop: 14, fontSize: 12, color: '#4A5568', lineHeight: 1.6, padding: '10px 14px', background: '#0D1117', border: '1px solid #1E2836', borderRadius: 4 }}>
+          Phase 1 signals power the current POC. Phase 2 signals are in development for the production version leveraging CGS International's existing MSCI and Bloomberg institutional data relationships.
+        </div>
+      </Section>
+
+      {/* SECTION 4: DATA SOURCES */}
+      <Section title="04 — Data Sources">
         <div style={{ overflowX: 'auto' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
             <thead>
@@ -97,8 +153,8 @@ export function MethodologyPage() {
         </div>
       </Section>
 
-      {/* SECTION 4: ACADEMIC FOUNDATION */}
-      <Section title="04 — Academic Foundation">
+      {/* SECTION 5: ACADEMIC FOUNDATION */}
+      <Section title="05 — Academic Foundation">
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           {[
             {
@@ -129,8 +185,8 @@ export function MethodologyPage() {
         </div>
       </Section>
 
-      {/* SECTION 5: ROADMAP */}
-      <Section title="05 — The 18-Month Roadmap">
+      {/* SECTION 6: ROADMAP */}
+      <Section title="06 — The 18-Month Roadmap">
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 16 }}>
           {[
             {
@@ -165,8 +221,8 @@ export function MethodologyPage() {
         </div>
       </Section>
 
-      {/* SECTION 6: GREENWASHING DEFENSE */}
-      <Section title="06 — Greenwashing Defense">
+      {/* SECTION 7: GREENWASHING DEFENSE */}
+      <Section title="07 — Greenwashing Defense">
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           {[
             { icon: '✓', title: 'Verified Events Only', body: 'Regulatory fines are government-issued. Third-party certifications are independently audited. Company press releases receive lower weighting than verifiable external events.' },

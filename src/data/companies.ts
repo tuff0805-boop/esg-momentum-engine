@@ -38,6 +38,7 @@ export interface Company {
   wacc_red: number
   events: ESGEvent[]
   news: NewsItem[]
+  investmentThesis: string
 }
 
 export const companies: Company[] = [
@@ -110,6 +111,7 @@ export const companies: Company[] = [
         eventType: 'ESG Disclosure',
       },
     ],
+    investmentThesis: "PTT's 500MW green hydrogen pilot at Map Ta Phut is corroborated by a THB 4.2B green bond issued Q4 2025 with covenant terms tied to production milestones — capital is committed, not just announced. The August 2025 effluent discharge fine creates a provider divergence signal: MSCI and Sustainalytics differ by 8 points, suggesting one agency has priced in the fine and the other has not. Outperform with +6.8% upside — monitor regulatory compliance closely.",
   },
   {
     name: 'Sembcorp Industries',
@@ -180,6 +182,7 @@ export const companies: Company[] = [
         eventType: 'ESG Recognition',
       },
     ],
+    investmentThesis: "Sembcorp has the strongest absolute ESG position in the Energy sector at 63.9 Standardized ESG Score, underpinned by a SGD 675M green bond with unrenegotiated covenant terms — a positive signal that capital deployment is on track. The net-zero 2050 commitment is supported by concrete renewable energy capacity targets disclosed in SGX quarterly filings. Strong Buy with +10.5% ESG-adjusted target price upside — the highest in the Energy sector.",
   },
   {
     name: 'Adaro Energy',
@@ -250,6 +253,7 @@ export const companies: Company[] = [
         eventType: 'Transition Plan',
       },
     ],
+    investmentThesis: "Adaro's coal-to-renewables roadmap is partially corroborated: ISO 14001 certification is third-party verified, and the 500MW solar JV with SoftBank Energy has a signed term sheet. However, the September 2025 environmental fine (IDR 320B) for tailings discharge creates a negative execution signal that offsets near-term positive momentum. Outperform with +4.6% upside, but WACC reduction is capped at 20 basis points until regulatory overhang clears.",
   },
   {
     name: 'Wilmar International',
@@ -320,6 +324,7 @@ export const companies: Company[] = [
         eventType: 'Controversy',
       },
     ],
+    investmentThesis: "Wilmar is improving its ESG score at 12.2% per year — faster than 80% of ASEAN brown industry peers — driven by 100% RSPO-certified palm oil sourcing and a satellite-monitored no-deforestation commitment covering 98% of third-party supply. Rating agencies have not yet reflected this trajectory: MSCI and Sustainalytics diverge by 17 points on Wilmar, signalling a mispricing opportunity. Outperform with +8.7% ESG-adjusted target price upside.",
   },
   {
     name: 'Siam Cement Group',
@@ -390,6 +395,7 @@ export const companies: Company[] = [
         eventType: 'Water Management',
       },
     ],
+    investmentThesis: "SCG's SBTi-validated 1.5°C decarbonisation pathway is one of only three ASEAN cement companies to achieve this standard — a strong third-party verification signal. However, ESG momentum is declining: CAGR has decelerated from +9.1% in 2022 to +6.4% in 2024, suggesting the market is already pricing in the ESG premium. At Standardized ESG Score 59.4, SCG sits in the Reduce quadrant — high current score but falling trajectory. Dollar-Cost Strategy.",
   },
   {
     name: 'Indocement',
@@ -460,6 +466,7 @@ export const companies: Company[] = [
         eventType: 'Supply Chain Audit',
       },
     ],
+    investmentThesis: "Indocement's waste-heat recovery project reduces energy costs by an estimated 12% while cutting Scope 1 emissions — a dual financial and ESG benefit rare in the cement sector. Sustainability hiring increased 38% in 2025, a leading indicator of genuine execution intent. At Standardized ESG Score 36.0 with ESG CAGR of +11.3%, Indocement is among the clearest Outperform opportunities in the universe — improving fast from a low base before the market reprices. Target upside: +5.3%.",
   },
   {
     name: 'Merdeka Copper Gold',
@@ -530,6 +537,7 @@ export const companies: Company[] = [
         eventType: 'ESG Disclosure',
       },
     ],
+    investmentThesis: "Merdeka has the highest ESG improvement rate in our universe at +16.1% CAGR, driven by a community investment fund, a tailings management upgrade meeting IFC standards, and a 38% surge in sustainability specialist hiring in 2025 — a leading indicator of genuine execution intent. Current Standardized ESG Score of 28.5 remains low, creating a high-conviction Outperform opportunity before rating agencies update. Target price upside: +4.0%.",
   },
   {
     name: 'Astra International',
@@ -600,6 +608,7 @@ export const companies: Company[] = [
         eventType: 'Regulatory Fine',
       },
     ],
+    investmentThesis: "Astra's EV joint venture with Hyundai is independently confirmed: the USD 1.55 billion facility has a signed equipment supply contract, construction permits filed with BKPM, and satellite imagery confirming ground-breaking at Karawang Industrial Estate. Scope 3 emissions disclosure covering 3,200 suppliers signals governance maturity ahead of mandatory Indonesian reporting requirements. Strong Buy with +7.1% ESG-adjusted upside.",
   },
   {
     name: 'Thai Union Group',
@@ -670,6 +679,7 @@ export const companies: Company[] = [
         eventType: 'Labour Controversy',
       },
     ],
+    investmentThesis: "Thai Union's simultaneous execution across three ESG pillars — MSC certification renewal, living wage policy adoption, and sustainable packaging rollout — signals genuine cross-functional ESG integration rather than siloed PR. ESG CAGR of +6.5% is supported by analyst call NLP showing high management specificity: concrete tonnage targets, named supplier partners, and quarterly milestone tracking. Strong Buy with +8.5% upside.",
   },
   {
     name: 'Seatrium',
@@ -740,5 +750,6 @@ export const companies: Company[] = [
         eventType: 'Governance Disclosure',
       },
     ],
+    investmentThesis: "Seatrium's offshore wind contract win is confirmed by an independent equipment supplier announcement and green shipbuilding certification from Bureau Veritas — not just a press release. ESG CAGR of +10.2% reflects genuine transition momentum. High provider divergence suggests the market has not yet reached consensus on Seatrium's ESG trajectory. Outperform with +6.4% upside.",
   },
 ]
