@@ -49,37 +49,39 @@ export function CompanyDrawer({ company, allCompanies, onClose, onEventClick }: 
   const modal = (
     <AnimatePresence>
       {company && (
-        <>
-          {/* Backdrop */}
-          <motion.div
-            style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.75)', zIndex: 1000 }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={onClose}
-          />
-
-          {/* Modal container */}
+        <motion.div
+          key="drawer-backdrop"
+          style={{
+            position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+            width: '100vw', height: '100vh',
+            background: 'rgba(0,0,0,0.85)',
+            zIndex: 9998,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+          }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
+          onClick={onClose}
+        >
+          {/* Modal panel */}
           <motion.div
             style={{
-              position: 'fixed',
-              top: '5vh',
-              left: '50%',
-              transform: 'translateX(-50%)',
               width: 'min(960px, 92vw)',
-              height: '90vh',
+              height: '88vh', maxHeight: '88vh',
               background: '#0D1117',
               border: '1px solid #2A3A4A',
               borderRadius: 8,
               overflow: 'hidden',
               display: 'flex',
               flexDirection: 'column',
-              zIndex: 1001,
+              position: 'relative',
+              zIndex: 9999,
             }}
             onClick={e => e.stopPropagation()}
-            initial={{ opacity: 0, scale: 0.97 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.97 }}
+            initial={{ opacity: 0, scale: 0.96, y: 16 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.96, y: 16 }}
             transition={{ type: 'spring', damping: 28, stiffness: 280 }}
           >
             {/* Header */}
@@ -94,7 +96,7 @@ export function CompanyDrawer({ company, allCompanies, onClose, onEventClick }: 
               </div>
               <button
                 onClick={onClose}
-                style={{ color: '#8B9AAB', background: 'none', border: 'none', cursor: 'pointer', padding: 4 }}
+                style={{ color: '#8B9AAB', background: 'none', border: 'none', cursor: 'pointer', padding: 4, position: 'absolute', top: 16, right: 16, zIndex: 10000 }}
               >
                 <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -266,7 +268,7 @@ export function CompanyDrawer({ company, allCompanies, onClose, onEventClick }: 
               </div>
             </div>
           </motion.div>
-        </>
+        </motion.div>
       )}
     </AnimatePresence>
   )

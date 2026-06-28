@@ -9,6 +9,7 @@ interface TopNavProps {
   activeSector: Sector
   onSectorChange: (s: Sector) => void
   onHelpClick: () => void
+  onBackToLanding: () => void
 }
 
 const TABS: { id: Tab; label: string }[] = [
@@ -23,7 +24,7 @@ const TABS: { id: Tab; label: string }[] = [
 
 const SECTORS: Sector[] = ['All', 'Energy', 'Materials', 'Industrials']
 
-export function TopNav({ activeTab, onTabChange, activeSector, onSectorChange, onHelpClick }: TopNavProps) {
+export function TopNav({ activeTab, onTabChange, activeSector, onSectorChange, onHelpClick, onBackToLanding }: TopNavProps) {
   return (
     <div style={{
       height: 44, minHeight: 44, flexShrink: 0,
@@ -33,8 +34,23 @@ export function TopNav({ activeTab, onTabChange, activeSector, onSectorChange, o
       justifyContent: 'space-between',
       zIndex: 15,
     }}>
-      {/* LEFT: Tab items */}
+      {/* LEFT: Back button + Tab items */}
       <div style={{ display: 'flex', alignItems: 'stretch', overflowX: 'auto', whiteSpace: 'nowrap' }}>
+        {/* ← Overview */}
+        <button
+          onClick={onBackToLanding}
+          style={{
+            padding: '0 14px', height: '100%', fontSize: 11,
+            color: '#8B9AAB', background: 'transparent', border: 'none',
+            cursor: 'pointer', transition: 'color 0.15s', whiteSpace: 'nowrap', flexShrink: 0,
+          }}
+          onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = '#E8EDF2' }}
+          onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = '#8B9AAB' }}
+        >
+          ← Overview
+        </button>
+        {/* Divider */}
+        <div style={{ width: 1, background: '#1E2836', alignSelf: 'center', height: 20, flexShrink: 0 }} />
         {TABS.map(tab => {
           const isActive = activeTab === tab.id
           return (

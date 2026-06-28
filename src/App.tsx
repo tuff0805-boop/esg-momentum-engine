@@ -88,7 +88,13 @@ export default function App() {
       >
         {/* Left: CGS logo + divider + title */}
         <div style={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
-          <div style={{ borderRadius: 6, overflow: 'hidden', flexShrink: 0 }}>
+          <div
+            onClick={() => setShowLanding(true)}
+            title="Back to Overview"
+            style={{ borderRadius: 6, overflow: 'hidden', flexShrink: 0, cursor: 'pointer', opacity: 1, transition: 'opacity 0.15s' }}
+            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.opacity = '0.75' }}
+            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.opacity = '1' }}
+          >
             <img src="/cgsi_logo.png" alt="CGS International" style={{ height: 32, width: 'auto', display: 'block' }} />
           </div>
           <div style={{ width: 1, height: 28, background: '#2A3A4A', margin: '0 18px', flexShrink: 0 }} />
@@ -139,6 +145,7 @@ export default function App() {
         activeSector={activeSector}
         onSectorChange={setActiveSector}
         onHelpClick={() => setShowTour(true)}
+        onBackToLanding={() => setShowLanding(true)}
       />
 
       {/* ── Main content — full width ── */}
@@ -183,17 +190,22 @@ export default function App() {
         <Ticker />
       </div>
 
-      <CompanyDrawer
-        company={selectedCompany}
-        allCompanies={ALL_COMPANIES}
-        onClose={() => setSelectedCompany(null)}
-        onEventClick={(item) => {
-          if (selectedCompany) {
-            const ses = calcSES(selectedCompany, ALL_COMPANIES)
-            setSelectedEvent({ item, companyName: selectedCompany.name, ses })
-          }
-        }}
-      />
+      <AnimatePresence>
+        {selectedCompany && (
+          <CompanyDrawer
+            key={selectedCompany.name}
+            company={selectedCompany}
+            allCompanies={ALL_COMPANIES}
+            onClose={() => setSelectedCompany(null)}
+            onEventClick={(item) => {
+              if (selectedCompany) {
+                const ses = calcSES(selectedCompany, ALL_COMPANIES)
+                setSelectedEvent({ item, companyName: selectedCompany.name, ses })
+              }
+            }}
+          />
+        )}
+      </AnimatePresence>
 
       {selectedEvent && (
         <EventAnalyticsModal
