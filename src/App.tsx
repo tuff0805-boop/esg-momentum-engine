@@ -191,22 +191,17 @@ export default function App() {
         <Ticker />
       </div>
 
-      <AnimatePresence>
-        {selectedCompany && (
-          <CompanyDrawer
-            key={selectedCompany.name}
-            company={selectedCompany}
-            allCompanies={ALL_COMPANIES}
-            onClose={() => setSelectedCompany(null)}
-            onEventClick={(item) => {
-              if (selectedCompany) {
-                const ses = calcSES(selectedCompany, ALL_COMPANIES)
-                setSelectedEvent({ item, companyName: selectedCompany.name, ses })
-              }
-            }}
-          />
-        )}
-      </AnimatePresence>
+      <CompanyDrawer
+        company={selectedCompany}
+        allCompanies={ALL_COMPANIES}
+        onClose={() => setSelectedCompany(null)}
+        onEventClick={(item) => {
+          if (selectedCompany) {
+            const ses = calcSES(selectedCompany, ALL_COMPANIES)
+            setSelectedEvent({ item, companyName: selectedCompany.name, ses })
+          }
+        }}
+      />
 
       {selectedEvent && (
         <EventAnalyticsModal

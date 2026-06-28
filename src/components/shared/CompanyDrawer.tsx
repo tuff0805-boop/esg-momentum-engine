@@ -1,5 +1,5 @@
 import { createPortal } from 'react-dom'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import type { Company, NewsItem } from '../../data/companies'
 import {
   calcSES, calcCAGR, calcMomentum, calcPillars, calcDCF,
@@ -34,75 +34,79 @@ function PillarBar({ label, value, color }: { label: string; value: number; colo
 }
 
 export function CompanyDrawer({ company, allCompanies, onClose, onEventClick }: CompanyDrawerProps) {
-  const ses       = company ? calcSES(company, allCompanies) : 0
-  const cagr      = company ? calcCAGR(company) : 0
-  const momentum  = company ? calcMomentum(company, allCompanies) : 0
-  const pillars   = company ? calcPillars(company, allCompanies) : { E: 0, S: 0, G: 0, I: 0 }
-  const quadrant  = company ? getQuadrant(company, allCompanies) : ''
-  const forecast  = company ? getRaterForecast(company, allCompanies) : ''
-  const dcf       = company ? calcDCF(company, allCompanies) : null
-  const esgSignal = company ? getESGSignal(company, allCompanies) : 'Neutral'
-  const action    = company ? getActionRating(company, allCompanies) : 'Hold'
+  if (!company) return null
+
+  const ses       = calcSES(company, allCompanies)
+  const cagr      = calcCAGR(company)
+  const momentum  = calcMomentum(company, allCompanies)
+  const pillars   = calcPillars(company, allCompanies)
+  const quadrant  = getQuadrant(company, allCompanies)
+  const forecast  = getRaterForecast(company, allCompanies)
+  const dcf       = calcDCF(company, allCompanies)
+  const esgSignal = getESGSignal(company, allCompanies)
+  const action    = getActionRating(company, allCompanies)
 
   const border = '#1E2836'
 
-  const modal = (
-    <AnimatePresence>
-      {company && (
-        <motion.div
-          key="drawer-backdrop"
-          style={{
-            position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
-            width: '100vw', height: '100vh',
-            background: 'rgba(0,0,0,0.85)',
-            zIndex: 9998,
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-          }}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
+  return createPortal(
+    <>
+      {/* Backdrop */}
+      <div
+        onClick={onClose}
+        style={{
+          position: 'fixed',
+          inset: 0,
+          backgroundColor: 'rgba(0,0,0,0.85)',
+          zIndex: 9998,
+        }}
+      />
+      {/* Modal */}
+      <div
+        onClick={e => e.stopPropagation()}
+        style={{
+          position: 'fixed',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: 'min(960px, 92vw)',
+          height: '88vh',
+          backgroundColor: '#0D1117',
+          border: '1px solid #2A3A4A',
+          borderRadius: '8px',
+          overflowY: 'auto',
+          zIndex: 9999,
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        {/* Close button */}
+        <button
           onClick={onClose}
-        >
-          {/* Modal panel */}
-          <motion.div
-            style={{
-              width: 'min(960px, 92vw)',
-              height: '88vh', maxHeight: '88vh',
-              background: '#0D1117',
-              border: '1px solid #2A3A4A',
-              borderRadius: 8,
-              overflow: 'hidden',
-              display: 'flex',
-              flexDirection: 'column',
-              position: 'relative',
-              zIndex: 9999,
-            }}
-            onClick={e => e.stopPropagation()}
-            initial={{ opacity: 0, scale: 0.96, y: 16 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.96, y: 16 }}
-            transition={{ type: 'spring', damping: 28, stiffness: 280 }}
-          >
-            {/* Header */}
-            <div style={{
-              display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-              padding: '0 20px', height: 56, borderBottom: `1px solid ${border}`,
-              background: '#080B10', flexShrink: 0,
-            }}>
-              <div>
-                <div style={{ fontSize: 20, fontWeight: 600, color: '#E8EDF2', lineHeight: 1.2 }}>{company.name}</div>
-                <div style={{ fontSize: 13, color: '#8B9AAB' }}>{company.country} · {company.sector}</div>
-              </div>
-              <button
-                onClick={onClose}
-                style={{ color: '#8B9AAB', background: 'none', border: 'none', cursor: 'pointer', padding: 4, position: 'absolute', top: 16, right: 16, zIndex: 10000 }}
-              >
-                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
+          style={{
+            position: 'absolute',
+            top: 12,
+            right: 12,
+            background: 'none',
+            border: 'none',
+            color: '#8B9AAB',
+            fontSize: 20,
+            cursor: 'pointer',
+            zIndex: 10,
+            lineHeight: 1,
+          }}
+        >✕</button>
+
+        {/* Header */}
+        <div style={{
+          display: 'flex', alignItems: 'center',
+          padding: '0 20px', height: 56, borderBottom: `1px solid ${border}`,
+          background: '#080B10', flexShrink: 0,
+        }}>
+          <div>
+            <div style={{ fontSize: 20, fontWeight: 600, color: '#E8EDF2', lineHeight: 1.2 }}>{company.name}</div>
+            <div style={{ fontSize: 13, color: '#8B9AAB' }}>{company.country} · {company.sector}</div>
+          </div>
+        </div>
 
             {/* Body — 3-column grid */}
             <div style={{
@@ -267,11 +271,8 @@ export function CompanyDrawer({ company, allCompanies, onClose, onEventClick }: 
                 )}
               </div>
             </div>
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+        </div>
+    </>,
+    document.body
   )
-
-  return createPortal(modal, document.body)
 }
