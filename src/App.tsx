@@ -45,14 +45,15 @@ export default function App() {
   const onSelect = useCallback((c: Company) => setSelectedCompany(c), [])
 
   return (
-    <AnimatePresence mode="wait">
+    <AnimatePresence>
     {showLanding ? (
       <motion.div
         key="landing"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        exit={{ opacity: 0, y: -20 }}
-        transition={{ duration: 0.3 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.25 }}
+        style={{ pointerEvents: 'auto' }}
       >
         <LandingPage
           onLaunch={() => setShowLanding(false)}
@@ -62,11 +63,11 @@ export default function App() {
     ) : (
     <motion.div
       key="dashboard"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.35, ease: 'easeOut' }}
-      style={{ display: 'flex', flexDirection: 'column', height: '100vh', background: '#080B10' }}
+      transition={{ duration: 0.25 }}
+      style={{ display: 'flex', flexDirection: 'column', height: '100vh', background: '#080B10', pointerEvents: 'auto' }}
     >
       {/* ── Header 72px ── */}
       <motion.header
