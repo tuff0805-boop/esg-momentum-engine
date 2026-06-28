@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react'
 import type { Company } from '../../data/companies'
 import { calcSES, calcCAGR, calcMomentum, calcDCF, getQuadrant, getRaterForecast, getESGSignal, getActionRating } from '../../lib/esg'
-import { Badge, forecastVariant, esgSignalVariant } from '../shared/Badge'
+import { Badge, forecastVariant, esgSignalVariant, actionVariant } from '../shared/Badge'
 
 interface ESGScreenerProps {
   allCompanies: Company[]
@@ -248,7 +248,7 @@ export function ESGScreener({ allCompanies, onSelect }: ESGScreenerProps) {
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
               <thead>
                 <tr style={{ background: '#080B10', borderBottom: '1px solid #1E2836', position: 'sticky', top: 0, zIndex: 1 }}>
-                  {['#', 'Company', 'Sector', 'ESG Signal', 'Std. ESG', 'CAGR', 'Momentum', 'Pot. Upside', 'Forecast', ''].map(h => (
+                  {['#', 'Company', 'Sector', 'ESG Signal', 'Std. ESG', 'CAGR', 'Momentum', 'Pot. Upside', 'Forecast', 'Action', ''].map(h => (
                     <th key={h} style={{ padding: '0 14px', height: 40, fontSize: 11, textTransform: 'uppercase',
                       letterSpacing: '0.08em', fontWeight: 600, color: '#4A5568',
                       textAlign: h === '#' || h === 'Std. ESG' || h === 'CAGR' || h === 'Pot. Upside' ? 'right' : 'left',
@@ -319,7 +319,11 @@ export function ESGScreener({ allCompanies, onSelect }: ESGScreenerProps) {
                       <td style={{ padding: '0 14px', verticalAlign: 'middle' }}>
                         <Badge variant={forecastVariant(r.forecast)}>{r.forecast}</Badge>
                       </td>
-                      {/* Action */}
+                      {/* Suggested Action badge */}
+                      <td style={{ padding: '0 14px', verticalAlign: 'middle' }}>
+                        <Badge variant={actionVariant(r.action)}>{r.action}</Badge>
+                      </td>
+                      {/* Analyse button */}
                       <td style={{ padding: '0 14px', verticalAlign: 'middle' }}>
                         <button
                           onClick={() => onSelect(r.company)}

@@ -34,7 +34,7 @@ export function TopNav({ activeTab, onTabChange, activeSector, onSectorChange, o
       zIndex: 15,
     }}>
       {/* LEFT: Tab items */}
-      <div style={{ display: 'flex', alignItems: 'stretch' }}>
+      <div style={{ display: 'flex', alignItems: 'stretch', overflowX: 'auto', whiteSpace: 'nowrap' }}>
         {TABS.map(tab => {
           const isActive = activeTab === tab.id
           return (
