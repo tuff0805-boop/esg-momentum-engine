@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import type { Company, NewsItem, ESGEvent } from '../../data/companies'
 import { calcSES, calcPillars } from '../../lib/esg'
 
@@ -9,10 +10,12 @@ interface PillarEventFeedProps {
 
 const PILLARS: { id: 'E' | 'S' | 'G' | 'I'; name: string; color: string; bgDim: string }[] = [
   { id: 'E', name: 'Environmental', color: '#00C087', bgDim: '#003D2B' },
-  { id: 'S', name: 'Social',        color: '#1E6FD9', bgDim: '#0A2A52' },
-  { id: 'G', name: 'Governance',    color: '#7C3AED', bgDim: '#1A0A2E' },
+  { id: 'S', name: 'Social',        color: '#60A5FA', bgDim: '#0A2A52' },
+  { id: 'G', name: 'Governance',    color: '#A78BFA', bgDim: '#1A0A2E' },
   { id: 'I', name: 'Innovation',    color: '#F59E0B', bgDim: '#2A1A00' },
 ]
+
+const SHOW_LIMIT = 3
 
 const INNOVATION_KEYWORDS = [
   'Patent', 'Technology', 'Digital', 'Innovation', 'Hydrogen', 'EV',
@@ -139,6 +142,7 @@ function collectPillarItems(
 }
 
 export function PillarEventFeed({ companies, allCompanies, onEventClick }: PillarEventFeedProps) {
+  const [expandedPillars, setExpandedPillars] = useState<Set<string>>(new Set())
   const pillarEvents = collectPillarItems(companies)
 
   // Per-pillar universe averages
@@ -205,11 +209,30 @@ export function PillarEventFeed({ companies, allCompanies, onEventClick }: Pilla
         })}
       </div>
 
+      {/* LEGEND */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 16, fontSize: 11, color: '#8B9AAB' }}>
+        <span>Left border:</span>
+        {[
+          { color: '#00C087', label: 'Positive' },
+          { color: '#E8323C', label: 'Negative' },
+          { color: '#C4A85A', label: 'Neutral' },
+        ].map(({ color, label }) => (
+          <span key={label} style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
+            <span style={{ display: 'inline-block', width: 10, height: 10, borderRadius: '50%', background: color }} />
+            {label}
+          </span>
+        ))}
+      </div>
+
       {/* 4-COLUMN EVENT FEED */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, alignItems: 'start' }}>
         {PILLARS.map(p => {
           const events = pillarEvents[p.id]
           const avg = avgPillars[p.id]
+          const isExpanded = expandedPillars.has(p.id)
+          const visibleEvents = isExpanded ? events : events.slice(0, SHOW_LIMIT)
+          const hiddenCount = events.length - SHOW_LIMIT
+
           return (
             <div key={p.id}>
               {/* Column header */}
@@ -217,49 +240,34 @@ export function PillarEventFeed({ companies, allCompanies, onEventClick }: Pilla
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
                   <div
                     style={{
-                      width: 36,
-                      height: 36,
-                      borderRadius: '50%',
-                      background: p.bgDim,
-                      border: `2px solid ${p.color}`,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontSize: 16,
-                      fontWeight: 700,
-                      color: p.color,
-                      flexShrink: 0,
+                      width: 36, height: 36, borderRadius: '50%',
+                      background: p.bgDim, border: `2px solid ${p.color}`,
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      fontSize: 16, fontWeight: 700, color: p.color, flexShrink: 0,
                     }}
                   >
                     {p.id}
                   </div>
                   <div>
-                    <div style={{ fontSize: 14, fontWeight: 600, color: '#E8EDF2' }}>{p.name}</div>
+                    <div style={{ fontSize: 14, fontWeight: 600, color: p.color }}>{p.name}</div>
                     <div style={{ fontSize: 11, color: '#8B9AAB' }}>
                       Avg: {avg.toFixed(1)} {avg >= 50 ? '▲' : '▼'}
                     </div>
                   </div>
                 </div>
                 <div style={{ height: 3, background: '#1E2836', borderRadius: 2, overflow: 'hidden' }}>
-                  <div
-                    style={{
-                      height: '100%',
-                      width: `${Math.min(avg, 100)}%`,
-                      background: p.color,
-                      borderRadius: 2,
-                    }}
-                  />
+                  <div style={{ height: '100%', width: `${Math.min(avg, 100)}%`, background: p.color, borderRadius: 2 }} />
                 </div>
               </div>
 
               {/* Event cards */}
               {events.length === 0 && (
-                <div style={{ fontSize: 12, color: '#4A5568', padding: '12px 0' }}>
-                  No events for this pillar.
-                </div>
+                <div style={{ fontSize: 12, color: '#4A5568', padding: '12px 0' }}>No events for this pillar.</div>
               )}
-              {events.map(({ event, company }, idx) => {
+              {visibleEvents.map(({ event, company }, idx) => {
                 const isNeg = event.sentiment === 'negative' || event.sentiment === 'very-negative'
+                const isPos = event.sentiment === 'positive' || event.sentiment === 'very-positive'
+                const borderLeftColor = isNeg ? '#E8323C' : isPos ? '#00C087' : '#C4A85A'
                 const sentColor = SENT_COLOR[event.sentiment] ?? '#8B9AAB'
                 const sentBg = SENT_BG[event.sentiment] ?? '#131920'
                 const sentLabel = SENT_LABEL[event.sentiment] ?? event.sentiment
@@ -277,130 +285,84 @@ export function PillarEventFeed({ companies, allCompanies, onEventClick }: Pilla
                     style={{
                       background: '#0D1117',
                       border: '1px solid #1E2836',
-                      borderLeft: `3px solid ${isNeg ? '#E8323C' : p.color}`,
+                      borderLeft: `3px solid ${borderLeftColor}`,
                       borderRadius: 4,
                       padding: '10px 12px',
                       marginBottom: 8,
                       cursor: 'pointer',
-                      boxShadow: isNeg ? 'inset 3px 0 8px rgba(232,50,60,0.08)' : 'none',
+                      minHeight: 140,
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'space-between',
                       transition: 'border-color 0.12s',
                     }}
-                    onMouseEnter={e => {
-                      const el = e.currentTarget as HTMLElement
-                      el.style.borderColor = p.color
-                    }}
+                    onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = p.color }}
                     onMouseLeave={e => {
                       const el = e.currentTarget as HTMLElement
                       el.style.borderColor = '#1E2836'
-                      el.style.borderLeftColor = isNeg ? '#E8323C' : p.color
+                      el.style.borderLeftColor = borderLeftColor
                     }}
                   >
-                    {/* Row 1: company + country + sentiment */}
-                    <div
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: 6,
-                        flexWrap: 'wrap',
-                        marginBottom: 5,
-                      }}
-                    >
-                      <span style={{ fontSize: 13, fontWeight: 600, color: '#E8EDF2' }}>
-                        {company.name.split(' ')[0]}
-                      </span>
-                      <span
-                        style={{
-                          fontSize: 10,
-                          color: '#4A5568',
-                          background: '#131920',
-                          border: '1px solid #1E2836',
-                          borderRadius: 2,
-                          padding: '0 5px',
-                        }}
-                      >
-                        {company.country}
-                      </span>
-                      <span
-                        style={{
-                          fontSize: 10,
-                          fontWeight: 500,
-                          color: sentColor,
-                          background: sentBg,
-                          border: `1px solid ${sentColor}44`,
-                          borderRadius: 2,
-                          padding: '0 5px',
-                        }}
-                      >
-                        {sentLabel}
-                      </span>
-                    </div>
-
-                    {/* Row 2: headline */}
-                    <div
-                      style={{
-                        fontSize: 12,
-                        color: '#C8D3DC',
-                        lineHeight: 1.4,
-                        marginBottom: 5,
-                        overflow: 'hidden',
-                        display: '-webkit-box',
-                        WebkitLineClamp: 2,
-                        WebkitBoxOrient: 'vertical' as const,
-                      }}
-                    >
-                      {headline}
-                    </div>
-
-                    {/* Row 3: date + event type + severity dots */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 5 }}>
-                      {date && (
-                        <span style={{ fontSize: 10, color: '#4A5568', fontFamily: 'monospace' }}>{date}</span>
-                      )}
-                      {eventType && (
-                        <span
-                          style={{
-                            fontSize: 10,
-                            color: '#60A5FA',
-                            background: '#0A2A52',
-                            border: '1px solid #0F3D7A',
-                            borderRadius: 2,
-                            padding: '0 5px',
-                          }}
-                        >
-                          {eventType}
+                    <div>
+                      {/* Row 1: company + country + sentiment */}
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap', marginBottom: 5 }}>
+                        <span style={{ fontSize: 13, fontWeight: 600, color: '#E8EDF2' }}>{company.name.split(' ')[0]}</span>
+                        <span style={{ fontSize: 10, color: '#4A5568', background: '#131920', border: '1px solid #1E2836', borderRadius: 2, padding: '0 5px' }}>
+                          {company.country}
                         </span>
-                      )}
-                      <span style={{ fontSize: 10, color: p.color, letterSpacing: 1 }}>
-                        {'●'.repeat(severity)}{'○'.repeat(Math.max(0, 3 - severity))}
-                      </span>
-                    </div>
-
-                    {/* Row 4: SDG chips */}
-                    {sdgGoals.length > 0 && (
-                      <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
-                        {sdgGoals.slice(0, 3).map((n: number) => (
-                          <span
-                            key={n}
-                            style={{
-                              fontSize: 9,
-                              color: '#8B9AAB',
-                              background: '#131920',
-                              border: '1px solid #1E2836',
-                              borderRadius: 2,
-                              padding: '1px 4px',
-                            }}
-                          >
-                            SDG {n}
-                          </span>
-                        ))}
-                        {sdgGoals.length > 3 && (
-                          <span style={{ fontSize: 9, color: '#4A5568' }}>+{sdgGoals.length - 3}</span>
-                        )}
+                        <span style={{ fontSize: 10, fontWeight: 500, color: sentColor, background: sentBg, border: `1px solid ${sentColor}44`, borderRadius: 2, padding: '0 5px' }}>
+                          {sentLabel}
+                        </span>
                       </div>
-                    )}
+                      {/* Row 2: headline */}
+                      <div style={{ fontSize: 12, color: '#C8D3DC', lineHeight: 1.4, marginBottom: 5, overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' as const }}>
+                        {headline}
+                      </div>
+                    </div>
+                    <div>
+                      {/* Row 3: date + event type + severity dots */}
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: sdgGoals.length > 0 ? 5 : 0 }}>
+                        {date && <span style={{ fontSize: 10, color: '#4A5568', fontFamily: 'monospace' }}>{date}</span>}
+                        {eventType && (
+                          <span style={{ fontSize: 10, color: '#60A5FA', background: '#0A2A52', border: '1px solid #0F3D7A', borderRadius: 2, padding: '0 5px' }}>
+                            {eventType}
+                          </span>
+                        )}
+                        <span style={{ fontSize: 10, color: p.color, letterSpacing: 1 }}>
+                          {'●'.repeat(severity)}{'○'.repeat(Math.max(0, 3 - severity))}
+                        </span>
+                      </div>
+                      {/* Row 4: SDG chips */}
+                      {sdgGoals.length > 0 && (
+                        <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
+                          {sdgGoals.slice(0, 3).map((n: number) => (
+                            <span key={n} style={{ fontSize: 9, color: '#8B9AAB', background: '#131920', border: '1px solid #1E2836', borderRadius: 2, padding: '1px 4px' }}>
+                              SDG {n}
+                            </span>
+                          ))}
+                          {sdgGoals.length > 3 && <span style={{ fontSize: 9, color: '#4A5568' }}>+{sdgGoals.length - 3}</span>}
+                        </div>
+                      )}
+                    </div>
                   </div>
                 )
               })}
+
+              {/* Show more / less */}
+              {hiddenCount > 0 && (
+                <button
+                  onClick={() => setExpandedPillars(prev => {
+                    const next = new Set(prev)
+                    if (isExpanded) next.delete(p.id); else next.add(p.id)
+                    return next
+                  })}
+                  style={{ fontSize: 11, color: '#8B9AAB', background: 'none', border: 'none', cursor: 'pointer', padding: '4px 0', transition: 'color 0.12s' }}
+                  onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = '#E8EDF2' }}
+                  onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = '#8B9AAB' }}
+                >
+                  {isExpanded ? 'Show less ↑' : `Show ${hiddenCount} more →`}
+                </button>
+              )}
             </div>
           )
         })}

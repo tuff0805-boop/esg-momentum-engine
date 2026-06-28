@@ -3,7 +3,7 @@ import { companies as ALL_COMPANIES } from '../../data/companies'
 import type { Company } from '../../data/companies'
 import { calcCAGR, getQuadrant, getRaterForecast } from '../../lib/esg'
 import { MetricCard } from '../shared/MetricCard'
-import { MomentumMatrix } from './MomentumMatrix'
+import { CAGRBarChart } from './CAGRBarChart'
 import { EventFeed } from './EventFeed'
 import { Leaderboard } from './Leaderboard'
 import { RetailSignalCard } from '../shared/RetailSignalCard'
@@ -83,7 +83,7 @@ export function MomentumPanel({ activeSector, onSelect, animKey, viewMode = 'ana
       {!isRetail && (
         <div style={{ display: 'flex', gap: 0, borderBottom: '1px solid #1E2836', marginBottom: 0 }}>
           {[
-            { id: 'matrix' as const, label: '◈ Momentum Matrix' },
+            { id: 'matrix' as const, label: '◈ CAGR Ranking' },
             { id: 'leaderboard' as const, label: '≡ Leaderboard' },
             { id: 'trends' as const, label: '↗ Score Trends' },
           ].map(t => (
@@ -98,28 +98,11 @@ export function MomentumPanel({ activeSector, onSelect, animKey, viewMode = 'ana
         </div>
       )}
 
-      {/* Matrix tab — analyst only */}
+      {/* CAGR Ranking tab — analyst only */}
       {!isRetail && momentumSubTab === 'matrix' && (
         <div className="card overflow-hidden">
-          <div className="card-header">
-            <div className="card-title">ESG Momentum Matrix</div>
-            <div className="card-subtitle">X = Standardized ESG Score · Y = ESG CAGR · click dot to inspect</div>
-          </div>
           <div className="p-4">
-            <MomentumMatrix companies={filtered} allCompanies={ALL_COMPANIES} onSelect={onSelect} />
-          </div>
-          <div className="px-5 pb-4 flex gap-4 flex-wrap">
-            {[
-              { label: 'Outperform',  color: '#00C087' },
-              { label: 'Strong Buy',  color: '#60A5FA' },
-              { label: 'Underperform', color: '#E8323C' },
-              { label: 'Reduce',      color: '#C4A85A' },
-            ].map(q => (
-              <div key={q.label} className="flex items-center gap-1.5 text-xs text-secondary">
-                <div className="w-2.5 h-2.5 rounded-full" style={{ background: q.color }} />
-                {q.label}
-              </div>
-            ))}
+            <CAGRBarChart companies={filtered} allCompanies={ALL_COMPANIES} />
           </div>
         </div>
       )}
