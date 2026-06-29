@@ -8,19 +8,13 @@ interface PillarEventFeedProps {
   onEventClick: (item: NewsItem, companyName: string, ses: number) => void
 }
 
-const PILLARS: { id: 'E' | 'S' | 'G' | 'I'; name: string; color: string; bgDim: string }[] = [
+const PILLARS: { id: 'E' | 'S' | 'G'; name: string; color: string; bgDim: string }[] = [
   { id: 'E', name: 'Environmental', color: '#00C087', bgDim: '#003D2B' },
   { id: 'S', name: 'Social',        color: '#60A5FA', bgDim: '#0A2A52' },
   { id: 'G', name: 'Governance',    color: '#A78BFA', bgDim: '#1A0A2E' },
-  { id: 'I', name: 'Innovation',    color: '#F59E0B', bgDim: '#2A1A00' },
 ]
 
 const SHOW_LIMIT = 3
-
-const INNOVATION_KEYWORDS = [
-  'Patent', 'Technology', 'Digital', 'Innovation', 'Hydrogen', 'EV',
-  'Renewable', 'Solar', 'Wind', 'Green Bond', 'Net Zero', 'Carbon',
-]
 
 const SENT_COLOR: Record<string, string> = {
   'very-positive': '#00C087', 'positive': '#00C087',
@@ -77,15 +71,10 @@ function eventToNewsItem(ev: ESGEvent, company: Company, idx: number): NewsItem 
   }
 }
 
-function isInnovation(text: string): boolean {
-  const lower = text.toLowerCase()
-  return INNOVATION_KEYWORDS.some(kw => lower.includes(kw.toLowerCase()))
-}
-
 function collectPillarItems(
   companies: Company[]
-): Record<'E' | 'S' | 'G' | 'I', FeedItem[]> {
-  const buckets: Record<'E' | 'S' | 'G' | 'I', FeedItem[]> = { E: [], S: [], G: [], I: [] }
+): Record<'E' | 'S' | 'G', FeedItem[]> {
+  const buckets: Record<'E' | 'S' | 'G', FeedItem[]> = { E: [], S: [], G: [] }
   const seen = new Set<string>()
 
   for (const company of companies) {
@@ -103,10 +92,6 @@ function collectPillarItems(
       if (pillar === 'E' || pillar === 'S' || pillar === 'G') {
         buckets[pillar].push(feedItem)
       }
-      // Also check for innovation from news
-      if (isInnovation(item.headline) || isInnovation(item.eventType ?? '')) {
-        buckets['I'].push(feedItem)
-      }
     }
 
     // Collect from company.events (fallback for items not in news)
@@ -123,14 +108,11 @@ function collectPillarItems(
       if (ev.pillar === 'E' || ev.pillar === 'S' || ev.pillar === 'G') {
         buckets[ev.pillar].push(feedItem)
       }
-      if (isInnovation(ev.title)) {
-        buckets['I'].push({ ...feedItem })
-      }
     }
   }
 
   // Sort: sentimentRank asc (very-negative first), then severity desc, then date desc
-  for (const key of ['E', 'S', 'G', 'I'] as const) {
+  for (const key of ['E', 'S', 'G'] as const) {
     buckets[key].sort((a, b) => {
       if (a.sentimentRank !== b.sentimentRank) return a.sentimentRank - b.sentimentRank
       if (b.severity !== a.severity) return b.severity - a.severity
@@ -146,19 +128,17 @@ export function PillarEventFeed({ companies, allCompanies, onEventClick }: Pilla
   const pillarEvents = collectPillarItems(companies)
 
   // Per-pillar universe averages
-  const avgPillars = { E: 0, S: 0, G: 0, I: 0 }
+  const avgPillars = { E: 0, S: 0, G: 0 }
   companies.forEach(c => {
     const p = calcPillars(c, allCompanies)
     avgPillars.E += p.E
     avgPillars.S += p.S
     avgPillars.G += p.G
-    avgPillars.I += p.I
   })
   if (companies.length) {
     avgPillars.E /= companies.length
     avgPillars.S /= companies.length
     avgPillars.G /= companies.length
-    avgPillars.I /= companies.length
   }
 
   // Per-pillar positive/negative counts

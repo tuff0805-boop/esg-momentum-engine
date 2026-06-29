@@ -165,7 +165,6 @@ export function CompanyDrawer({ company, allCompanies, onClose, onEventClick }: 
                   <PillarBar label="E" value={pillars.E} color="#00C087" />
                   <PillarBar label="S" value={pillars.S} color="#60A5FA" />
                   <PillarBar label="G" value={pillars.G} color="#C084FC" />
-                  <PillarBar label="I" value={pillars.I} color="#F59E0B" />
                 </div>
 
                 {/* ESG Score History */}

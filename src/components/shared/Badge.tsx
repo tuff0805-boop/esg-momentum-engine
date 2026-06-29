@@ -14,7 +14,6 @@ type BadgeVariant =
   | 'pillar-e'
   | 'pillar-s'
   | 'pillar-g'
-  | 'pillar-i'
   | 'severity-1'
   | 'severity-2'
   | 'severity-3'
@@ -37,7 +36,6 @@ const variantStyles: Record<BadgeVariant, { bg: string; color: string; border: s
   'pillar-e':      { bg: '#003D2B', color: '#00C087', border: '#005A3F' },
   'pillar-s':      { bg: '#0A2A52', color: '#60A5FA', border: '#0F3D7A' },
   'pillar-g':      { bg: '#1A0A2E', color: '#C084FC', border: '#2D1050' },
-  'pillar-i':      { bg: '#2A1A00', color: '#F59E0B', border: '#3D2600' },
   'severity-1':    { bg: '#131920', color: '#8B9AAB', border: '#1E2836' },
   'severity-2':    { bg: '#2A1A00', color: '#C4A85A', border: '#3D2600' },
   'severity-3':    { bg: '#3D0A0C', color: '#E8323C', border: '#5A1014' },

@@ -20,7 +20,6 @@ const PILLAR_STYLE: Record<string, { bg: string; color: string }> = {
   E:   { bg: '#003D2B', color: '#00C087' },
   S:   { bg: '#0A2A52', color: '#60A5FA' },
   G:   { bg: '#1A0A2E', color: '#C084FC' },
-  I:   { bg: '#2A1A00', color: '#F59E0B' },
   ESG: { bg: '#131920', color: '#8B9AAB' },
 }
 

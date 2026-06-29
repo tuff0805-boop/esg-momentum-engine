@@ -36,7 +36,6 @@ function generateTrendData(company: Company, allCompanies: Company[]) {
     E: currentPillars.E / cagrFactor,
     S: currentPillars.S / cagrFactor,
     G: currentPillars.G / (cagrFactor * 0.9),
-    I: currentPillars.I / (cagrFactor * 1.1),
   }
 
   const YEARS = [2019, 2020, 2021, 2022, 2023, 2024]
@@ -50,7 +49,6 @@ function generateTrendData(company: Company, allCompanies: Company[]) {
     const eJitter = (seededRandom(seed, i * 7 + 2) - 0.5) * 5
     const sJitter = (seededRandom(seed, i * 7 + 3) - 0.5) * 5
     const gJitter = (seededRandom(seed, i * 7 + 4) - 0.5) * 3
-    const iJitter = (seededRandom(seed, i * 7 + 5) - 0.5) * 6
 
     const clamp = (v: number) => Math.max(15, Math.min(95, v))
 
@@ -60,7 +58,6 @@ function generateTrendData(company: Company, allCompanies: Company[]) {
       E: clamp(parseFloat((pillarBase.E + (currentPillars.E - pillarBase.E) * t + (i > 0 && i < YEARS.length - 1 ? eJitter : 0)).toFixed(1))),
       S: clamp(parseFloat((pillarBase.S + (currentPillars.S - pillarBase.S) * t + (i > 0 && i < YEARS.length - 1 ? sJitter : 0)).toFixed(1))),
       G: clamp(parseFloat((pillarBase.G + (currentPillars.G - pillarBase.G) * t + (i > 0 && i < YEARS.length - 1 ? gJitter : 0)).toFixed(1))),
-      I: clamp(parseFloat((pillarBase.I + (currentPillars.I - pillarBase.I) * t + (i > 0 && i < YEARS.length - 1 ? iJitter : 0)).toFixed(1))),
     }
   })
 }
@@ -136,8 +133,6 @@ export function ScoreTrendChart({ company, allCompanies, height = 200, showPilla
             <Line type="monotone" dataKey="S" name="S" stroke="#1E6FD9" strokeWidth={1.5}
               strokeDasharray="4 2" dot={false} animationDuration={1000} />
             <Line type="monotone" dataKey="G" name="G" stroke="#7C3AED" strokeWidth={1.5}
-              strokeDasharray="4 2" dot={false} animationDuration={1000} />
-            <Line type="monotone" dataKey="I" name="I" stroke="#F59E0B" strokeWidth={1.5}
               strokeDasharray="4 2" dot={false} animationDuration={1000} />
           </>
         )}

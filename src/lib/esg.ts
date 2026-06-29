@@ -172,24 +172,17 @@ export function getESGSignal(
 export function calcPillars(
   company: Company,
   allCompanies: Company[]
-): { E: number; S: number; G: number; I: number } {
+): { E: number; S: number; G: number } {
   const idx = allCompanies.indexOf(company)
   const msciZ = zScore(allCompanies.map(c => c.msci))
   const susZ = zScore(allCompanies.map(c => c.sustainalytics))
   const bbgZ = zScore(allCompanies.map(c => c.bloomberg))
 
-  // Deterministic pillar approximation using provider z-scores
   const envRaw = msciZ[idx] * 0.5 + bbgZ[idx] * 0.5
   const socRaw = susZ[idx] * 0.6 + msciZ[idx] * 0.4
   const govRaw = bbgZ[idx] * 0.6 + susZ[idx] * 0.4
 
   const clamp = (v: number) => Math.min(100, Math.max(0, Math.round(50 + v * 15)))
 
-  const innovationKeywords = ['Patent', 'Technology', 'Digital', 'Innovation', 'Hydrogen', 'EV', 'Renewable', 'Solar', 'Wind']
-  const innovationEvents = company.events.filter(ev =>
-    innovationKeywords.some(kw => ev.title.toLowerCase().includes(kw.toLowerCase()))
-  )
-  const I = Math.min(90, 40 + innovationEvents.length * 8 + innovationEvents.reduce((s, e) => s + e.severity, 0) * 3)
-
-  return { E: clamp(envRaw), S: clamp(socRaw), G: clamp(govRaw), I }
+  return { E: clamp(envRaw), S: clamp(socRaw), G: clamp(govRaw) }
 }

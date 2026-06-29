@@ -229,11 +229,11 @@ export function CompanyComparison({ allCompanies, onSelectCompany }: CompanyComp
       ))}
 
       {/* ── SECTION 2: PILLAR BUTTERFLY CHART ── */}
-      <SectionTitle>E/S/G/I Pillar Breakdown</SectionTitle>
+      <SectionTitle>E/S/G Pillar Breakdown</SectionTitle>
       <div style={{ padding: '16px 20px' }}>
-        {(['E', 'S', 'G', 'I'] as const).map(p => {
-          const PILLAR_COLORS = { E: '#00C087', S: '#60A5FA', G: '#C084FC', I: '#F59E0B' }
-          const PILLAR_NAMES  = { E: 'Environmental', S: 'Social', G: 'Governance', I: 'Innovation' }
+        {(['E', 'S', 'G'] as const).map(p => {
+          const PILLAR_COLORS = { E: '#00C087', S: '#60A5FA', G: '#C084FC' }
+          const PILLAR_NAMES  = { E: 'Environmental', S: 'Social', G: 'Governance' }
           const aScore = dataA.pillars[p]
           const bScore = dataB.pillars[p]
           const color = PILLAR_COLORS[p]
