@@ -15,12 +15,8 @@ import { Tooltip } from './components/shared/Tooltip'
 import { LandingPage } from './components/LandingPage'
 import { Ticker } from './components/Ticker'
 import { EventAnalyticsModal } from './components/EventAnalyticsModal'
-import { ESGScreener } from './components/screener/ESGScreener'
-import { CompanyComparison } from './components/comparison/CompanyComparison'
-import { PortfolioBuilder } from './components/portfolio/PortfolioBuilder'
-
 type Sector   = 'All' | 'Energy' | 'Materials' | 'Industrials'
-type Tab      = 'standardizer' | 'momentum' | 'dcf' | 'screener' | 'compare' | 'portfolio' | 'methodology'
+type Tab      = 'standardizer' | 'momentum' | 'dcf' | 'methodology'
 type ViewMode = 'retail' | 'analyst'
 
 export default function App() {
@@ -169,16 +165,7 @@ export default function App() {
             {activeTab === 'dcf' && (
               <DCFPanel activeSector={activeSector} onSelect={onSelect} viewMode={viewMode} />
             )}
-            {activeTab === 'screener' && (
-              <ESGScreener allCompanies={ALL_COMPANIES} onSelect={onSelect} />
-            )}
-            {activeTab === 'compare' && (
-              <CompanyComparison allCompanies={ALL_COMPANIES} onSelectCompany={onSelect} />
-            )}
-            {activeTab === 'portfolio' && (
-              <PortfolioBuilder allCompanies={ALL_COMPANIES} onSelectCompany={onSelect} />
-            )}
-            {activeTab === 'methodology' && <MethodologyPage />}
+{activeTab === 'methodology' && <MethodologyPage />}
           </motion.div>
         </main>
         <footer style={{ padding: '10px 20px', textAlign: 'center', fontSize: 10, color: '#4A5568', borderTop: '1px solid #1E2836' }}>

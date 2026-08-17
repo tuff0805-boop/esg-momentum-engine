@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 
-type Tab = 'standardizer' | 'momentum' | 'dcf' | 'screener' | 'compare' | 'portfolio' | 'methodology'
+type Tab = 'standardizer' | 'momentum' | 'dcf' | 'methodology'
 type Sector = 'All' | 'Energy' | 'Materials' | 'Industrials'
 
 interface TopNavProps {
@@ -16,9 +16,6 @@ const TABS: { id: Tab; label: string }[] = [
   { id: 'standardizer',  label: 'ESG Standardizer'       },
   { id: 'momentum',      label: 'ESG Momentum'            },
   { id: 'dcf',           label: 'Financial Materiality'   },
-  { id: 'screener',      label: 'ESG Screener'            },
-  { id: 'compare',       label: 'Compare'                 },
-  { id: 'portfolio',     label: 'Portfolio'               },
   { id: 'methodology',   label: 'Methodology'             },
 ]
 
